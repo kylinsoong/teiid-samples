@@ -22,25 +22,13 @@
 
 	<dependencies>
 
-<!--  
-
-		<dependency>
-			<groupId>org.jboss.as</groupId>
-			<artifactId>jboss-as-process-controller</artifactId>
-			<version>7.2.0.Final-redhat-8</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jboss.as</groupId>
-			<artifactId>jboss-as-host-controller</artifactId>
-			<version>7.2.0.Final-redhat-8</version>
-		</dependency>
--->
+<!--  -->
 	<dependency>
-		<groupId>org.jboss.as</groupId>
-		<artifactId>jboss-as-server</artifactId>
-		<version>7.2.0.Final-redhat-8</version>
+		<groupId>org.jboss.teiid</groupId>
+		<artifactId>teiid-common-core</artifactId>
+		<version>8.4.1-redhat-7</version>
 	</dependency>
+
 
 	</dependencies>
 
