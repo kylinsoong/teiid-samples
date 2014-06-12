@@ -40,3 +40,16 @@ Caused by: org.teiid.core.TeiidRuntimeException: TEIID40065 Failed to resolve th
 ~~~
 
 This project for solving this issue.
+
+# Resolusion
+
+https://bugzilla.redhat.com/show_bug.cgi?id=1108418
+
+No hostname IP mapping cause InetAddress.getLocalHost() throw java.net.UnknownHostException, this trigger teiid-runtime SocketConfiguration throw UnknownHostException, but the exception be swallowed, instead with the TeiidRuntimeException.
+
+The workaround is: edit /etc/hosts, add hostname IP mapping as below
+~~~
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4 kylin.redhat.com
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6 kylin.redhat.com
+~~~
+

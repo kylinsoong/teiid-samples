@@ -6,15 +6,16 @@ import java.net.UnknownHostException;
 public class InetAddressTest {
 
 	public static void main(String[] args) throws UnknownHostException {
-
-		InetAddress address = InetAddress.getByName("www.baidu.com");
-		System.out.println(address.getHostAddress());
-		System.out.println(address.getHostName());
 		
-		address = InetAddress.getLocalHost();
-		System.out.println(address.getHostAddress());
+		InetAddress address = InetAddress.getByName("www.redhat.com");
+		System.out.println(address);
 		System.out.println(address.getHostName());
+		System.out.println(address.getHostAddress());
 		
+	    address = InetAddress.getLocalHost();
+	    System.out.println(address);
+		System.out.println(address.getHostName());
+		System.out.println(address.getHostAddress());
 	}
 
 }
