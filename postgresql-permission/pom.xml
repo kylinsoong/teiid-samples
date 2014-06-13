@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.teiid.test</groupId>
-	<artifactId>teiid-startup-exception</artifactId>
+	<artifactId>teiid-postgresql-permission</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
-	<name>JBoss Data Virtualization startup exception</name>
-	<description>JBoss Data Virtualization startup exception</description>
+	<name>JBoss Data Virtualization postgresql permission</name>
+	<description>JBoss Data Virtualization postgresql permission</description>
 
 	<url>https://github.com/kylinsoong</url>
 
