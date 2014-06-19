@@ -19,6 +19,7 @@
     <modules>
         <module>startup-exception</module>
         <module>postgresql-permission</module>
+        <module>jdbc-client</module>
     </modules>
 
 </project>
