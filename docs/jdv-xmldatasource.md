@@ -1,6 +1,12 @@
 # What's this
 
-This document show import mettadata from xml file, create & deploy virtual database and use JDBC interact with xml file. The content containing:
+This document show import mettadata from xml file, create & deploy virtual database and use JDBC interact with xml file. 
+
+![XMLDataSource](img/xml-datasource.png)
+
+As above figure depicted, [book.xml](../workspace/XMLDataSource/books.xml) contain a series books, throw JBoss Data Virtualization & VDB we can interact/access xml data via either JDBC, or Teiid Designer.
+
+The content containing:
 
 * Start JDV Server and Set up Teiid instance
 * Creating a Teiid Project
