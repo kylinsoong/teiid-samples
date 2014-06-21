@@ -4,6 +4,29 @@ This Sample contain a sql scripts for creating database, tables against Mysql da
 
 # Sql Script
 
-![brokerinfo](brokerinfo-mysql.sql)
+The following SQL Script first create database *brokerinfo*, then create table *Broker* and *Customer*. Each Broker have Id, firstname, lastname and reference with multiple Customers, the Customer use Id for identification.
 
-[Download Script](brokerinfo-mysql.sql)
+~~~
+DROP DATABASE IF EXISTS brokerinfo;
+
+create DATABASE brokerinfo;
+
+use brokerinfo;
+
+CREATE TABLE Broker (
+  Id varchar(15) NOT NULL,
+  LastName varchar(25) NOT NULL,
+  FirstName varchar(10) NOT NULL,
+  PRIMARY KEY (Id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE Customer (
+  BrokerId varchar(15) DEFAULT NULL,
+  Id varchar(15) DEFAULT NULL,
+  CONSTRAINT FK_BrokerId_1 FOREIGN KEY (BrokerId) REFERENCES Broker (Id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+~~~
+
+[Click to download the Completed Script](brokerinfo-mysql.sql). At the end of the script, there are some test data for test convenient.
+
+//TODO - update Customer to use unique ID
