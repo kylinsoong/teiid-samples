@@ -7,6 +7,8 @@ JBoss Data Virtualizaztion
 
 [CSV file as Data Source](jdv-csvdatasource.md)
 
+[Mysql database as Data Source](jdv-mysqldatasource.md)
+
 
 Mysql
 =====

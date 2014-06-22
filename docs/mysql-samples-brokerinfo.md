@@ -22,11 +22,22 @@ CREATE TABLE Broker (
 
 CREATE TABLE Customer (
   BrokerId varchar(15) DEFAULT NULL,
-  Id varchar(15) DEFAULT NULL,
+  Id varchar(15) DEFAULT NULL UNIQUE,
   CONSTRAINT FK_BrokerId_1 FOREIGN KEY (BrokerId) REFERENCES Broker (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ~~~
 
-[Click to download the Completed Script](brokerinfo-mysql.sql). At the end of the script, there are some test data for test convenient.
+[Click to download the Completed Script](brokerinfo-mysql.sql). At the end of the script, there are some test data for test convenience.
 
-//TODO - update Customer to use unique ID
+# JDBC Query
+
+Run [MysqlJDBCClient](../jdbc-client/src/main/java/com/jboss/teiid/mysql/MysqlJDBCClient.java) as Java Application will show how use JDBC Query Mysql database.
+
+> Note, [MysqlJDBCClient](../jdbc-client/src/main/java/com/jboss/teiid/mysql/MysqlJDBCClient.java) have sql statement against mysql database `brokerinfo`, it looks like below:
+
+~~~
+UPDATE Broker SET LastName = 'Steve' WHERE Id = 'B1236'
+SELECT * FROM Broker
+SELECT * FROM Customer
+SELECT Broker.Id, Broker.LastName, Broker.FirstName, Customer.ID FROM Broker INNER JOIN Customer ON Broker.Id=Customer.BrokerId
+~~~

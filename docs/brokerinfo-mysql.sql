@@ -14,7 +14,7 @@ CREATE TABLE Broker (
 
 CREATE TABLE Customer (
   BrokerId varchar(15) DEFAULT NULL,
-  ID varchar(15) DEFAULT NULL,
+  ID varchar(15) DEFAULT NULL UNIQUE,
   CONSTRAINT FK_BrokerId_1 FOREIGN KEY (BrokerId) REFERENCES Broker (Id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

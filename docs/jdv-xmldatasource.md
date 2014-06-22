@@ -4,7 +4,7 @@ This document show import mettadata from xml file, create & deploy virtual datab
 
 ![XMLDataSource](img/xml-datasource.png)
 
-As above figure depicted, [book.xml](../workspace/XMLDataSource/books.xml) contain a series books, throw JBoss Data Virtualization & VDB we can interact/access xml data via either JDBC, or Teiid Designer.
+As above figure depicted, [book.xml](../workspace/XMLDataSource/books.xml) contain a series books, through JBoss Data Virtualization & VDB we can interact/access xml data via either JDBC, or Teiid Designer.
 
 The content containing:
 
