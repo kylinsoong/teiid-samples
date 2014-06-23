@@ -3,6 +3,8 @@ JBoss Data Virtualizaztion
 
 [Install JBoss Data Virtualization, JBoss Developer Studio, Environment Setting Up](jdv-installation.md)
 
+[Administration](jdv-administraion.md)
+
 [XML file as Data Source](jdv-xmldatasource.md)
 
 [CSV file as Data Source](jdv-csvdatasource.md)
