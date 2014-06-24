@@ -118,3 +118,44 @@ Launch the CLI in Linux via execute `EAP_HOME/bin/jboss-cli.sh`.
 *Non-interacive AdminShell* - The non-interactive AdminShell allows users to administer JBoss Data Virtualization by executing previously developed scripts from the command-line. This mode is especially useful to automate testing and to perform repeated configuration/migration changes to a JBoss Data Virtualization instance.
 
 *AdminShell GUI* - The AdminShell GUI enables users to administer JBoss Data Virtualization through the development and running of scripts in a graphical environment. Script development is done using a GUI text editor with syntax highlighting.
+
+[More about Groovy](http://groovy.codehaus.org/)
+
+### Launch AdminShell
+
+Navigate to `dataVirtualization/teiid-adminshell`, execute:
+
+~~~
+./adminshell.sh
+~~~
+
+Alternatively, launch the AdminShell GUI via:
+
+~~~
+./adminshell-console.sh
+~~~
+
+### Save a Script in Interactive AdminShell
+
+~~~
+record start /home/kylin/tmp/scripts
+...
+record stop
+~~~
+
+> Note that this will generate a series commands in /home/kylin/tmp/scripts, use ./adminshell.sh /home/kylin/tmp/scripts can execute these commands continuely.
+
+### Example Scripts
+
+In [Mysql Database as Data Source](jdv-mysqldatasource.md), we have created VDB `BrokerInfo_VDB.vdb`, In this examples, we first deploy `BrokerInfo_VDB.vdb` to JDV, then query Database against VDB, Note deploy need admin connection, so the scripts as:
+
+~~~
+connectAsAdmin();
+deploy("/home/kylin/work/project/teiid-samples/workspace/MysqlDataSource/BrokerInfo_VDB.vdb");
+disconnect();
+conn = connect("jdbc:teiid:BrokerInfo_VDB@mm://localhost:31000;version=1","user","user");
+conn.eachRow("SELECT * FROM BrokerInfo_VBL.Broker"){println "${it}"}
+conn.eachRow("SELECT * FROM BrokerInfo_VBL.Customer"){println "${it}"}
+disconnect();
+exit;
+~~~ 
