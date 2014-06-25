@@ -55,8 +55,7 @@ kylin=password1!
 
 ~~~
 user=odata,example-role
-administrator=administrator
-kylin=accounts,inventory,reports,user,admin
+kylin=user,admin
 ~~~
 
 * Save and close the file
