@@ -20,6 +20,14 @@ Mysql
 [Mysql Samples brokerinfo](mysql-samples-brokerinfo.md)
 
 
+PostgreSQL 
+==========
+
+[PostgreSQL Admin & Usage Commands Entry](postgres-usage-scripts.md)
+
+[PostgreSQL Samples Financials](financials-psql.sql)
+
+
 Teiid Admin
 ===========
 
