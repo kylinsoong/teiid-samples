@@ -11,14 +11,21 @@ public class PermissionIssueReproduce {
 	static final String JDBC_URL = "jdbc:postgresql://localhost:5432/products";
 	static final String JDBC_USER = "pg_user";
 	static final String JDBC_PASS = "pg_pass";
+	
+	static final String SQL_QUERY = "SELECT * FROM productdata";
 
 	public static void main(String[] args) throws Exception {
 		
 		Connection conn = JDBCUtil.getDriverConnection(JDBC_DRIVER, JDBC_URL, JDBC_USER, JDBC_PASS);
 
-		System.out.println(conn);
-		
-		conn.close();
+		try {
+			JDBCUtil.executeQuery(conn, SQL_QUERY);
+		} catch (Exception e) {
+			throw e ;
+		} finally {
+			conn.close();
+		}
+
 	}
 
 }

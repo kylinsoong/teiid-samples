@@ -33,3 +33,13 @@ Caused by: org.postgresql.util.PSQLException: ERROR: permission denied for relat
 ~~~
 
 this project for sovling this issue
+
+
+# Reproduce
+
+Run [PermissionIssueReproduce](src/main/java/org/teiid/jboss/test/PermissionIssueReproduce.java) will reproduce the issue.
+
+# Resolution
+
+[../docs/postgres-usage-scripts.md](../docs/postgres-usage-scripts.md)
+
