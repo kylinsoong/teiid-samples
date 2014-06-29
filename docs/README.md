@@ -11,6 +11,8 @@ JBoss Data Virtualizaztion
 
 [Mysql database as Data Source](jdv-mysqldatasource.md)
 
+[Workshop Financials Example](jdv-workshop-financials.md)
+
 
 Mysql
 =====

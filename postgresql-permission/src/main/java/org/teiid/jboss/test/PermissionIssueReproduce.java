@@ -5,12 +5,13 @@ import java.sql.Connection;
 import com.jboss.teiid.client.util.JDBCUtil;
 
 
+
 public class PermissionIssueReproduce {
 
 	static final String JDBC_DRIVER = "org.postgresql.Driver";
 	static final String JDBC_URL = "jdbc:postgresql://localhost:5432/products";
-	static final String JDBC_USER = "pg_user";
-	static final String JDBC_PASS = "pg_pass";
+	static final String JDBC_USER = "postgres";
+	static final String JDBC_PASS = "redhat";
 	
 	static final String SQL_QUERY = "SELECT * FROM productdata";
 

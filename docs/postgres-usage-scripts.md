@@ -112,6 +112,36 @@ service postgresql restart
 chkconfig postgresql on
 ~~~
 
-# Privilege Grant
+# PostgreSQL execute SQL File
 
+The following steps show how to execute SQL File [financials-psql.sql](financials-psql.sql) against running PostgreSQL Database.
 
+### Connect to the PostgreSQL database
+
+~~~
+su - postgres
+~~~
+
+### Execute SQL File via the following command:
+
+~~~
+psql -a -f ~/work/financials-psql.sql
+~~~
+
+### View the created database
+
+Start the psql command line utility and type the “\l” to list the databases in PostgreSQL database:
+
+~~~
+postgres=# \l
+                                    List of databases
+     Name      |  Owner   | Encoding |  Collation  |    Ctype    |   Access privileges   
+---------------+----------+----------+-------------+-------------+-----------------------
+ apaccustomers | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ brokerinfo    | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ eucustomers   | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ postgres      | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+ products      | postgres | UTF8     | en_US.UTF-8 | en_US.UTF-8 | 
+~~~
+
+> Note, `products`, `brokerinfo`, `apaccustomers`, `eucustomers` are database created via [financials-psql.sql](financials-psql.sql)
