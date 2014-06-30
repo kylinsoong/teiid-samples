@@ -23,5 +23,8 @@ This is workshop for quick learning JBoss Data Virtualization. [Step by Step doc
 |Create a virtual base layer: BrokerInfo_VBL |`BrokerInfo_VBL.xmi` be created under VirtualBaseLayer folder |
 |Import the Data Dictionary Schema |Import `DataDictionary.xsd` to Schemas folder |
 |Examine the Data Dictionary |N/A  |
+|Create the EU_Customers_DDC Enterprise Data Layer |`EU_Customers_DDC.xmi` generated under EnterpriseDataLyer |
+|Create the US_Customers_DDC Enterprise Data Layer |`US_Customers_DDC.xmi` generated under EnterpriseDataLyer |
+
 
         
