@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<partssupplier>
+   <parts id="P400">
+      <name>Rod</name>
+      <color>Red</color>
+      <weight>12</weight>
+   </parts>
+   <parts id="P401">
+      <name>Bolt</name>
+      <color>Orange</color>
+      <weight>12</weight>
+   </parts>
+   <parts id="P402">
+      <name>Nail</name>
+      <color>Orange</color>
+      <weight>13</weight>
+   </parts>
+   <parts id="P403">
+      <name>Bolt</name>
+      <color>Green</color>
+      <weight>17</weight>
+   </parts>
+   <parts id="P404">
+      <name>Cam</name>
+      <color>Green</color>
+      <weight>18</weight>
+   </parts>
+   <parts id="P405">
+      <name>Cog</name>
+      <color>Red</color>
+      <weight>20</weight>
+   </parts>
+   <parts id="P406">
+      <name>Nail</name>
+      <color>Orange</color>
+      <weight>16</weight>
+   </parts>
+   <parts id="P407">
+      <name>Washer</name>
+      <color>Green</color>
+      <weight>19</weight>
+   </parts>
+   <parts id="P408">
+      <name>Cam</name>
+      <color>Black</color>
+      <weight>15</weight>
+   </parts>
+   <parts id="P409">
+      <name>Rod</name>
+      <color>Black</color>
+      <weight>14</weight>
+   </parts>
+   <parts id="P410">
+      <name>Cap</name>
+      <color>Red</color>
+      <weight>13</weight>
+   </parts>
+   <parts id="P411">
+      <name>Wheel</name>
+      <color>Green</color>
+      <weight>18</weight>
+   </parts>
+   <parts id="P412">
+      <name>Bolt</name>
+      <color>Orange</color>
+      <weight>21</weight>
+   </parts>
+   <parts id="P413">
+      <name>Rod</name>
+      <color>Orange</color>
+      <weight>11</weight>
+   </parts>
+   <parts id="P414">
+      <name>Nail</name>
+      <color>Black</color>
+      <weight>15</weight>
+   </parts>
+   <parts id="P415">
+      <name>Fastener</name>
+      <color>Orange</color>
+      <weight>14</weight>
+   </parts>
+   
+</partssupplier>

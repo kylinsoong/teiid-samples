@@ -14,6 +14,13 @@ JBoss Data Virtualizaztion
 [Workshop Financials Example](jdv-workshop-financials.md)
 
 
+Examples
+========
+
+### Federation
+
+* [Example of Federating Two Data Sources](jdv-example-federating-two-data-source.md)
+
 Mysql
 =====
 
