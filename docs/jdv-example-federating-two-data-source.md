@@ -8,12 +8,7 @@ The Content contain:
 * Creating the Project
 * Import Metadata from a Flat file
 * Import Metadata from a XML file
-
 * Create a Union View Model
-** Create Relational View Model
-** Create View Table
-** Add Source Tables to View Transformation
-
 * Test the New Model
 
 # Overview
@@ -65,7 +60,7 @@ Open the Teiid Designer perspective in JBoss Developer Studio.
 * In Flat File Delimited Columns Parser Setting page, change `WEIGHT` column to interger, then click **Next>**
 * In View Model Definition page, select Location `parts/views`, Name `PartsFlatFileView.xmi`, New view table name `PartsFlatFile`, and click **Finish**
 
-![Parts Flat File Model](jdv-parts-flatfile.png)
+![Parts Flat File Model](img/jdv-parts-flatfile.png)
 
 # Import Metadata from a XML file
 
@@ -74,7 +69,7 @@ Open the Teiid Designer perspective in JBoss Developer Studio.
 * Also in XML Data File Source Selection page, Source Model Definition section, select Localtion to `sources` folder and name `PartsXMLFileSource`, then click **Next>**
 * In XML Data File Import Options page, select Root Path `/partssupplier/parts`, and add column, change the `WEIGHT` column to interger
 
-![XML Data File Import Options](jdv-parts-xml-column.png)
+![XML Data File Import Options](img/jdv-parts-xml-column.png)
 
 * Click **Next>**, in View Model Definition page, select Location `parts/views`, Name `PartsXMLFileView.xmi`, New view table name `PartsXMLFile`, and click **Finish**
 
