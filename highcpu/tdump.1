@@ -1,0 +1,1607 @@
+2014-08-07 15:10:47
+Full thread dump Java HotSpot(TM) 64-Bit Server VM (24.60-b09 mixed mode):
+
+"Attach Listener" daemon prio=10 tid=0x00007fc730028000 nid=0x37e6 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"teiid-async-threads - 4" prio=10 tid=0x00007fc700150000 nid=0x33c7 waiting on condition [0x00007fc7504ae000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c5ea1830> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at org.jboss.threads.QueueExecutor.takeTask(QueueExecutor.java:748)
+	at org.jboss.threads.QueueExecutor.access$400(QueueExecutor.java:45)
+	at org.jboss.threads.QueueExecutor$Worker.run(QueueExecutor.java:842)
+	at java.lang.Thread.run(Thread.java:745)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:122)
+
+   Locked ownable synchronizers:
+	- None
+
+"teiid-async-threads - 3" prio=10 tid=0x00007fc700175800 nid=0x33c6 waiting on condition [0x00007fc73545d000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c5ea1830> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at org.jboss.threads.QueueExecutor.takeTask(QueueExecutor.java:748)
+	at org.jboss.threads.QueueExecutor.access$400(QueueExecutor.java:45)
+	at org.jboss.threads.QueueExecutor$Worker.run(QueueExecutor.java:842)
+	at java.lang.Thread.run(Thread.java:745)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:122)
+
+   Locked ownable synchronizers:
+	- None
+
+"teiid-async-threads - 2" prio=10 tid=0x00007fc700171000 nid=0x33c5 waiting on condition [0x00007fc73555e000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c5ea1830> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at org.jboss.threads.QueueExecutor.takeTask(QueueExecutor.java:748)
+	at org.jboss.threads.QueueExecutor.access$400(QueueExecutor.java:45)
+	at org.jboss.threads.QueueExecutor$Worker.run(QueueExecutor.java:842)
+	at java.lang.Thread.run(Thread.java:745)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:122)
+
+   Locked ownable synchronizers:
+	- None
+
+"teiid-async-threads - 1" prio=10 tid=0x00007fc6f8272800 nid=0x3365 waiting on condition [0x00007fc70434c000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c5ea1830> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at org.jboss.threads.QueueExecutor.takeTask(QueueExecutor.java:748)
+	at org.jboss.threads.QueueExecutor.access$400(QueueExecutor.java:45)
+	at org.jboss.threads.QueueExecutor$Worker.run(QueueExecutor.java:842)
+	at java.lang.Thread.run(Thread.java:745)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:122)
+
+   Locked ownable synchronizers:
+	- None
+
+"Thread-219" prio=10 tid=0x00007fc6f8271000 nid=0x3364 runnable [0x00007fc70444d000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5a966e0> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5a966d0> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5a96538> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.sun.net.httpserver.ServerImpl$Dispatcher.run(ServerImpl.java:382)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"server-timer" daemon prio=10 tid=0x00007fc6f826f800 nid=0x3363 in Object.wait() [0x00007fc70454e000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c5a96d10> (a java.util.TaskQueue)
+	at java.util.TimerThread.mainLoop(Timer.java:552)
+	- locked <0x00000000c5a96d10> (a java.util.TaskQueue)
+	at java.util.TimerThread.run(Timer.java:505)
+
+   Locked ownable synchronizers:
+	- None
+
+"New I/O server boss #36" daemon prio=10 tid=0x00007fc71025d000 nid=0x3362 runnable [0x00007fc70464f000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5f02ec8> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5f02eb8> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5eef300> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:102)
+	at org.jboss.netty.channel.socket.nio.NioServerBoss.select(NioServerBoss.java:163)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.NioServerBoss.run(NioServerBoss.java:42)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5eef108> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #35" daemon prio=10 tid=0x00007fc71025b000 nid=0x3361 runnable [0x00007fc704750000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5eef8c8> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5eef8b8> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5eef7a0> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5eef650> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #34" daemon prio=10 tid=0x00007fc710244000 nid=0x3360 runnable [0x00007fc704851000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ef2f18> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ef2f08> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ef2df0> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ef2ca0> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #33" daemon prio=10 tid=0x00007fc710241800 nid=0x335f runnable [0x00007fc704952000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ef4550> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ef4540> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ef4428> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ef42d8> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #32" daemon prio=10 tid=0x00007fc710259800 nid=0x335e runnable [0x00007fc704a53000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ee73e8> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ee73d8> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ee72c0> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ee70d0> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #31" daemon prio=10 tid=0x00007fc710257800 nid=0x335d runnable [0x00007fc704b54000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5eedec0> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5eedeb0> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5eedd98> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5eedba8> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #30" daemon prio=10 tid=0x00007fc710255800 nid=0x335c runnable [0x00007fc704c55000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5efb9d8> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5efb9c8> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5efb8b0> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ef4af0> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #29" daemon prio=10 tid=0x00007fc710021000 nid=0x335b runnable [0x00007fc704d56000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ee7938> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ee7928> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ee7810> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ee7620> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #28" daemon prio=10 tid=0x00007fc710067800 nid=0x335a runnable [0x00007fc704e57000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5efd108> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5efd0f8> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5efcfe0> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5efce90> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"SessionMonitor" daemon prio=10 tid=0x00007fc7101aa800 nid=0x3359 in Object.wait() [0x00007fc704f58000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c5ee6838> (a java.util.TaskQueue)
+	at java.util.TimerThread.mainLoop(Timer.java:552)
+	- locked <0x00000000c5ee6838> (a java.util.TaskQueue)
+	at java.util.TimerThread.run(Timer.java:505)
+
+   Locked ownable synchronizers:
+	- None
+
+"Teiid Timer" daemon prio=10 tid=0x00007fc7142d2000 nid=0x3358 in Object.wait() [0x00007fc705059000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c5eb55f8> (a java.util.TaskQueue)
+	at java.lang.Object.wait(Object.java:503)
+	at java.util.TimerThread.mainLoop(Timer.java:526)
+	- locked <0x00000000c5eb55f8> (a java.util.TaskQueue)
+	at java.util.TimerThread.run(Timer.java:505)
+
+   Locked ownable synchronizers:
+	- None
+
+"SessionMonitor" daemon prio=10 tid=0x00007fc7142d0000 nid=0x3357 in Object.wait() [0x00007fc70515a000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c5ee6288> (a java.util.TaskQueue)
+	at java.util.TimerThread.mainLoop(Timer.java:552)
+	- locked <0x00000000c5ee6288> (a java.util.TaskQueue)
+	at java.util.TimerThread.run(Timer.java:505)
+
+   Locked ownable synchronizers:
+	- None
+
+"SessionMonitor" daemon prio=10 tid=0x00007fc7101aa000 nid=0x3356 in Object.wait() [0x00007fc70525b000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c5edfb00> (a java.util.TaskQueue)
+	at java.util.TimerThread.mainLoop(Timer.java:552)
+	- locked <0x00000000c5edfb00> (a java.util.TaskQueue)
+	at java.util.TimerThread.run(Timer.java:505)
+
+   Locked ownable synchronizers:
+	- None
+
+"New I/O server boss #27" daemon prio=10 tid=0x00007fc6f8260800 nid=0x3355 runnable [0x00007fc70535c000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ede560> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ede550> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ecb530> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:102)
+	at org.jboss.netty.channel.socket.nio.NioServerBoss.select(NioServerBoss.java:163)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.NioServerBoss.run(NioServerBoss.java:42)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ecb338> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #26" daemon prio=10 tid=0x00007fc6f8241800 nid=0x3354 runnable [0x00007fc70545d000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ecb100> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ecb0f0> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ecafd8> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ecade0> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #25" daemon prio=10 tid=0x00007fc6f8222000 nid=0x3353 runnable [0x00007fc70555e000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ecec40> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ecec30> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5eceb18> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ecb978> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #24" daemon prio=10 tid=0x00007fc6f8203000 nid=0x3352 runnable [0x00007fc70565f000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ed0280> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ed0270> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ed0158> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ed0000> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #23" daemon prio=10 tid=0x00007fc6f81e5000 nid=0x3351 runnable [0x00007fc705760000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ed08b0> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ed08a0> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ed0788> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ed0630> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #22" daemon prio=10 tid=0x00007fc6f81c7000 nid=0x3350 runnable [0x00007fc705861000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ed6f10> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ed6f00> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ed6de8> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ed6c90> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #21" daemon prio=10 tid=0x00007fc6f8156000 nid=0x334f runnable [0x00007fc705cc2000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ec9b98> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ec9b88> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ec3a60> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ec3868> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #20" daemon prio=10 tid=0x00007fc6f8154800 nid=0x334e runnable [0x00007fc705dc3000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ed8648> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ed8638> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ed8520> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ed83c8> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #19" daemon prio=10 tid=0x00007fc6f8152800 nid=0x334d runnable [0x00007fc705ec4000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5ec2620> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5ec2610> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5ec24f8> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5ec2300> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"SessionMonitor" daemon prio=10 tid=0x00007fc6f8151000 nid=0x334c in Object.wait() [0x00007fc705fc5000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c5b8cd90> (a java.util.TaskQueue)
+	at java.util.TimerThread.mainLoop(Timer.java:552)
+	- locked <0x00000000c5b8cd90> (a java.util.TaskQueue)
+	at java.util.TimerThread.run(Timer.java:505)
+
+   Locked ownable synchronizers:
+	- None
+
+"TxCleanupService,resultset,local" daemon prio=10 tid=0x00007fc70c0c6000 nid=0x334b runnable [0x00007fc7060c6000]
+   java.lang.Thread.State: TIMED_WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c5aa7a98> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2082)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1090)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:807)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"TxCleanupService,preparedplan,local" daemon prio=10 tid=0x00007fc6fc11c800 nid=0x334a runnable [0x00007fc734120000]
+   java.lang.Thread.State: TIMED_WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c5aa7278> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2082)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1090)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:807)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"Scheduled-eviction-thread-1" daemon prio=10 tid=0x00007fc7001e3800 nid=0x3349 waiting on condition [0x00007fc734221000]
+   java.lang.Thread.State: TIMED_WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c5aa7550> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2082)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1090)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:807)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"TxCleanupService,resultset-repl,local" daemon prio=10 tid=0x00007fc70013d000 nid=0x3348 runnable [0x00007fc734322000]
+   java.lang.Thread.State: TIMED_WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c5a872b0> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2082)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1090)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:807)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"Timer-1" prio=10 tid=0x00007fc6fc055800 nid=0x3342 in Object.wait() [0x00007fc734cf1000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c5b8ca38> (a java.util.TaskQueue)
+	at java.lang.Object.wait(Object.java:503)
+	at java.util.TimerThread.mainLoop(Timer.java:526)
+	- locked <0x00000000c5b8ca38> (a java.util.TaskQueue)
+	at java.util.TimerThread.run(Timer.java:505)
+
+   Locked ownable synchronizers:
+	- None
+
+"IdleRemover" daemon prio=10 tid=0x00007fc6f8150800 nid=0x3341 waiting on condition [0x00007fc73515a000]
+   java.lang.Thread.State: TIMED_WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000bb026368> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2176)
+	at org.jboss.jca.core.connectionmanager.pool.idle.IdleRemover$IdleRemoverRunner.run(IdleRemover.java:261)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5b8c4f8> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"ConnectionValidator" daemon prio=10 tid=0x00007fc70013b800 nid=0x3340 waiting on condition [0x00007fc73525b000]
+   java.lang.Thread.State: TIMED_WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000bb026058> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2176)
+	at org.jboss.jca.core.connectionmanager.pool.validator.ConnectionValidator$ConnectionValidatorRunner.run(ConnectionValidator.java:263)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c5b8c890> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"Remoting "kylin" write-1" prio=10 tid=0x00007fc71c0be000 nid=0x333d runnable [0x00007fc73565f000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5b86fb8> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5b86fa8> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5b86e90> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:102)
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:164)
+
+   Locked ownable synchronizers:
+	- None
+
+"Remoting "kylin" read-1" prio=10 tid=0x00007fc71c260800 nid=0x333c runnable [0x00007fc735a66000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c5b7c3b8> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c5b7c3a8> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c5b7c200> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:102)
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:164)
+
+   Locked ownable synchronizers:
+	- None
+
+"http-/127.0.0.1:8080-Acceptor-0" daemon prio=10 tid=0x00007fc714358800 nid=0x333b runnable [0x00007fc735b67000]
+   java.lang.Thread.State: RUNNABLE
+	at java.net.PlainSocketImpl.socketAccept(Native Method)
+	at java.net.AbstractPlainSocketImpl.accept(AbstractPlainSocketImpl.java:398)
+	at java.net.ServerSocket.implAccept(ServerSocket.java:530)
+	at java.net.ServerSocket.accept(ServerSocket.java:498)
+	at org.apache.tomcat.util.net.DefaultServerSocketFactory.acceptSocket(DefaultServerSocketFactory.java:61)
+	at org.apache.tomcat.util.net.JIoEndpoint$Acceptor.run(JIoEndpoint.java:312)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"http-/127.0.0.1:8080-Poller" daemon prio=10 tid=0x00007fc714247800 nid=0x333a in Object.wait() [0x00007fc735d6a000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c5c929d8> (a org.apache.tomcat.util.net.JIoEndpoint$Poller)
+	at org.apache.tomcat.util.net.JIoEndpoint$Poller.run(JIoEndpoint.java:735)
+	- locked <0x00000000c5c929d8> (a org.apache.tomcat.util.net.JIoEndpoint$Poller)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"ContainerBackgroundProcessor[StandardEngine[jboss.web]]" daemon prio=10 tid=0x00007fc714005000 nid=0x3339 waiting on condition [0x00007fc735e6b000]
+   java.lang.Thread.State: TIMED_WAITING (sleeping)
+	at java.lang.Thread.sleep(Native Method)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1563)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"Periodic Recovery" prio=10 tid=0x00007fc7100b1800 nid=0x3338 in Object.wait() [0x00007fc735f6c000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c661b7a8> (a java.lang.Object)
+	at com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.doPeriodicWait(PeriodicRecovery.java:672)
+	at com.arjuna.ats.internal.arjuna.recovery.PeriodicRecovery.run(PeriodicRecovery.java:392)
+	- locked <0x00000000c661b7a8> (a java.lang.Object)
+
+   Locked ownable synchronizers:
+	- None
+
+"Transaction Expired Entry Monitor" daemon prio=10 tid=0x00007fc710041800 nid=0x3337 in Object.wait() [0x00007fc7501ab000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c661be88> (a com.arjuna.ats.internal.arjuna.recovery.ExpiredEntryMonitor)
+	at com.arjuna.ats.internal.arjuna.recovery.ExpiredEntryMonitor.run(ExpiredEntryMonitor.java:190)
+	- locked <0x00000000c661be88> (a com.arjuna.ats.internal.arjuna.recovery.ExpiredEntryMonitor)
+
+   Locked ownable synchronizers:
+	- None
+
+"Remoting "kylin:MANAGEMENT" write-1" prio=10 tid=0x00007fc700144000 nid=0x331d runnable [0x00007fc7507b1000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c59714c8> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c59714b8> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c59713a0> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:102)
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:164)
+
+   Locked ownable synchronizers:
+	- None
+
+"Remoting "kylin:MANAGEMENT" read-1" prio=10 tid=0x00007fc700142000 nid=0x331c runnable [0x00007fc735864000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c596fa58> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c596fa48> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c596f8a0> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:102)
+	at org.xnio.nio.WorkerThread.run(WorkerThread.java:164)
+
+   Locked ownable synchronizers:
+	- None
+
+"DeploymentScanner-threads - 2" prio=10 tid=0x00007fc700141000 nid=0x331b waiting on condition [0x00007fc7063cc000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c4397eb8> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1085)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:807)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:122)
+
+   Locked ownable synchronizers:
+	- None
+
+"Buffer reclamation thread" daemon prio=10 tid=0x00007fc740021800 nid=0x331a in Object.wait() [0x00007fc707bfa000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c6616a10> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:135)
+	- locked <0x00000000c6616a10> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:151)
+	at org.xnio.ByteBufferSlicePool$QueueThread.run(ByteBufferSlicePool.java:195)
+
+   Locked ownable synchronizers:
+	- None
+
+"DeploymentScanner-threads - 1" prio=10 tid=0x00007fc700117000 nid=0x3310 waiting on condition [0x00007fc7534e4000]
+   java.lang.Thread.State: TIMED_WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c4397eb8> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.parkNanos(LockSupport.java:226)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.awaitNanos(AbstractQueuedSynchronizer.java:2082)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1090)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:807)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:122)
+
+   Locked ownable synchronizers:
+	- None
+
+"ServerDeploymentRepository-temp-threads - 1" daemon prio=10 tid=0x00007fc710040800 nid=0x32fd waiting on condition [0x00007fc750cb6000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c4390bb0> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1079)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:807)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:122)
+
+   Locked ownable synchronizers:
+	- None
+
+"H2 Log Writer TEIID-DASHBOARD-DS" daemon prio=10 tid=0x00007fc6e0303800 nid=0x3227 in Object.wait() [0x00007fc705962000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c4faa9f8> (a org.h2.store.WriterThread)
+	at org.h2.store.WriterThread.run(WriterThread.java:104)
+	- locked <0x00000000c4faa9f8> (a org.h2.store.WriterThread)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"H2 File Lock Watchdog /home/kylin/work/jdv/jboss-eap-6.3/standalone/data/teiid-dashboard/teiid-dashboard-ds.lock.db" daemon prio=10 tid=0x00007fc6e02a6800 nid=0x3226 waiting on condition [0x00007fc705a63000]
+   java.lang.Thread.State: TIMED_WAITING (sleeping)
+	at java.lang.Thread.sleep(Native Method)
+	at org.h2.store.FileLock.run(FileLock.java:492)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"New I/O server boss #18" daemon prio=10 tid=0x00007fc71c1c9000 nid=0x321a runnable [0x00007fc7065e4000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.interrupt(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.interrupt(EPollArrayWrapper.java:317)
+	at sun.nio.ch.EPollSelectorImpl.wakeup(EPollSelectorImpl.java:193)
+	- locked <0x00000000c42a67d8> (a java.lang.Object)
+	at java.nio.channels.spi.AbstractSelector$1.interrupt(AbstractSelector.java:210)
+	at java.nio.channels.spi.AbstractSelector.begin(AbstractSelector.java:216)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:78)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42a6830> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42a6840> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42a67e8> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:102)
+	at org.jboss.netty.channel.socket.nio.NioServerBoss.select(NioServerBoss.java:163)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.NioServerBoss.run(NioServerBoss.java:42)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c405fd58> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #17" daemon prio=10 tid=0x00007fc71c1aa000 nid=0x3219 runnable [0x00007fc7066e5000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.interrupt(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.interrupt(EPollArrayWrapper.java:317)
+	at sun.nio.ch.EPollSelectorImpl.wakeup(EPollSelectorImpl.java:193)
+	- locked <0x00000000c50478c0> (a java.lang.Object)
+	at java.nio.channels.spi.AbstractSelector$1.interrupt(AbstractSelector.java:210)
+	at java.nio.channels.spi.AbstractSelector.begin(AbstractSelector.java:216)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:78)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c40e1480> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c40e1470> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c40e1358> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c4060110> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O server boss #15" daemon prio=10 tid=0x00007fc6fc23c800 nid=0x3218 runnable [0x00007fc7067e6000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.interrupt(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.interrupt(EPollArrayWrapper.java:317)
+	at sun.nio.ch.EPollSelectorImpl.wakeup(EPollSelectorImpl.java:193)
+	- locked <0x00000000c42a94a8> (a java.lang.Object)
+	at java.nio.channels.spi.AbstractSelector$1.interrupt(AbstractSelector.java:210)
+	at java.nio.channels.spi.AbstractSelector.begin(AbstractSelector.java:216)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:78)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42a7f80> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42a7f90> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42a7f38> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:102)
+	at org.jboss.netty.channel.socket.nio.NioServerBoss.select(NioServerBoss.java:163)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.NioServerBoss.run(NioServerBoss.java:42)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e5bd0> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #16" daemon prio=10 tid=0x00007fc71c18b000 nid=0x3217 runnable [0x00007fc7068e7000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.interrupt(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.interrupt(EPollArrayWrapper.java:317)
+	at sun.nio.ch.EPollSelectorImpl.wakeup(EPollSelectorImpl.java:193)
+	- locked <0x00000000c53a3e00> (a java.lang.Object)
+	at java.nio.channels.spi.AbstractSelector$1.interrupt(AbstractSelector.java:210)
+	at java.nio.channels.spi.AbstractSelector.begin(AbstractSelector.java:216)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:78)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42a9500> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42a9510> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42a94b8> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e3058> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #14" daemon prio=10 tid=0x00007fc71c16c000 nid=0x3216 runnable [0x00007fc7069e8000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c40e47c0> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c40e47b0> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c40e4698> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e44a8> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #13" daemon prio=10 tid=0x00007fc71c14c800 nid=0x3215 runnable [0x00007fc706ae9000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.interrupt(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.interrupt(EPollArrayWrapper.java:317)
+	at sun.nio.ch.EPollSelectorImpl.wakeup(EPollSelectorImpl.java:193)
+	- locked <0x00000000c53a3e10> (a java.lang.Object)
+	at java.nio.channels.spi.AbstractSelector$1.interrupt(AbstractSelector.java:210)
+	at java.nio.channels.spi.AbstractSelector.begin(AbstractSelector.java:216)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:78)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42a9bb0> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42a9bc0> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42a9b38> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c405fef0> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #12" daemon prio=10 tid=0x00007fc6fc21c000 nid=0x3214 runnable [0x00007fc706bea000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.IOUtil.drain(Native Method)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:90)
+	- locked <0x00000000c53a3e20> (a java.lang.Object)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42ac090> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42ac0a0> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42ac048> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e7e68> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #11" daemon prio=10 tid=0x00007fc71c12d800 nid=0x3213 runnable [0x00007fc706ceb000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.interrupt(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.interrupt(EPollArrayWrapper.java:317)
+	at sun.nio.ch.EPollSelectorImpl.wakeup(EPollSelectorImpl.java:193)
+	- locked <0x00000000c50478d0> (a java.lang.Object)
+	at java.nio.channels.spi.AbstractSelector$1.interrupt(AbstractSelector.java:210)
+	at java.nio.channels.spi.AbstractSelector.begin(AbstractSelector.java:216)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:78)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c40e2be0> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c40e2bd0> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c40e2ab8> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e28c8> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #10" daemon prio=10 tid=0x00007fc6fc1fd000 nid=0x3212 runnable [0x00007fc706dec000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.interrupt(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.interrupt(EPollArrayWrapper.java:317)
+	at sun.nio.ch.EPollSelectorImpl.wakeup(EPollSelectorImpl.java:193)
+	- locked <0x00000000c53a3e30> (a java.lang.Object)
+	at java.nio.channels.spi.AbstractSelector$1.interrupt(AbstractSelector.java:210)
+	at java.nio.channels.spi.AbstractSelector.begin(AbstractSelector.java:216)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:78)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42ac710> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42ac720> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42ac6c8> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e5f80> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #5" daemon prio=10 tid=0x00007fc71c10e800 nid=0x3211 runnable [0x00007fc706eed000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42acbe8> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42acbf8> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42acba0> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e26b8> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #9" daemon prio=10 tid=0x00007fc6fc1de800 nid=0x3210 runnable [0x00007fc706fee000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.interrupt(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.interrupt(EPollArrayWrapper.java:317)
+	at sun.nio.ch.EPollSelectorImpl.wakeup(EPollSelectorImpl.java:193)
+	- locked <0x00000000c53f8fa8> (a java.lang.Object)
+	at java.nio.channels.spi.AbstractSelector$1.interrupt(AbstractSelector.java:210)
+	at java.nio.channels.spi.AbstractSelector.begin(AbstractSelector.java:216)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:78)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42b0100> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42b0110> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42b00b8> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e5d68> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #8" daemon prio=10 tid=0x00007fc6fc1bf800 nid=0x320f runnable [0x00007fc7070ef000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.interrupt(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.interrupt(EPollArrayWrapper.java:317)
+	at sun.nio.ch.EPollSelectorImpl.wakeup(EPollSelectorImpl.java:193)
+	- locked <0x00000000c53f6fa8> (a java.lang.Object)
+	at java.nio.channels.spi.AbstractSelector$1.interrupt(AbstractSelector.java:210)
+	at java.nio.channels.spi.AbstractSelector.begin(AbstractSelector.java:216)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:78)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42b0608> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42b0618> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42b0590> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e9318> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #7" daemon prio=10 tid=0x00007fc6fc1a0800 nid=0x320e runnable [0x00007fc7071f0000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.interrupt(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.interrupt(EPollArrayWrapper.java:317)
+	at sun.nio.ch.EPollSelectorImpl.wakeup(EPollSelectorImpl.java:193)
+	- locked <0x00000000c50478f0> (a java.lang.Object)
+	at java.nio.channels.spi.AbstractSelector$1.interrupt(AbstractSelector.java:210)
+	at java.nio.channels.spi.AbstractSelector.begin(AbstractSelector.java:216)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:78)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c40e64d0> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c40e64c0> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c40e63a8> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e6198> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #6" daemon prio=10 tid=0x00007fc6fc181800 nid=0x320d runnable [0x00007fc7072f1000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42b0c58> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42b0c68> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42b0c10> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e8080> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #4" daemon prio=10 tid=0x00007fc6fc162800 nid=0x320c runnable [0x00007fc7073f2000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.IOUtil.drain(Native Method)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:90)
+	- locked <0x00000000c5047920> (a java.lang.Object)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c40e7a28> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c40e7a18> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c40e7900> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e7708> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #3" daemon prio=10 tid=0x00007fc71c0d2000 nid=0x320b runnable [0x00007fc7074f3000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42b4318> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42b4328> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42b42d0> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e4298> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #1" daemon prio=10 tid=0x00007fc6fc12b000 nid=0x320a runnable [0x00007fc7075f4000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.IOUtil.drain(Native Method)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:90)
+	- locked <0x00000000c53f6fc8> (a java.lang.Object)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42b4820> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42b4830> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42b47a8> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e7c50> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"New I/O worker #2" daemon prio=10 tid=0x00007fc71c0d0000 nid=0x3209 runnable [0x00007fc7076f5000]
+   java.lang.Thread.State: RUNNABLE
+	at sun.nio.ch.EPollArrayWrapper.epollWait(Native Method)
+	at sun.nio.ch.EPollArrayWrapper.poll(EPollArrayWrapper.java:269)
+	at sun.nio.ch.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:79)
+	at sun.nio.ch.SelectorImpl.lockAndDoSelect(SelectorImpl.java:87)
+	- locked <0x00000000c42b4cc8> (a sun.nio.ch.Util$2)
+	- locked <0x00000000c42b4cd8> (a java.util.Collections$UnmodifiableSet)
+	- locked <0x00000000c42b4c80> (a sun.nio.ch.EPollSelectorImpl)
+	at sun.nio.ch.SelectorImpl.select(SelectorImpl.java:98)
+	at org.jboss.netty.channel.socket.nio.SelectorUtil.select(SelectorUtil.java:64)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.select(AbstractNioSelector.java:409)
+	at org.jboss.netty.channel.socket.nio.AbstractNioSelector.run(AbstractNioSelector.java:206)
+	at org.jboss.netty.channel.socket.nio.AbstractNioWorker.run(AbstractNioWorker.java:90)
+	at org.jboss.netty.channel.socket.nio.NioWorker.run(NioWorker.java:178)
+	at org.jboss.netty.util.ThreadRenamingRunnable.run(ThreadRenamingRunnable.java:108)
+	at org.jboss.netty.util.internal.DeadLockProofWorker$1.run(DeadLockProofWorker.java:42)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- <0x00000000c40e2e28> (a java.util.concurrent.ThreadPoolExecutor$Worker)
+
+"BufferManager Cleaner" daemon prio=10 tid=0x00007fc70009d000 nid=0x31fc in Object.wait() [0x00007fc734423000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c3a0ffb8> (a org.teiid.common.buffer.impl.BufferManagerImpl$Cleaner)
+	at org.teiid.common.buffer.impl.BufferManagerImpl$Cleaner.run(BufferManagerImpl.java:121)
+	- locked <0x00000000c3a0ffb8> (a org.teiid.common.buffer.impl.BufferManagerImpl$Cleaner)
+	at java.util.TimerThread.mainLoop(Timer.java:555)
+	at java.util.TimerThread.run(Timer.java:505)
+
+   Locked ownable synchronizers:
+	- None
+
+"Transaction Reaper Worker 0" daemon prio=10 tid=0x00007fc70811b000 nid=0x31fa in Object.wait() [0x00007fc734625000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000bae33b00> (a java.util.LinkedList)
+	at java.lang.Object.wait(Object.java:503)
+	at com.arjuna.ats.arjuna.coordinator.TransactionReaper.waitForCancellations(TransactionReaper.java:321)
+	- locked <0x00000000bae33b00> (a java.util.LinkedList)
+	at com.arjuna.ats.internal.arjuna.coordinator.ReaperWorkerThread.run(ReaperWorkerThread.java:65)
+
+   Locked ownable synchronizers:
+	- None
+
+"Transaction Reaper" daemon prio=10 tid=0x00007fc708119800 nid=0x31f9 in Object.wait() [0x00007fc734754000]
+   java.lang.Thread.State: TIMED_WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000bae338d0> (a com.arjuna.ats.arjuna.coordinator.TransactionReaper)
+	at com.arjuna.ats.internal.arjuna.coordinator.ReaperThread.run(ReaperThread.java:90)
+	- locked <0x00000000bae338d0> (a com.arjuna.ats.arjuna.coordinator.TransactionReaper)
+
+   Locked ownable synchronizers:
+	- None
+
+"DestroyJavaVM" prio=10 tid=0x00007fc764009800 nid=0x319e waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"ServerDeploymentRepository-temp-threads - 1" daemon prio=10 tid=0x00007fc70c00a000 nid=0x31b4 waiting on condition [0x00007fc7535e5000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c32d3b30> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:1079)
+	at java.util.concurrent.ScheduledThreadPoolExecutor$DelayedWorkQueue.take(ScheduledThreadPoolExecutor.java:807)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+	at org.jboss.threads.JBossThread.run(JBossThread.java:122)
+
+   Locked ownable synchronizers:
+	- None
+
+"MSC service thread 1-8" prio=10 tid=0x00007fc708002000 nid=0x31b3 waiting on condition [0x00007fc7536e6000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c32c9708> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"MSC service thread 1-7" prio=10 tid=0x00007fc700003000 nid=0x31b2 waiting on condition [0x00007fc7537e7000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c32c9708> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"MSC service thread 1-6" prio=10 tid=0x00007fc700002000 nid=0x31b1 waiting on condition [0x00007fc7538e8000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c32c9708> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"MSC service thread 1-5" prio=10 tid=0x00007fc714001000 nid=0x31b0 waiting on condition [0x00007fc7539e9000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c32c9708> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"MSC service thread 1-4" prio=10 tid=0x00007fc710001800 nid=0x31af waiting on condition [0x00007fc753aea000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c32c9708> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"MSC service thread 1-3" prio=10 tid=0x00007fc76452b000 nid=0x31ae waiting on condition [0x00007fc753beb000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c32c9708> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"MSC service thread 1-2" prio=10 tid=0x00007fc71c001000 nid=0x31ad waiting on condition [0x00007fc753cec000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c32c9708> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"MSC service thread 1-1" prio=10 tid=0x00007fc764522800 nid=0x31ac waiting on condition [0x00007fc753ded000]
+   java.lang.Thread.State: WAITING (parking)
+	at sun.misc.Unsafe.park(Native Method)
+	- parking to wait for  <0x00000000c32c9708> (a java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject)
+	at java.util.concurrent.locks.LockSupport.park(LockSupport.java:186)
+	at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2043)
+	at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+	at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1068)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1130)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:745)
+
+   Locked ownable synchronizers:
+	- None
+
+"Reference Reaper" daemon prio=10 tid=0x00007fc7641da000 nid=0x31ab in Object.wait() [0x00007fc75862f000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000bada41d0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:135)
+	- locked <0x00000000bada41d0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:151)
+	at org.jboss.modules.ref.References$ReaperThread.run(References.java:68)
+
+   Locked ownable synchronizers:
+	- None
+
+"Service Thread" daemon prio=10 tid=0x00007fc76415c800 nid=0x31a9 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"C2 CompilerThread1" daemon prio=10 tid=0x00007fc76415a800 nid=0x31a8 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"C2 CompilerThread0" daemon prio=10 tid=0x00007fc764157800 nid=0x31a7 waiting on condition [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"Signal Dispatcher" daemon prio=10 tid=0x00007fc764156000 nid=0x31a6 runnable [0x0000000000000000]
+   java.lang.Thread.State: RUNNABLE
+
+   Locked ownable synchronizers:
+	- None
+
+"Finalizer" daemon prio=10 tid=0x00007fc764136800 nid=0x31a5 in Object.wait() [0x00007fc758c3b000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c3265df0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:135)
+	- locked <0x00000000c3265df0> (a java.lang.ref.ReferenceQueue$Lock)
+	at java.lang.ref.ReferenceQueue.remove(ReferenceQueue.java:151)
+	at java.lang.ref.Finalizer$FinalizerThread.run(Finalizer.java:209)
+
+   Locked ownable synchronizers:
+	- None
+
+"Reference Handler" daemon prio=10 tid=0x00007fc764134800 nid=0x31a4 in Object.wait() [0x00007fc758d3c000]
+   java.lang.Thread.State: WAITING (on object monitor)
+	at java.lang.Object.wait(Native Method)
+	- waiting on <0x00000000c32659f8> (a java.lang.ref.Reference$Lock)
+	at java.lang.Object.wait(Object.java:503)
+	at java.lang.ref.Reference$ReferenceHandler.run(Reference.java:133)
+	- locked <0x00000000c32659f8> (a java.lang.ref.Reference$Lock)
+
+   Locked ownable synchronizers:
+	- None
+
+"VM Thread" prio=10 tid=0x00007fc764130000 nid=0x31a3 runnable 
+
+"GC task thread#0 (ParallelGC)" prio=10 tid=0x00007fc76401f000 nid=0x319f runnable 
+
+"GC task thread#1 (ParallelGC)" prio=10 tid=0x00007fc764021000 nid=0x31a0 runnable 
+
+"GC task thread#2 (ParallelGC)" prio=10 tid=0x00007fc764022800 nid=0x31a1 runnable 
+
+"GC task thread#3 (ParallelGC)" prio=10 tid=0x00007fc764024800 nid=0x31a2 runnable 
+
+"VM Periodic Task Thread" prio=10 tid=0x00007fc764167800 nid=0x31aa waiting on condition 
+
+JNI global references: 441
+
