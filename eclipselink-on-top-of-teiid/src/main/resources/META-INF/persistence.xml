@@ -16,8 +16,13 @@
       <property name="javax.persistence.jdbc.password" value="user" />
 
       <!-- EclipseLink should create the database schema automatically -->
-      <property name="eclipselink.ddl-generation" value="create-tables" />
+      <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
       <property name="eclipselink.ddl-generation.output-mode" value="database" />
+      <!--  -->
+      <property name="eclipselink.target-database" value="org.teiid.eclipselink.platform.TeiidServerPlatform"/>
+      
+      <property name="eclipselink.logging.level.sql" value="FINE"/>
+      
     </properties>
       
    </persistence-unit>
