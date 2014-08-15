@@ -1,4 +1,4 @@
-package org.teiid.eclipselink.platform;
+package com.teiid.quickstart;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +25,10 @@ import org.teiid.translator.file.FileExecutionFactory;
 import org.teiid.transport.SocketConfiguration;
 import org.teiid.transport.WireProtocol;
 
-public class TestTeiidServerQuery {
+import com.teiid.quickstart.util.JDBCUtil;
+
+
+public class TestTeiidServerJDBC {
 	
 	static FakeServer server;
 	private static Connection conn;
@@ -120,11 +123,11 @@ public class TestTeiidServerQuery {
 	
 	
 	/**
-     * 1. Local Temporary Tables only support created in runtime via JDBC
-	 * 2. Global Temporary Tables only support create via the metadata supplied to Teiid at deploy time, cannot be created at runtime.
+     *  Local Temporary Tables only support created in runtime via JDBC
+	 * 
      */
 	@Test
-	public void testDDLTempTables() throws Exception {
+	public void testDDLLocalTempTables() throws Exception {
 	
 		assertTrue(JDBCUtil.executeUpdate(conn, "CREATE LOCAL TEMPORARY TABLE TEMP (id SERIAL NOT NULL, name string, PRIMARY KEY (id))"));
 		for(int i = 0 ; i < 3 ; i ++) {
@@ -134,12 +137,15 @@ public class TestTeiidServerQuery {
 		assertTrue(JDBCUtil.executeUpdate(conn, "UPDATE TEMP SET name = 'Kylin Soong' WHERE id = 3"));
 		assertEquals("Kylin Soong", JDBCUtil.query(conn, "SELECT name FROM TEMP WHERE id = 3"));
 		assertTrue(JDBCUtil.executeUpdate(conn, "DROP TABLE TEMP"));
-			
-		for(int i = 0 ; i < 3 ; i ++) {
-			JDBCUtil.executeUpdate(conn, "INSERT INTO GTEMP (name) VALUES ('test-name-" + i + "')");
-		}
-		
-		
+	}
+	
+	/**
+	 * 
+	 * Global Temporary Tables only support create via the metadata supplied to Teiid at deploy time, cannot be created at runtime.
+	 */
+	@Test
+	public void testDDLGlobalTempTables() throws Exception {
+		assertNotNull("todo");
 	}
 	
 
@@ -149,9 +155,5 @@ public class TestTeiidServerQuery {
 		conn.close();
 		server.stop();
 	}
-	
-	/**
-     *
-     */
 
 }

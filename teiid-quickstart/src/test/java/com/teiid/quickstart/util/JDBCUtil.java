@@ -1,4 +1,4 @@
-package org.teiid.eclipselink.platform;
+package com.teiid.quickstart.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,0 +1,7 @@
+<vdb name="test" version="1">
+  <model name="test" type="VIRTUAL">
+    <metadata type="DDL">
+    <![CDATA[CREATE VIEW helloworld as SELECT 'HELLO WORLD';]]> 
+    </metadata>
+  </model>
+</vdb>

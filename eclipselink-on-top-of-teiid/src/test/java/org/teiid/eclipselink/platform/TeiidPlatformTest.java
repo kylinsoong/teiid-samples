@@ -2,49 +2,72 @@ package org.teiid.eclipselink.platform;
 
 import static org.junit.Assert.*;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.teiid.deployers.VirtualDatabaseException;
+import org.teiid.dqp.internal.datamgr.ConnectorManagerRepository.ConnectorManagerException;
+import org.teiid.jdbc.FakeServer;
+import org.teiid.runtime.EmbeddedConfiguration;
+import org.teiid.translator.TranslatorException;
+import org.teiid.transport.SocketConfiguration;
+import org.teiid.transport.WireProtocol;
 
 public class TeiidPlatformTest {
 	
-	private static final String JDBC_DRIVER = "org.teiid.jdbc.TeiidDriver";
-	private static final String JDBC_URL = "jdbc:teiid:ModeShape@mm://localhost:31000;version=1";
-	private static final String JDBC_USER = "user";
-	private static final String JDBC_PASS = "user";
+	static FakeServer server;
+	static EntityManagerFactory factory;
 	
-	static Connection conn = null;
 	
 	@BeforeClass 
-	public static void init() {
-		try {	
-			conn = JDBCUtil.getDriverConnection(JDBC_DRIVER, JDBC_URL, JDBC_USER, JDBC_PASS);
-		}  catch (Exception e) {
-			throw new RuntimeException("Can not init Teiid Server JDBC connection");
-		}
+	public static void init() throws VirtualDatabaseException, ConnectorManagerException, TranslatorException, FileNotFoundException, IOException {
+		
+		SocketConfiguration s = new SocketConfiguration();
+		InetSocketAddress addr = new InetSocketAddress("localhost", 31000);
+		s.setBindAddress(addr.getHostName());
+		s.setPortNumber(addr.getPort());
+		s.setProtocol(WireProtocol.teiid);
+		EmbeddedConfiguration config = new EmbeddedConfiguration();
+		config.addTransport(s);
+		
+		server = new FakeServer(false);
+		
+		server.start(config, false);
+		
+		server.deployVDB(new FileInputStream(new File("src/vdb/marketdata-vdb.xml")));
+		
+		factory = Persistence.createEntityManagerFactory("org.teiid.eclipselink.test");
 	}
 	
+	
+	
+	
 	@Test
-	public void testPing() throws Exception {
-		String sql = "SELECT 1";
-		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(sql);
-		assertEquals(1, rs.getMetaData().getColumnCount());
-		rs.next();
-		assertEquals("1", rs.getString(1));
-		JDBCUtil.close(rs, stmt);
+	public void testInit() throws Exception {
+		assertNotNull(factory);
+		EntityManager em = factory.createEntityManager();
+		assertNotNull(em);
+		em.close();
 	}
+	
+	
 	
 	@AfterClass 
 	public static void destory() {
-		JDBCUtil.close(conn);
+		server.stop();
+		factory.close();
 	}
 
 }

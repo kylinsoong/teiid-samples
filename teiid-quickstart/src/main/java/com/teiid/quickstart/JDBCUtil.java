@@ -1,4 +1,4 @@
-package org.teiid.eclipselink.platform;
+package com.teiid.quickstart;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -57,69 +57,6 @@ public class JDBCUtil {
 		}
 	}
 	
-	public static void printTableColumn(Connection conn, String sql) throws Exception {
-		Statement stmt = null;
-		ResultSet rs = null;
-		
-		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql);
-			ResultSetMetaData metadata = rs.getMetaData();
-			int columns = metadata.getColumnCount();
-			for(int i = 1 ; i <= columns ; i ++) {
-				System.out.print(metadata.getColumnName(i) + "/" + metadata.getColumnTypeName(i) + "  ");
-			}
-		} catch (Exception e) {
-			throw e ;
-		} finally {
-			close(rs, stmt);
-		}
-	}
-	
-	public static int countResults(Connection conn, String sql) throws Exception{
-		
-		int count = 0;
-		
-		Statement stmt = null;
-		ResultSet rs = null;
-		
-		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql);
-			while(rs.next()) {
-				count ++ ;
-			}
-		} catch (Exception e) {
-			throw e ;
-		} finally {
-			close(rs, stmt);
-		}
-		
-		return count ;
-		
-	}
-	
-	public static Object query(Connection conn, String sql) throws Exception {
-		
-		Object result = null;
-		
-		Statement stmt = null;
-		ResultSet rs = null;
-		
-		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql);
-			rs.next();
-			result = rs.getString(1);
-		} catch (Exception e) {
-			throw e ;
-		} finally {
-			close(rs, stmt);
-		}
-		
-		return result ;
-	}
-	
 	public static void executeQuery(Connection conn, String sql) throws Exception {
 		
 		System.out.println("Query SQL: " + sql);
@@ -152,8 +89,9 @@ public class JDBCUtil {
 		
 	}
 
-	public static boolean executeUpdate(Connection conn, String sql) throws Exception {
+	public static void executeUpdate(Connection conn, String sql) throws Exception {
 		
+		System.out.println("Update SQL: " + sql);
 		
 		Statement stmt = null;
 		
@@ -166,7 +104,7 @@ public class JDBCUtil {
 			close(stmt);
 		}
 		
-		return true ;
+		System.out.println();
 	}
 
 }
