@@ -31,7 +31,7 @@ import org.teiid.translator.jdbc.mysql.MySQL5ExecutionFactory;
 import org.teiid.transport.SocketConfiguration;
 import org.teiid.transport.WireProtocol;
 
-public class TeiidPlatformTest {
+public class TestTeiidPlatform {
 	
 	static FakeServer server;
 	static EntityManagerFactory factory;
@@ -54,7 +54,7 @@ public class TeiidPlatformTest {
 		server.addTranslator("file", executionFactory);
 		
 		FileManagedConnectionFactory fileManagedconnectionFactory = new FileManagedConnectionFactory();
-		fileManagedconnectionFactory.setParentDirectory("src/file");
+		fileManagedconnectionFactory.setParentDirectory("src/test/resources/file");
 		ConnectionFactory connectionFactory = fileManagedconnectionFactory.createConnectionFactory();
 		ConnectionFactoryProvider<ConnectionFactory> connectionFactoryProvider = new EmbeddedServer.SimpleConnectionFactoryProvider<ConnectionFactory>(connectionFactory);
 		server.addConnectionFactoryProvider("java:/marketdata-file", connectionFactoryProvider);
@@ -64,7 +64,7 @@ public class TeiidPlatformTest {
 		
 		server.start(config, false);
 		
-		server.deployVDB(new FileInputStream(new File("src/vdb/marketdata-vdb.xml")));
+		server.deployVDB(new FileInputStream(new File("src/test/resources/vdb/marketdata-vdb.xml")));
 		
 		factory = Persistence.createEntityManagerFactory("org.teiid.eclipselink.test");
 	}

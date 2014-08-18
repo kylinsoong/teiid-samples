@@ -19,6 +19,7 @@
         <module>startup-exception</module>
         <module>postgresql-permission</module>
         <module>jdbc-client</module>
+        <module>eclipselink-platform</module>
         <module>eclipselink-on-top-of-teiid</module>
         <module>hibernate-on-top-of-teiid</module>
         <module>teiid-quickstart</module>

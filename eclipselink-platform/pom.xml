@@ -1,33 +1,26 @@
-<?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<artifactId>teiid-parent</artifactId>
+		<groupId>org.jboss.teiid</groupId>
+        <version>8.9.0.Alpha1-SNAPSHOT</version>
+	</parent>
 	<modelVersion>4.0.0</modelVersion>
-
-	<groupId>org.jboss.teiid.quickstart</groupId>
-	<artifactId>eclipselink-on-top-of-teiid</artifactId>
-	<version>2.0.0</version>
-	<name>Teiid Quickstart: eclipselink</name>
-	<description>Teiid Quickstart: eclipselink</description>
-
-	<properties>
-		<version.jboss.bom.eap>6.2.0-build-7</version.jboss.bom.eap>
-	</properties>
-
-
-
+	<artifactId>teiid-eclipselink-platform</artifactId>
+	<name>Eclipselink DatabasePlatform</name>
+	<description>Teiid Eclipselink DatabasePlatform</description>
+    <packaging>bundle</packaging>
+    
 	<dependencies>
-
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>eclipselink</artifactId>
 			<version>2.5.0</version>
 		</dependency>
-<!--  -->
+		
 		<dependency>
 			<groupId>org.jboss.teiid</groupId>
 			<artifactId>teiid-client</artifactId>
-			<version>8.9.0.Alpha1-SNAPSHOT</version>
+			
 		</dependency>
 
 		<dependency>
@@ -66,17 +59,5 @@
 		</dependency>
 		
 	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.1</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	
 </project>
-

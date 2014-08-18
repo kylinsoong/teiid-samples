@@ -48,7 +48,7 @@ public class TestTeiidServerQuery {
 		server.addTranslator("file", executionFactory);
 		
 		FileManagedConnectionFactory fileManagedconnectionFactory = new FileManagedConnectionFactory();
-		fileManagedconnectionFactory.setParentDirectory("src/file");
+		fileManagedconnectionFactory.setParentDirectory("src/test/resources/file");
 		ConnectionFactory connectionFactory = fileManagedconnectionFactory.createConnectionFactory();
 		ConnectionFactoryProvider<ConnectionFactory> connectionFactoryProvider = new EmbeddedServer.SimpleConnectionFactoryProvider<ConnectionFactory>(connectionFactory);
 		server.addConnectionFactoryProvider("java:/marketdata-file", connectionFactoryProvider);
@@ -58,7 +58,7 @@ public class TestTeiidServerQuery {
 		
 		server.start(config, false);
 		
-		server.deployVDB(new FileInputStream(new File("src/vdb/marketdata-vdb.xml")));
+		server.deployVDB(new FileInputStream(new File("src/test/resources/vdb/marketdata-vdb.xml")));
 		
 		conn = JDBCUtil.getDriverConnection("org.teiid.jdbc.TeiidDriver", "jdbc:teiid:Marketdata@mm://localhost:31000;version=1", "", "");
 	}
