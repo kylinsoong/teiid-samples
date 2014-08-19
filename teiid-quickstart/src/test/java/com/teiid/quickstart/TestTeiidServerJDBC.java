@@ -16,7 +16,6 @@ import javax.resource.cci.ConnectionFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.teiid.jdbc.FakeServer;
 import org.teiid.resource.adapter.file.FileManagedConnectionFactory;
 import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
@@ -30,11 +29,22 @@ import com.teiid.quickstart.util.JDBCUtil;
 
 public class TestTeiidServerJDBC {
 	
-	static FakeServer server;
+	static EmbeddedServer server;
 	private static Connection conn;
 
 	@BeforeClass
 	public static void setUp() throws Exception {
+			
+		server = new EmbeddedServer();
+		
+		FileExecutionFactory executionFactory = new FileExecutionFactory();
+		server.addTranslator("file", executionFactory);
+		
+		FileManagedConnectionFactory fileManagedconnectionFactory = new FileManagedConnectionFactory();
+		fileManagedconnectionFactory.setParentDirectory("src/file");
+		ConnectionFactory connectionFactory = fileManagedconnectionFactory.createConnectionFactory();
+		ConnectionFactoryProvider<ConnectionFactory> connectionFactoryProvider = new EmbeddedServer.SimpleConnectionFactoryProvider<ConnectionFactory>(connectionFactory);
+		server.addConnectionFactoryProvider("java:/marketdata-file", connectionFactoryProvider);
 		
 		SocketConfiguration s = new SocketConfiguration();
 		InetSocketAddress addr = new InetSocketAddress("localhost", 31000);
@@ -43,18 +53,7 @@ public class TestTeiidServerJDBC {
 		s.setProtocol(WireProtocol.teiid);
 		EmbeddedConfiguration config = new EmbeddedConfiguration();
 		config.addTransport(s);
-		
-		server = new FakeServer(false);
-		
-		FileExecutionFactory executionFactory = new FileExecutionFactory();
-		server.addTranslator("file", executionFactory);
-		FileManagedConnectionFactory fileManagedconnectionFactory = new FileManagedConnectionFactory();
-		fileManagedconnectionFactory.setParentDirectory("src/file");
-		ConnectionFactory connectionFactory = fileManagedconnectionFactory.createConnectionFactory();
-		ConnectionFactoryProvider<ConnectionFactory> connectionFactoryProvider = new EmbeddedServer.SimpleConnectionFactoryProvider<ConnectionFactory>(connectionFactory);
-		server.addConnectionFactoryProvider("java:/marketdata-file", connectionFactoryProvider);
-		
-		server.start(config, false);
+		server.start(config);
 		
 		server.deployVDB(new FileInputStream(new File("src/vdb/marketdata-vdb.xml")));
 		
@@ -69,7 +68,6 @@ public class TestTeiidServerJDBC {
 	@Test
 	public void testSchema() {
 		assertNotNull(server.getSchemaDdl("Marketdata", "Stocks"));
-		assertNotNull(server.getSchemaDdl("Marketdata", "pg_catalog"));
 		assertNotNull(server.getSchemaDdl("Marketdata", "SYS"));
 		assertNotNull(server.getSchemaDdl("Marketdata", "SYSADMIN"));
 	}
