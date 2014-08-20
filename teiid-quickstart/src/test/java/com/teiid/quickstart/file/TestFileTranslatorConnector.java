@@ -1,6 +1,7 @@
 package com.teiid.quickstart.file;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -8,16 +9,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.net.InetSocketAddress;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 
 import javax.resource.ResourceException;
 import javax.resource.cci.ConnectionFactory;
-import javax.resource.cci.ConnectionMetaData;
-import javax.resource.cci.Interaction;
-import javax.resource.cci.LocalTransaction;
-import javax.resource.cci.ResultSetInfo;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -28,7 +24,9 @@ import org.teiid.language.Call;
 import org.teiid.language.LanguageFactory;
 import org.teiid.language.Literal;
 import org.teiid.language.Argument.Direction;
+import org.teiid.resource.adapter.file.FileConnectionImpl;
 import org.teiid.resource.adapter.file.FileManagedConnectionFactory;
+import org.teiid.resource.spi.BasicConnectionFactory;
 import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
 import org.teiid.runtime.EmbeddedServer.ConnectionFactoryProvider;
@@ -66,6 +64,47 @@ public class TestFileTranslatorConnector {
 		ProcedureExecution procedureExecution = fileExecutionFactory.createProcedureExecution(call, null, null, conn);
 		procedureExecution.execute();
 		assertNotNull(procedureExecution.next());
+	}
+	
+	@Test
+	public void testFileExecutionFactory() throws Exception {
+		
+		FileConnection conn = new FileConnectionImpl("src/file", new HashMap<String, String> (), true);
+		assertTrue(conn.getFile("marketdata.csv").exists());
+		Literal literal = new Literal("marketdata.csv", TypeFacility.RUNTIME_TYPES.STRING);
+		Argument argument = new Argument(Direction.IN, literal, TypeFacility.RUNTIME_TYPES.STRING, null);
+		Call call = LanguageFactory.INSTANCE.createCall("getTextFiles", Arrays.asList(argument), null);
+		FileExecutionFactory fileExecutionFactory = new FileExecutionFactory();
+		ProcedureExecution pe = fileExecutionFactory.createProcedureExecution(call, null, null, conn);
+		pe.execute();
+		assertNotNull(pe.next());
+	}
+	
+	@Test
+	public void testFileMapping() throws Exception {
+		FileManagedConnectionFactory fmcf = new FileManagedConnectionFactory();
+		fmcf.setParentDirectory("src/file");
+		fmcf.setFileMapping("x=marketdata.csv,y=noexist.csv");
+		BasicConnectionFactory<FileConnectionImpl> bcf = fmcf.createConnectionFactory();
+		FileConnection fc = (FileConnection) bcf.getConnection();
+		File f = fc.getFile("x");
+		assertEquals("src/file/marketdata.csv", f.getPath());
+		assertTrue(f.exists());
+		f = fc.getFile("y");
+		assertEquals("src/file/noexist.csv", f.getPath());
+		assertFalse(f.exists());
+	}
+	
+	@Test
+	public void testParentPaths() throws Exception {
+		FileManagedConnectionFactory fmcf = new FileManagedConnectionFactory();
+		fmcf.setParentDirectory("src/file");
+		fmcf.setAllowParentPaths(true);
+		BasicConnectionFactory<FileConnectionImpl> bcf = fmcf.createConnectionFactory();
+		FileConnection fc = bcf.getConnection();
+		File f = fc.getFile(".." + File.separator + "file");
+		assertTrue(f.exists());
+		assertTrue(f.isDirectory());
 	}
 	
 	static EmbeddedServer server = null;
@@ -124,44 +163,6 @@ public class TestFileTranslatorConnector {
 		}
 	}
 	
-	private class MyFileConnection implements FileConnection {
-
-		@Override
-		public Interaction createInteraction() throws ResourceException {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public LocalTransaction getLocalTransaction() throws ResourceException {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public ConnectionMetaData getMetaData() throws ResourceException {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public ResultSetInfo getResultSetInfo() throws ResourceException {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public void close() throws ResourceException {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public File getFile(String path) throws ResourceException {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		
-	}
+	
 
 }
