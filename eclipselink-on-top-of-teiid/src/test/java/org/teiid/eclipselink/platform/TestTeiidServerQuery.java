@@ -16,19 +16,17 @@ import javax.resource.cci.ConnectionFactory;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.teiid.jdbc.FakeServer;
 import org.teiid.resource.adapter.file.FileManagedConnectionFactory;
 import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
 import org.teiid.runtime.EmbeddedServer.ConnectionFactoryProvider;
 import org.teiid.translator.file.FileExecutionFactory;
-import org.teiid.translator.jdbc.mysql.MySQL5ExecutionFactory;
 import org.teiid.transport.SocketConfiguration;
 import org.teiid.transport.WireProtocol;
 
 public class TestTeiidServerQuery {
 	
-	static FakeServer server;
+	static EmbeddedServer server;
 	private static Connection conn;
 
 	@BeforeClass
@@ -42,7 +40,7 @@ public class TestTeiidServerQuery {
 		EmbeddedConfiguration config = new EmbeddedConfiguration();
 		config.addTransport(s);
 		
-		server = new FakeServer(false);
+		server = new EmbeddedServer();
 		
 		FileExecutionFactory executionFactory = new FileExecutionFactory();
 		server.addTranslator("file", executionFactory);
@@ -53,10 +51,8 @@ public class TestTeiidServerQuery {
 		ConnectionFactoryProvider<ConnectionFactory> connectionFactoryProvider = new EmbeddedServer.SimpleConnectionFactoryProvider<ConnectionFactory>(connectionFactory);
 		server.addConnectionFactoryProvider("java:/marketdata-file", connectionFactoryProvider);
 		
-		MySQL5ExecutionFactory mysqlExecutionFactory = new MySQL5ExecutionFactory();
-		server.addTranslator("mysql", mysqlExecutionFactory);
-		
-		server.start(config, false);
+
+		server.start(config);
 		
 		server.deployVDB(new FileInputStream(new File("src/vdb/marketdata-vdb.xml")));
 		

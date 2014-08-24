@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.InetSocketAddress;
 import java.util.List;
 
@@ -15,25 +17,24 @@ import javax.persistence.Persistence;
 import javax.resource.ResourceException;
 import javax.resource.cci.ConnectionFactory;
 
+import org.eclipse.persistence.internal.helper.DatabaseTable;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.teiid.deployers.VirtualDatabaseException;
 import org.teiid.dqp.internal.datamgr.ConnectorManagerRepository.ConnectorManagerException;
-import org.teiid.jdbc.FakeServer;
 import org.teiid.resource.adapter.file.FileManagedConnectionFactory;
 import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
 import org.teiid.runtime.EmbeddedServer.ConnectionFactoryProvider;
 import org.teiid.translator.TranslatorException;
 import org.teiid.translator.file.FileExecutionFactory;
-import org.teiid.translator.jdbc.mysql.MySQL5ExecutionFactory;
 import org.teiid.transport.SocketConfiguration;
 import org.teiid.transport.WireProtocol;
 
 public class TeiidPlatformTest {
 	
-	static FakeServer server;
+	static EmbeddedServer server;
 	static EntityManagerFactory factory;
 	
 	
@@ -48,7 +49,7 @@ public class TeiidPlatformTest {
 		EmbeddedConfiguration config = new EmbeddedConfiguration();
 		config.addTransport(s);
 		
-		server = new FakeServer(false);
+		server = new EmbeddedServer();
 		
 		FileExecutionFactory executionFactory = new FileExecutionFactory();
 		server.addTranslator("file", executionFactory);
@@ -59,17 +60,21 @@ public class TeiidPlatformTest {
 		ConnectionFactoryProvider<ConnectionFactory> connectionFactoryProvider = new EmbeddedServer.SimpleConnectionFactoryProvider<ConnectionFactory>(connectionFactory);
 		server.addConnectionFactoryProvider("java:/marketdata-file", connectionFactoryProvider);
 		
-		MySQL5ExecutionFactory mysqlExecutionFactory = new MySQL5ExecutionFactory();
-		server.addTranslator("mysql", mysqlExecutionFactory);
 		
-		server.start(config, false);
+		server.start(config);
 		
 		server.deployVDB(new FileInputStream(new File("src/vdb/marketdata-vdb.xml")));
 		
 		factory = Persistence.createEntityManagerFactory("org.teiid.eclipselink.test");
 	}
 	
-	
+	@Test
+	public void testTempTableSql() throws IOException {
+		TeiidServerPlatform platform = new TeiidServerPlatform();
+		Writer writer = new StringWriter();
+		platform.writeCreateTempTableSql(writer, new DatabaseTable("SYMBOLS"), null, null, null, null);
+		System.out.println(writer.toString());
+	}
 	
 	
 	@Test

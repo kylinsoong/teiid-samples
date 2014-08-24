@@ -14,20 +14,18 @@ import javax.resource.cci.ConnectionFactory;
 
 import org.teiid.deployers.VirtualDatabaseException;
 import org.teiid.dqp.internal.datamgr.ConnectorManagerRepository.ConnectorManagerException;
-import org.teiid.jdbc.FakeServer;
 import org.teiid.resource.adapter.file.FileManagedConnectionFactory;
 import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
 import org.teiid.runtime.EmbeddedServer.ConnectionFactoryProvider;
 import org.teiid.translator.TranslatorException;
 import org.teiid.translator.file.FileExecutionFactory;
-import org.teiid.translator.jdbc.mysql.MySQL5ExecutionFactory;
 import org.teiid.transport.SocketConfiguration;
 import org.teiid.transport.WireProtocol;
 
 public class Test {
 	
-	static FakeServer server;
+	static EmbeddedServer server;
 
 	public static void main(String[] args) throws ResourceException, VirtualDatabaseException, ConnectorManagerException, TranslatorException, FileNotFoundException, IOException {
 		
@@ -39,7 +37,7 @@ public class Test {
 		EmbeddedConfiguration config = new EmbeddedConfiguration();
 		config.addTransport(s);
 		
-		server = new FakeServer(false);
+		server = new EmbeddedServer();
 		
 		FileExecutionFactory executionFactory = new FileExecutionFactory();
 		server.addTranslator("file", executionFactory);
@@ -50,10 +48,8 @@ public class Test {
 		ConnectionFactoryProvider<ConnectionFactory> connectionFactoryProvider = new EmbeddedServer.SimpleConnectionFactoryProvider<ConnectionFactory>(connectionFactory);
 		server.addConnectionFactoryProvider("java:/marketdata-file", connectionFactoryProvider);
 		
-		MySQL5ExecutionFactory mysqlExecutionFactory = new MySQL5ExecutionFactory();
-		server.addTranslator("mysql", mysqlExecutionFactory);
 		
-		server.start(config, false);
+		server.start(config);
 		
 		server.deployVDB(new FileInputStream(new File("src/vdb/marketdata-vdb.xml")));
 

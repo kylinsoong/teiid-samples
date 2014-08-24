@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>org.jboss.teiid</groupId>
 			<artifactId>teiid-client</artifactId>
-			<version>8.9.0.Alpha1-SNAPSHOT</version>
+			<version>8.9.0.Alpha1</version>
 		</dependency>
 
 		<dependency>
@@ -40,28 +40,29 @@
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>translator-file</artifactId>
-			<version>8.9.0.Alpha1-SNAPSHOT</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.jboss.teiid.connectors</groupId>
-			<artifactId>translator-jdbc</artifactId>
-			<version>8.9.0.Alpha1-SNAPSHOT</version>
+			<version>8.9.0.Alpha1</version>
 			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>connector-file</artifactId>
-			<version>8.9.0.Alpha1-SNAPSHOT</version>
+			<version>8.9.0.Alpha1</version>
+			<classifier>lib</classifier>
 			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.jboss.teiid</groupId>
-			<artifactId>test-integration-common</artifactId>
-			<version>8.9.0.Alpha1-SNAPSHOT</version>
+			<artifactId>teiid-runtime</artifactId>
+			<version>8.9.0.Alpha1</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.teiid</groupId>
+			<artifactId>teiid-admin</artifactId>
+			<version>8.9.0.Alpha1</version>
 			<scope>test</scope>
 		</dependency>
 		

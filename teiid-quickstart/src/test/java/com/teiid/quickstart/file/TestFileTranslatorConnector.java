@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import javax.resource.ResourceException;
 import javax.resource.cci.ConnectionFactory;
 
 import org.junit.AfterClass;
@@ -161,6 +160,13 @@ public class TestFileTranslatorConnector {
 			server.stop();
 			server = null;
 		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		
+		TestFileTranslatorConnector test = new TestFileTranslatorConnector();
+		test.init();
+		JDBCUtil.executeQuery(conn, "SELECT * FROM Marketdata");
 	}
 	
 	
