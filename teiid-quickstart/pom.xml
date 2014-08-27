@@ -52,6 +52,20 @@
 			<version>8.9.0.Alpha2-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.teiid.connectors</groupId>
+			<artifactId>translator-object</artifactId>
+			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.teiid.connectors</groupId>
+			<artifactId>connector-infinispan</artifactId>
+			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>

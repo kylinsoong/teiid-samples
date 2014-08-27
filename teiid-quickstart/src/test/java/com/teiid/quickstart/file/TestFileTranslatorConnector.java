@@ -121,11 +121,9 @@ public class TestFileTranslatorConnector {
 		FileExecutionFactory executionFactory = new FileExecutionFactory();
 		server.addTranslator("file", executionFactory);
 		
-		FileManagedConnectionFactory fileManagedconnectionFactory = new FileManagedConnectionFactory();
-		fileManagedconnectionFactory.setParentDirectory("src/file");
-		ConnectionFactory connectionFactory = fileManagedconnectionFactory.createConnectionFactory();
-		ConnectionFactoryProvider<ConnectionFactory> connectionFactoryProvider = new EmbeddedServer.SimpleConnectionFactoryProvider<ConnectionFactory>(connectionFactory);
-		server.addConnectionFactoryProvider("java:/marketdata-file", connectionFactoryProvider);
+		FileManagedConnectionFactory managedconnectionFactory = new FileManagedConnectionFactory();
+		managedconnectionFactory.setParentDirectory("src/file");
+		server.addConnectionFactory("java:/marketdata-file", managedconnectionFactory.createConnectionFactory());
 		
 		SocketConfiguration s = new SocketConfiguration();
 		InetSocketAddress addr = new InetSocketAddress("localhost", 31000);
@@ -136,9 +134,9 @@ public class TestFileTranslatorConnector {
 		config.addTransport(s);
 		server.start(config);
 		
-		server.deployVDB(new FileInputStream(new File("src/vdb/marketdata-vdb.xml")));
+		server.deployVDB(new FileInputStream(new File("src/vdb/files-vdb.xml")));
 		
-		conn = JDBCUtil.getDriverConnection("org.teiid.jdbc.TeiidDriver", "jdbc:teiid:Marketdata@mm://localhost:31000;version=1", "", "");
+		conn = JDBCUtil.getDriverConnection("org.teiid.jdbc.TeiidDriver", "jdbc:teiid:FilesVDB@mm://localhost:31000;version=1", "", "");
 	}
 	
 	
@@ -146,8 +144,9 @@ public class TestFileTranslatorConnector {
 	public void testQuery() throws Exception {
 		init();
 		assertNotNull(conn);
-		String query = "SELECT * FROM Marketdata";
-		assertEquals(10, JDBCUtil.countResults(conn, query));
+		assertEquals(10, JDBCUtil.countResults(conn, "SELECT * FROM Marketdata"));
+		assertEquals(10, JDBCUtil.countResults(conn, "SELECT * FROM SYMBOLS"));
+		assertEquals(2, JDBCUtil.countResults(conn, "SELECT * FROM Books"));
 	}
 	
 	@AfterClass
@@ -167,6 +166,9 @@ public class TestFileTranslatorConnector {
 		TestFileTranslatorConnector test = new TestFileTranslatorConnector();
 		test.init();
 		JDBCUtil.executeQuery(conn, "SELECT * FROM Marketdata");
+		JDBCUtil.executeQuery(conn, "SELECT * FROM SYMBOLS");
+		JDBCUtil.executeQuery(conn, "SELECT * FROM Books");
+		JDBCUtil.close(conn);
 	}
 	
 	
