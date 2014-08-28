@@ -12,8 +12,6 @@ import java.sql.Connection;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import javax.resource.cci.ConnectionFactory;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,7 +26,6 @@ import org.teiid.resource.adapter.file.FileManagedConnectionFactory;
 import org.teiid.resource.spi.BasicConnectionFactory;
 import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
-import org.teiid.runtime.EmbeddedServer.ConnectionFactoryProvider;
 import org.teiid.translator.FileConnection;
 import org.teiid.translator.ProcedureExecution;
 import org.teiid.translator.TypeFacility;
@@ -119,6 +116,7 @@ public class TestFileTranslatorConnector {
 		server = new EmbeddedServer();
 		
 		FileExecutionFactory executionFactory = new FileExecutionFactory();
+		executionFactory.start();
 		server.addTranslator("file", executionFactory);
 		
 		FileManagedConnectionFactory managedconnectionFactory = new FileManagedConnectionFactory();
