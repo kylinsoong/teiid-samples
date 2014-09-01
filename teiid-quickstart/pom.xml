@@ -89,6 +89,20 @@
 			<classifier>lib</classifier>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.teiid.connectors</groupId>
+			<artifactId>translator-cassandra</artifactId>
+			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.teiid.connectors</groupId>
+			<artifactId>connector-cassandra</artifactId>
+			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
 
 
 		<dependency>
