@@ -24,6 +24,7 @@
         <module>hibernate-on-top-of-teiid</module>
         <module>teiid-quickstart</module>
         <module>teiid-jdbc-driver-samples</module>
+        <module>netty-samples</module>
     <module>connector-myType</module>
   </modules>
 
