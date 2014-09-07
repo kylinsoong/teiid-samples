@@ -14,7 +14,7 @@
             lastname string
         )
             AS
-        SELECT X.firstname, X.lastname cassandra_source.native('SELECT firstname, lastname FROM users') n, ARRAYTABLE(n.tuple COLUMNS firstname string, lastname string) AS X;
+        SELECT U.firstname, U.lastname FROM users AS U;
         ]]> </metadata>
     </model>
 </vdb>
