@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<vdb name="webservice" version="1">
+
+    <description>Shows how to call Web Services</description>
+    
+    <property name="UseConnectorMetadata" value="true" />
+    <!--property name="{http://teiid.org/rest}auto-generate" value="true"/-->
+
+    <model name="StateSource">
+        <source name="webservice" translator-name="translator-ws" connection-jndi-name="java:/CustomerWebSvcSource"/>
+    </model>
+    
+      <model name="States" type="VIRTUAL">
+        <metadata type="DDL"><![CDATA[
+       
+        CREATE  VIEW StateView (
+          name varchar(50),
+          abbreviation varchar(10),
+          capital varchar(50),
+          yearOfStatehood varchar(50)
+        )
+        AS
+          SELECT A.Name, A.Abbreviation, A.Capital, A.YearOfStatehood
+        FROM
+	  (EXEC invoke(binding=>'SOAP11', action=>'GetAllStateInfo')) AS f, XMLTABLE('/GetAllStateInfoResponse/AllStateInfo' PASSING XMLPARSE(DOCUMENT f.result) COLUMNS Name string PATH 'Name/text()', Abbreviation string PATH 'Abbreviation/text()', Capital string PATH 'Capital/text()', YearOfStatehood string PATH 'YearOfStatehood/text()') AS A; 
+
+        ]]>
+        </metadata>
+    </model>
+
+</vdb>

@@ -25,6 +25,7 @@
         <module>teiid-quickstart</module>
         <module>teiid-jdbc-driver-samples</module>
         <module>netty-samples</module>
+        <module>ws-translator</module>
     <module>connector-myType</module>
   </modules>
 
