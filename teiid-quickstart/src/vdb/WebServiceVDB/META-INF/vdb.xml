@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<vdb name="WebServiceVDB" version="1">
+    <property name="preview" value="false"/>
+    <property name="validationDateTime" value="Tue Sep 09 17:05:49 CST 2014"/>
+    <property name="validationVersion" value="8.4.1-redhat-7"/>
+    <model name="CountryInfoService" type="PHYSICAL" visible="true" path="/SOAPProj/sources/CountryInfoService.xmi">
+        <property name="checksum" value="3817949647"/>
+        <property name="indexName" value="3816864903.INDEX"/>
+        <property name="modelUuid" value="mmuuid:6adae145-b25f-457b-825e-a6a84f2a9525"/>
+        <property name="modelClass" value="Relational"/>
+        <property name="builtIn" value="false"/>
+        <source name="CountryInfoService" connection-jndi-name="CountryInfoService" translator-name="CountryInfoService_ws"/>
+    </model>
+    <model name="CountryInfoServiceView" type="VIRTUAL" visible="true" path="/SOAPProj/views/CountryInfoServiceView.xmi">
+        <property name="checksum" value="1890980002"/>
+        <property name="indexName" value="4251501904.INDEX"/>
+        <property name="modelUuid" value="mmuuid:822ef0f3-e5ca-4911-a2f1-1a5fc915b235"/>
+        <property name="modelClass" value="Relational"/>
+        <property name="builtIn" value="false"/>
+        <property name="imports" value="/SOAPProj/sources/CountryInfoService.xmi"/>
+    </model>
+</vdb>
