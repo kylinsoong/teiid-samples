@@ -1,9 +1,13 @@
 package com.teiid.quickstart.ws;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.Properties;
 
@@ -13,7 +17,11 @@ import javax.xml.ws.Dispatch;
 
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.teiid.adminapi.impl.ModelMetaData;
+import org.teiid.adminapi.impl.SourceMappingMetadata;
 import org.teiid.cdk.CommandBuilder;
+import org.teiid.deployers.VirtualDatabaseException;
+import org.teiid.dqp.internal.datamgr.ConnectorManagerRepository.ConnectorManagerException;
 import org.teiid.dqp.internal.datamgr.RuntimeMetadataImpl;
 import org.teiid.language.Call;
 import org.teiid.metadata.MetadataFactory;
@@ -32,6 +40,14 @@ import org.teiid.translator.ws.WSWSDLProcedureExecution;
 
 public class TestWebServiceDataSource {
 	
+	static final String WSDL = "http://www.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL" ;
+	static final String ENDPORTNAME = "CountryInfoServiceSoap" ;
+	static final String NAMESPACEURI = "http://www.oorsprong.org/websamples.countryinfo";
+	static final String SERVICE = "CountryInfoService";
+	
+	static EmbeddedServer server = null;
+	static Connection conn = null;
+	
 	@Test
 	public void testExecution() throws ResourceException, TranslatorException {
 		
@@ -42,7 +58,7 @@ public class TestWebServiceDataSource {
 		server.addTranslator("translator-ws", executionFactory);
 		
 		WSManagedConnectionFactory managedconnectionFactory = new WSManagedConnectionFactory();
-		managedconnectionFactory.setEndPoint(ENDPORT);
+		managedconnectionFactory.setEndPoint(ENDPORTNAME);
 		managedconnectionFactory.setNamespaceUri(NAMESPACEURI);
 		managedconnectionFactory.setServiceName(SERVICE);
 		managedconnectionFactory.setWsdl(WSDL);
@@ -84,7 +100,7 @@ public class TestWebServiceDataSource {
 		server.addTranslator("translator-ws", executionFactory);
 		
 		WSManagedConnectionFactory managedconnectionFactory = new WSManagedConnectionFactory();
-		managedconnectionFactory.setEndPointName(ENDPORT);
+		managedconnectionFactory.setEndPointName(ENDPORTNAME);
 		managedconnectionFactory.setNamespaceUri(NAMESPACEURI);
 		managedconnectionFactory.setServiceName(SERVICE);
 		managedconnectionFactory.setWsdl(WSDL);
@@ -93,14 +109,6 @@ public class TestWebServiceDataSource {
 		WSConnection connection = executionFactory.getConnection(managedconnectionFactory.createConnectionFactory(), null);
 		Dispatch<StAXSource> dispatch = connection.createDispatch(StAXSource.class, executionFactory.getDefaultServiceMode());
 	}
-	
-	static final String WSDL = "http://www.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL" ;
-	static final String ENDPORT = "CountryInfoServiceSoap" ;
-	static final String NAMESPACEURI = "http://www.oorsprong.org/websamples.countryinfo";
-	static final String SERVICE = "CountryInfoService";
-	
-	static EmbeddedServer server = null;
-	static Connection conn = null;
 	
 	public void init() throws Exception {
 		
@@ -111,7 +119,8 @@ public class TestWebServiceDataSource {
 		server.addTranslator("translator-ws", executionFactory);
 		
 		WSManagedConnectionFactory managedconnectionFactory = new WSManagedConnectionFactory();
-		managedconnectionFactory.setEndPoint(ENDPORT);
+		managedconnectionFactory.setEndPoint(WSDL);
+		managedconnectionFactory.setEndPointName(ENDPORTNAME);
 		managedconnectionFactory.setNamespaceUri(NAMESPACEURI);
 		managedconnectionFactory.setServiceName(SERVICE);
 		managedconnectionFactory.setWsdl(WSDL);
@@ -121,7 +130,7 @@ public class TestWebServiceDataSource {
 		
 		server.start(new EmbeddedConfiguration());
 		server.deployVDB(new FileInputStream(new File("src/vdb/webservice-vdb.xml")));
-//		conn = server.getDriver().connect("jdbc:teiid:CountryInfoServiceVDB", null);
+		conn = server.getDriver().connect("jdbc:teiid:CountryInfoServiceVDB", null);
 		
 		System.out.println(conn);
 	}

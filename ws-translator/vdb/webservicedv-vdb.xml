@@ -7,7 +7,11 @@
     <!--property name="{http://teiid.org/rest}auto-generate" value="true"/-->
 
     <model name="CountryInfoService">
-        <source name="webservice" translator-name="translator-ws" connection-jndi-name="java:/CustomerWebSvcSource"/>
+        <source name="webservice" translator-name="translator-ws" connection-jndi-name="java:/CaseWebSvcSource"/>
     </model>
-
+    
+    <translator name="translator-ws" type="ws">
+        <property name="DefaultBinding" value="HTTP"/>
+        <property name="DefaultServiceMode" value="MESSAGE"/>
+    </translator>
 </vdb>

@@ -3,7 +3,6 @@ package com.teiid.quickstart.ws;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.Types;
 
 import com.teiid.quickstart.util.JDBCUtil;
