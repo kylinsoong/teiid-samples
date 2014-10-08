@@ -23,6 +23,7 @@
         <module>eclipselink-on-top-of-teiid</module>
         <module>hibernate-on-top-of-teiid</module>
         <module>teiid-quickstart</module>
+        <module>teiid-test</module>
         <module>teiid-jdbc-driver-samples</module>
         <module>netty-samples</module>
         <module>ws-translator</module>

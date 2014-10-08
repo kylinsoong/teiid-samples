@@ -8,14 +8,19 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.naming.Context;
 
 import org.h2.tools.RunScript;
 import org.h2.tools.Server;
+import org.junit.Test;
+import org.teiid.client.plan.PlanNode;
 import org.teiid.deployers.VirtualDatabaseException;
 import org.teiid.dqp.internal.datamgr.ConnectorManagerRepository.ConnectorManagerException;
+import org.teiid.jdbc.TeiidStatement;
 import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
 import org.teiid.translator.TranslatorException;
@@ -67,6 +72,17 @@ public class TestH2DataSource {
 
 	private void initTestData() throws SQLException, FileNotFoundException {
 		RunScript.execute(pds.getConnection(), new FileReader("src/file/customer-schema-h2.sql"));
+	}
+	
+	@Test
+	public void testQueryPlans() throws Exception {
+		init();
+		Statement stmt = conn.createStatement();
+		stmt.execute("set showplan on");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM PRODUCT");
+		TeiidStatement tstatement = stmt.unwrap(TeiidStatement.class);
+		PlanNode queryPlan = tstatement.getPlanDescription();
+		System.out.println(queryPlan);
 	}
 
 	private void setupDataSource() {

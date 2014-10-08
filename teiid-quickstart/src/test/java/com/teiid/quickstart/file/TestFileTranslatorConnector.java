@@ -9,6 +9,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.net.InetSocketAddress;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -16,6 +19,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.teiid.client.plan.PlanNode;
+import org.teiid.jdbc.TeiidStatement;
 import org.teiid.language.Argument;
 import org.teiid.language.Call;
 import org.teiid.language.LanguageFactory;
@@ -135,6 +140,17 @@ public class TestFileTranslatorConnector {
 		server.deployVDB(new FileInputStream(new File("src/vdb/files-vdb.xml")));
 		
 		conn = JDBCUtil.getDriverConnection("org.teiid.jdbc.TeiidDriver", "jdbc:teiid:FilesVDB@mm://localhost:31000;version=1", "", "");
+	}
+	
+	@Test
+	public void testQueryPlans() throws Exception {
+		init();
+		Statement stmt = conn.createStatement();
+		stmt.execute("set showplan on");
+		ResultSet rs = stmt.executeQuery("SELECT * FROM Marketdata");
+		TeiidStatement tstatement = stmt.unwrap(TeiidStatement.class);
+		PlanNode queryPlan = tstatement.getPlanDescription();
+		System.out.println(queryPlan);
 	}
 	
 	

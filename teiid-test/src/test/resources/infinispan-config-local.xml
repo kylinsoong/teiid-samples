@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="urn:infinispan:config:5.0">
+  <global>
+  	<globalJmxStatistics allowDuplicateDomains="true"/>
+  </global>
+
+  <namedCache name="local-quickstart-cache">
+  	<transaction transactionMode="TRANSACTIONAL"/>
+        <eviction maxEntries="1024" strategy="LIRS" />
+        <expiration lifespan="7200000" />
+        <clustering mode="local"/>
+  </namedCache>
+
+</infinispan>
