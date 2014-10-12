@@ -1,0 +1,262 @@
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10
+Deserialize 1000 bytes spend time: 1 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50
+Deserialize 5000 bytes spend time: 4 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100
+Deserialize 10000 bytes spend time: 5 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500
+Deserialize 50000 bytes spend time: 12 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000
+Deserialize 100000 bytes spend time: 18 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000
+Deserialize 500000 bytes spend time: 45 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000
+Deserialize 1000000 bytes spend time: 34 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50000
+Deserialize 5000000 bytes spend time: 19 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100000
+Deserialize 10000000 bytes spend time: 79 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500000
+Deserialize 50000000 bytes spend time: 326 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000000
+Deserialize 100000000 bytes spend time: 1489 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000000
+Deserialize 500000000 bytes spend time: 2516 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000000
+Exception in thread "main" java.lang.OutOfMemoryError: GC overhead limit exceeded
+	at com.mysql.jdbc.MysqlIO.nextRowFast(MysqlIO.java:2267)
+	at com.mysql.jdbc.MysqlIO.nextRow(MysqlIO.java:2044)
+	at com.mysql.jdbc.MysqlIO.readSingleRowSet(MysqlIO.java:3549)
+	at com.mysql.jdbc.MysqlIO.getResultSet(MysqlIO.java:489)
+	at com.mysql.jdbc.MysqlIO.readResultsForQueryOrUpdate(MysqlIO.java:3240)
+	at com.mysql.jdbc.MysqlIO.readAllResults(MysqlIO.java:2411)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2834)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2832)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2781)
+	at com.mysql.jdbc.StatementImpl.executeQuery(StatementImpl.java:1569)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:73)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:52)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:38)
+	at com.jboss.teiid.mysql.DeserializationCaculation.main(DeserializationCaculation.java:30)
+
+
+
+
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10
+Deserialize 1000 bytes spend time: 1 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50
+Deserialize 5000 bytes spend time: 4 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100
+Deserialize 10000 bytes spend time: 5 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500
+Deserialize 50000 bytes spend time: 11 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000
+Deserialize 100000 bytes spend time: 17 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000
+Deserialize 500000 bytes spend time: 49 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000
+Deserialize 1000000 bytes spend time: 27 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50000
+Deserialize 5000000 bytes spend time: 22 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100000
+Deserialize 10000000 bytes spend time: 46 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500000
+Deserialize 50000000 bytes spend time: 332 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000000
+Deserialize 100000000 bytes spend time: 618 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000000
+Deserialize 500000000 bytes spend time: 19038 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000000
+Exception in thread "main" java.lang.OutOfMemoryError: GC overhead limit exceeded
+	at com.mysql.jdbc.MysqlIO.nextRowFast(MysqlIO.java:2267)
+	at com.mysql.jdbc.MysqlIO.nextRow(MysqlIO.java:2044)
+	at com.mysql.jdbc.MysqlIO.readSingleRowSet(MysqlIO.java:3549)
+	at com.mysql.jdbc.MysqlIO.getResultSet(MysqlIO.java:489)
+	at com.mysql.jdbc.MysqlIO.readResultsForQueryOrUpdate(MysqlIO.java:3240)
+	at com.mysql.jdbc.MysqlIO.readAllResults(MysqlIO.java:2411)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2834)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2832)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2781)
+	at com.mysql.jdbc.StatementImpl.executeQuery(StatementImpl.java:1569)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:73)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:52)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:38)
+	at com.jboss.teiid.mysql.DeserializationCaculation.main(DeserializationCaculation.java:30)
+
+
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10
+Deserialize 1000 bytes spend time: 1 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50
+Deserialize 5000 bytes spend time: 4 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100
+Deserialize 10000 bytes spend time: 5 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500
+Deserialize 50000 bytes spend time: 9 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000
+Deserialize 100000 bytes spend time: 16 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000
+Deserialize 500000 bytes spend time: 54 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000
+Deserialize 1000000 bytes spend time: 29 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50000
+Deserialize 5000000 bytes spend time: 33 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100000
+Deserialize 10000000 bytes spend time: 46 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500000
+Deserialize 50000000 bytes spend time: 338 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000000
+Deserialize 100000000 bytes spend time: 622 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000000
+Deserialize 500000000 bytes spend time: 18932 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000000
+Exception in thread "main" java.lang.OutOfMemoryError: GC overhead limit exceeded
+	at com.mysql.jdbc.MysqlIO.nextRowFast(MysqlIO.java:2267)
+	at com.mysql.jdbc.MysqlIO.nextRow(MysqlIO.java:2044)
+	at com.mysql.jdbc.MysqlIO.readSingleRowSet(MysqlIO.java:3549)
+	at com.mysql.jdbc.MysqlIO.getResultSet(MysqlIO.java:489)
+	at com.mysql.jdbc.MysqlIO.readResultsForQueryOrUpdate(MysqlIO.java:3240)
+	at com.mysql.jdbc.MysqlIO.readAllResults(MysqlIO.java:2411)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2834)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2832)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2781)
+	at com.mysql.jdbc.StatementImpl.executeQuery(StatementImpl.java:1569)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:73)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:52)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:38)
+	at com.jboss.teiid.mysql.DeserializationCaculation.main(DeserializationCaculation.java:30)
+
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10
+Deserialize 1000 bytes spend time: 1 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50
+Deserialize 5000 bytes spend time: 4 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100
+Deserialize 10000 bytes spend time: 5 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500
+Deserialize 50000 bytes spend time: 9 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000
+Deserialize 100000 bytes spend time: 16 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000
+Deserialize 500000 bytes spend time: 54 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000
+Deserialize 1000000 bytes spend time: 29 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50000
+Deserialize 5000000 bytes spend time: 33 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100000
+Deserialize 10000000 bytes spend time: 46 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500000
+Deserialize 50000000 bytes spend time: 338 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000000
+Deserialize 100000000 bytes spend time: 622 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000000
+Deserialize 500000000 bytes spend time: 18932 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000000
+Exception in thread "main" java.lang.OutOfMemoryError: GC overhead limit exceeded
+	at com.mysql.jdbc.MysqlIO.nextRowFast(MysqlIO.java:2267)
+	at com.mysql.jdbc.MysqlIO.nextRow(MysqlIO.java:2044)
+	at com.mysql.jdbc.MysqlIO.readSingleRowSet(MysqlIO.java:3549)
+	at com.mysql.jdbc.MysqlIO.getResultSet(MysqlIO.java:489)
+	at com.mysql.jdbc.MysqlIO.readResultsForQueryOrUpdate(MysqlIO.java:3240)
+	at com.mysql.jdbc.MysqlIO.readAllResults(MysqlIO.java:2411)
+	at com.mysql.jdbc.MysqlIO.sqlQueryDirect(MysqlIO.java:2834)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2832)
+	at com.mysql.jdbc.ConnectionImpl.execSQL(ConnectionImpl.java:2781)
+	at com.mysql.jdbc.StatementImpl.executeQuery(StatementImpl.java:1569)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:73)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:52)
+	at com.jboss.teiid.mysql.DeserializationCaculation.caculation(DeserializationCaculation.java:38)
+	at com.jboss.teiid.mysql.DeserializationCaculation.main(DeserializationCaculation.java:30)
+
+
+
+
+
+
+
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10
+Deserialize 1000 bytes spend time: 1 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50
+Deserialize 5000 bytes spend time: 4 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100
+Deserialize 10000 bytes spend time: 5 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500
+Deserialize 50000 bytes spend time: 19 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000
+Deserialize 100000 bytes spend time: 21 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000
+Deserialize 500000 bytes spend time: 52 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000
+Deserialize 1000000 bytes spend time: 36 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50000
+Deserialize 5000000 bytes spend time: 30 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100000
+Deserialize 10000000 bytes spend time: 46 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500000
+Deserialize 50000000 bytes spend time: 340 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000000
+Deserialize 100000000 bytes spend time: 641 ms
+
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000000
+Deserialize 500000000 bytes spend time: 18525 ms
+

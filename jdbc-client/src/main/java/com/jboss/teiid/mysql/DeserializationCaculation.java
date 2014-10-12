@@ -35,7 +35,7 @@ public class DeserializationCaculation {
 	private static void caculation() throws Exception {
 		
 		for(Integer size : array) {
-			System.out.println("Deserialize " + " bytes spend time: " + caculation(size) + " ms\n");
+			System.out.println("Deserialize " + size + " bytes spend time: " + caculation(size) + " ms\n");
 		}
 	}
 
@@ -45,14 +45,19 @@ public class DeserializationCaculation {
 		
 		int rows = size / 100;
 		String query = "SELECT * FROM PERFTEST WHERE id < " + rows;
-		System.out.println("Query SQL: " + query);
+//		System.out.println("Query SQL: " + query);
 		
-		long sum = 0;
-		for(int i = 0 ; i < 10 ; i ++) {
-			sum += caculation(query);
-		}
-
-		return sum/10;
+		Thread.currentThread().sleep(1000 * 30);
+		
+		return caculation(query);
+		
+//		long sum = 0;
+//		for(int i = 0 ; i < 10 ; i ++) {
+//			Thread.currentThread().sleep(1000 * 20);
+//			sum += caculation(query);
+//		}
+//
+//		return sum/10;
 	}
 
 

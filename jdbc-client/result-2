@@ -1,0 +1,80 @@
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m com.jboss.teiid.mysql.DeserializationCaculation
+Deserialize 1000 bytes spend time: 1 ms
+
+Deserialize 5000 bytes spend time: 2 ms
+
+Deserialize 10000 bytes spend time: 5 ms
+
+Deserialize 50000 bytes spend time: 10 ms
+
+Deserialize 100000 bytes spend time: 21 ms
+
+Deserialize 500000 bytes spend time: 50 ms
+
+Deserialize 1000000 bytes spend time: 24 ms
+
+Deserialize 5000000 bytes spend time: 24 ms
+
+Deserialize 10000000 bytes spend time: 45 ms
+
+Deserialize 50000000 bytes spend time: 214 ms
+
+Deserialize 100000000 bytes spend time: 680 ms
+
+Deserialize 500000000 bytes spend time: 3368 ms
+
+Deserialize 1000000000 bytes spend time: 62159 ms
+
+
+Deserialize 1000 bytes spend time: 1 ms
+
+Deserialize 5000 bytes spend time: 4 ms
+
+Deserialize 10000 bytes spend time: 4 ms
+
+Deserialize 50000 bytes spend time: 8 ms
+
+Deserialize 100000 bytes spend time: 18 ms
+
+Deserialize 500000 bytes spend time: 50 ms
+
+Deserialize 1000000 bytes spend time: 30 ms
+
+Deserialize 5000000 bytes spend time: 25 ms
+
+Deserialize 10000000 bytes spend time: 47 ms
+
+Deserialize 50000000 bytes spend time: 209 ms
+
+Deserialize 100000000 bytes spend time: 653 ms
+
+Deserialize 500000000 bytes spend time: 3259 ms
+
+Deserialize 1000000000 bytes spend time: 56484 ms
+
+
+Deserialize 1000 bytes spend time: 1 ms
+
+Deserialize 5000 bytes spend time: 4 ms
+
+Deserialize 10000 bytes spend time: 6 ms
+
+Deserialize 50000 bytes spend time: 12 ms
+
+Deserialize 100000 bytes spend time: 16 ms
+
+Deserialize 500000 bytes spend time: 46 ms
+
+Deserialize 1000000 bytes spend time: 28 ms
+
+Deserialize 5000000 bytes spend time: 24 ms
+
+Deserialize 10000000 bytes spend time: 48 ms
+
+Deserialize 50000000 bytes spend time: 208 ms
+
+Deserialize 100000000 bytes spend time: 664 ms
+
+Deserialize 500000000 bytes spend time: 3246 ms
+
+Deserialize 1000000000 bytes spend time: 62254 ms
