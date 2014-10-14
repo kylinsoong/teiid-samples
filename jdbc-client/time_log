@@ -1,0 +1,406 @@
+Deserialize 100000000 bytes spend time: 533 ms
+
+[kylin@kylin jdbc-client]$ vim gc.log.20141013104605 
+[kylin@kylin jdbc-client]$ rm gc.log.20141013104605 
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 100000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000000
+Deserialize 100000000 bytes spend time: 530 ms
+
+[kylin@kylin jdbc-client]$ rm gc.log.20141013104631 
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 90000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 900000
+Deserialize 90000000 bytes spend time: 490 ms
+
+[kylin@kylin jdbc-client]$ vim gc.log.20141013104819 
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 90000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 900000
+Deserialize 90000000 bytes spend time: 489 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 90000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 900000
+Deserialize 90000000 bytes spend time: 485 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 80000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 800000
+Deserialize 80000000 bytes spend time: 443 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 80000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 800000
+Deserialize 80000000 bytes spend time: 446 ms
+
+[kylin@kylin jdbc-client]$ rm gc.log.20141013104*
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 80000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 800000
+Deserialize 80000000 bytes spend time: 454 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 70000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 700000
+Deserialize 70000000 bytes spend time: 416 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 70000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 700000
+Deserialize 70000000 bytes spend time: 407 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 70000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 700000
+Deserialize 70000000 bytes spend time: 403 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 60000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 600000
+Deserialize 60000000 bytes spend time: 361 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 60000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 600000
+Deserialize 60000000 bytes spend time: 358 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 60000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 600000
+Deserialize 60000000 bytes spend time: 355 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 50000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500000
+Deserialize 50000000 bytes spend time: 317 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 50000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500000
+Deserialize 50000000 bytes spend time: 317 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 50000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500000
+Deserialize 50000000 bytes spend time: 312 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 40000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 400000
+Deserialize 40000000 bytes spend time: 271 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 40000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 400000
+Deserialize 40000000 bytes spend time: 275 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 40000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 400000
+Deserialize 40000000 bytes spend time: 269 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 30000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 300000
+Deserialize 30000000 bytes spend time: 237 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 30000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 300000
+Deserialize 30000000 bytes spend time: 237 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 30000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 300000
+Deserialize 30000000 bytes spend time: 234 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 20000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 200000
+Deserialize 20000000 bytes spend time: 186 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 20000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 200000
+Deserialize 20000000 bytes spend time: 192 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 20000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 200000
+Deserialize 20000000 bytes spend time: 192 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 10000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100000
+Deserialize 10000000 bytes spend time: 149 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 10000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100000
+Deserialize 10000000 bytes spend time: 149 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 10000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100000
+Deserialize 10000000 bytes spend time: 149 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 9000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 90000
+Deserialize 9000000 bytes spend time: 141 ms
+
+[kylin@kylin jdbc-client]$ rm gc.log.2014101310
+rm: cannot remove `gc.log.2014101310': No such file or directory
+[kylin@kylin jdbc-client]$ rm gc.log.2014101310*
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 9000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 90000
+Deserialize 9000000 bytes spend time: 160 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 9000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 90000
+Deserialize 9000000 bytes spend time: 140 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 9000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 90000
+Deserialize 9000000 bytes spend time: 144 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 8000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 80000
+Deserialize 8000000 bytes spend time: 147 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 8000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 80000
+Deserialize 8000000 bytes spend time: 140 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 8000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 80000
+Deserialize 8000000 bytes spend time: 150 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 8000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 80000
+Deserialize 8000000 bytes spend time: 147 ms
+
+[kylin@kylin jdbc-client]$ rm gc.log.20141013105*
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 8000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 80000
+Deserialize 8000000 bytes spend time: 138 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 8000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 80000
+Deserialize 8000000 bytes spend time: 139 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 6000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 60000
+Deserialize 6000000 bytes spend time: 145 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 6000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 60000
+Deserialize 6000000 bytes spend time: 129 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 6000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 60000
+Deserialize 6000000 bytes spend time: 129 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 6000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 60000
+Deserialize 6000000 bytes spend time: 135 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 4000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 40000
+Deserialize 4000000 bytes spend time: 131 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 4000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 40000
+Deserialize 4000000 bytes spend time: 128 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 4000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 40000
+Deserialize 4000000 bytes spend time: 120 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 2000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 20000
+Deserialize 2000000 bytes spend time: 108 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 2000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 20000
+Deserialize 2000000 bytes spend time: 105 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 2000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 20000
+Deserialize 2000000 bytes spend time: 111 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 1000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000
+Deserialize 1000000 bytes spend time: 91 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 1000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000
+Deserialize 1000000 bytes spend time: 91 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 1000000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10000
+Deserialize 1000000 bytes spend time: 93 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 900000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 9000
+Deserialize 900000 bytes spend time: 90 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 900000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 9000
+Deserialize 900000 bytes spend time: 87 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 900000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 9000
+Deserialize 900000 bytes spend time: 88 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 700000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 7000
+Deserialize 700000 bytes spend time: 77 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 700000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 7000
+Deserialize 700000 bytes spend time: 86 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 700000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 7000
+Deserialize 700000 bytes spend time: 88 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 500000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000
+Deserialize 500000 bytes spend time: 69 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 500000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000
+Deserialize 500000 bytes spend time: 76 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 500000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 5000
+Deserialize 500000 bytes spend time: 73 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 300000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 3000
+Deserialize 300000 bytes spend time: 57 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 300000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 3000
+Deserialize 300000 bytes spend time: 59 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 300000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 3000
+Deserialize 300000 bytes spend time: 49 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 100000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000
+Deserialize 100000 bytes spend time: 25 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 100000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000
+Deserialize 100000 bytes spend time: 23 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 100000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 1000
+Deserialize 100000 bytes spend time: 24 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 90000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 900
+Deserialize 90000 bytes spend time: 24 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 90000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 900
+Deserialize 90000 bytes spend time: 20 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 90000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 900
+Deserialize 90000 bytes spend time: 17 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 70000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 700
+Deserialize 70000 bytes spend time: 15 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 70000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 700
+Deserialize 70000 bytes spend time: 15 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 70000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 700
+Deserialize 70000 bytes spend time: 14 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 50000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500
+Deserialize 50000 bytes spend time: 14 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 50000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500
+Deserialize 50000 bytes spend time: 14 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 50000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500
+Deserialize 50000 bytes spend time: 17 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 50000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 500
+Deserialize 50000 bytes spend time: 12 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 30000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 300
+Deserialize 30000 bytes spend time: 10 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 30000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 300
+Deserialize 30000 bytes spend time: 10 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 30000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 300
+Deserialize 30000 bytes spend time: 9 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 10000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100
+Deserialize 10000 bytes spend time: 5 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 10000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100
+Deserialize 10000 bytes spend time: 6 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 10000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 100
+Deserialize 10000 bytes spend time: 6 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 9000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 90
+Deserialize 9000 bytes spend time: 4 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 9000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 90
+Deserialize 9000 bytes spend time: 3 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 9000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 90
+Deserialize 9000 bytes spend time: 7 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 9000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 90
+Deserialize 9000 bytes spend time: 4 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 7000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 70
+Deserialize 7000 bytes spend time: 4 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 7000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 70
+Deserialize 7000 bytes spend time: 2 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 7000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 70
+Deserialize 7000 bytes spend time: 4 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 5000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50
+Deserialize 5000 bytes spend time: 3 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 5000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50
+Deserialize 5000 bytes spend time: 4 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 5000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50
+Deserialize 5000 bytes spend time: 3 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 5000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 50
+Deserialize 5000 bytes spend time: 4 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 3000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 30
+Deserialize 3000 bytes spend time: 2 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 3000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 30
+Deserialize 3000 bytes spend time: 3 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 3000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 30
+Deserialize 3000 bytes spend time: 2 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 1000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10
+Deserialize 1000 bytes spend time: 1 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 1000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10
+Deserialize 1000 bytes spend time: 1 ms
+
+[kylin@kylin jdbc-client]$ java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log.`date +%Y%m%d%H%M%S` -XX:+PrintGCDetails -XX:+PrintGCTimeStamps com.jboss.teiid.mysql.DeserializationCaculation 1000
+Query SQL: SELECT * FROM PERFTEST WHERE id < 10
+Deserialize 1000 bytes spend time: 1 ms

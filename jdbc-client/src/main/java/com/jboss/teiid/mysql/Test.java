@@ -1,5 +1,6 @@
 package com.jboss.teiid.mysql;
 
+import java.util.Date;
 import java.util.Random;
 
 
@@ -7,12 +8,7 @@ import java.util.Random;
 public class Test {
 
 	public static void main(String[] args) {
-		long sum = 0;
-		for(int i = 0 ; i < 10 ; i ++) {
-			sum += caculation();
-		}
-		
-		System.out.println(sum + " " + sum/10);
+		System.out.println(new Date());
 	}
 
 	private static long caculation() {

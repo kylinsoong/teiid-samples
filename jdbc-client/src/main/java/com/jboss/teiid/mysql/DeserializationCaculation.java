@@ -4,9 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import com.jboss.teiid.client.util.JDBCUtil;
 
+/*
+ * 
+ * java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/mysql-connector-java-5.1.30.jar -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps com.jboss.teiid.mysql.DeserializationCaculation 100000000
+ * 
+ * */
 public class DeserializationCaculation {
 	
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -20,14 +27,19 @@ public class DeserializationCaculation {
 	
 	static final String INSERT_SQL = "insert into PERFTEST values(?, ?, ?, ?)";
 	
-	static Integer[] array = new Integer[] {1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000, 10000000, 50000000, 100000000, 500000000, 1000000000};
+	static Integer[] array = new Integer[] {1000, 5000, 10000, 30000, 50000, 70000, 90000, 100000, 300000, 500000, 700000, 900000, 1000000, 3000000, 5000000, 7000000, 9000000, 10000000, 20000000, 30000000, 40000000, 50000000, 60000000, 70000000, 80000000, 90000000, 100000000, 200000000, 300000000, 400000000, 500000000, 600000000, 700000000, 800000000, 900000000, 1000000000};
 
 	public static void main(String[] args) throws Exception {
 		
-//		init(10000 * 10000);
+//		init(10000 * 1000);
 		
-		
-		caculation();
+		if(args.length > 0) {
+			int size = Integer.parseInt(args[0]);
+			System.out.println("Deserialize " + size + " bytes spend time: " + caculation(size) + " ms\n");
+		} else {
+			caculation();
+		}
+
 	}
 
 
@@ -45,9 +57,9 @@ public class DeserializationCaculation {
 		
 		int rows = size / 100;
 		String query = "SELECT * FROM PERFTEST WHERE id < " + rows;
-//		System.out.println("Query SQL: " + query);
+		System.out.println("Query SQL: " + query);
 		
-		Thread.currentThread().sleep(1000 * 30);
+		
 		
 		return caculation(query);
 		
@@ -71,6 +83,8 @@ public class DeserializationCaculation {
 		
 		try {
 			rs = stmt.executeQuery(query);
+			Thread.currentThread().sleep(1000 * 5);
+			System.out.println("Start count: " +  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date(System.currentTimeMillis())));
 			long start = System.currentTimeMillis();
 			while(rs.next()) {
 				rs.getInt(1);
@@ -79,6 +93,7 @@ public class DeserializationCaculation {
 				rs.getString(4);
 			}
 			time = System.currentTimeMillis() - start;
+			System.out.println("End count: " +  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date(System.currentTimeMillis())));
 		} catch (Exception e) {
 			throw e;
 		} finally {

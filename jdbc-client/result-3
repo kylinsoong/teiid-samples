@@ -1,0 +1,72 @@
+Deserialize 1000 bytes spend time: 1 ms
+
+Deserialize 5000 bytes spend time: 4 ms
+
+Deserialize 10000 bytes spend time: 3 ms
+
+Deserialize 30000 bytes spend time: 9 ms
+
+Deserialize 50000 bytes spend time: 14 ms
+
+Deserialize 70000 bytes spend time: 15 ms
+
+Deserialize 90000 bytes spend time: 19 ms
+
+Deserialize 100000 bytes spend time: 17 ms
+
+Deserialize 300000 bytes spend time: 10 ms
+
+Deserialize 500000 bytes spend time: 20 ms
+
+Deserialize 700000 bytes spend time: 13 ms
+
+Deserialize 900000 bytes spend time: 10 ms
+
+Deserialize 1000000 bytes spend time: 11 ms
+
+Deserialize 3000000 bytes spend time: 16 ms
+
+Deserialize 5000000 bytes spend time: 27 ms
+
+Deserialize 7000000 bytes spend time: 32 ms
+
+Deserialize 9000000 bytes spend time: 39 ms
+
+Deserialize 10000000 bytes spend time: 49 ms
+
+Deserialize 20000000 bytes spend time: 86 ms
+
+Deserialize 30000000 bytes spend time: 126 ms
+
+Deserialize 40000000 bytes spend time: 168 ms
+
+Deserialize 50000000 bytes spend time: 332 ms
+
+Deserialize 60000000 bytes spend time: 218 ms
+
+Deserialize 70000000 bytes spend time: 249 ms
+
+Deserialize 80000000 bytes spend time: 290 ms
+
+Deserialize 90000000 bytes spend time: 324 ms
+
+Deserialize 100000000 bytes spend time: 368 ms
+
+Deserialize 200000000 bytes spend time: 1164 ms
+
+Deserialize 300000000 bytes spend time: 1873 ms
+
+Deserialize 400000000 bytes spend time: 3225 ms
+
+Deserialize 500000000 bytes spend time: 3181 ms
+
+Deserialize 600000000 bytes spend time: 3118 ms
+
+Deserialize 700000000 bytes spend time: 10519 ms
+
+Deserialize 800000000 bytes spend time: 11417 ms
+
+Deserialize 900000000 bytes spend time: 4473 ms
+
+Deserialize 1000000000 bytes spend time: 5223 ms
+
