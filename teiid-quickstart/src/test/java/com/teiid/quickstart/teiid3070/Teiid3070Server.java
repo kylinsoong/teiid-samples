@@ -1,14 +1,12 @@
 package com.teiid.quickstart.teiid3070;
 
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 
-import javax.resource.ResourceException;
 import javax.resource.cci.ConnectionFactory;
 
 import org.teiid.resource.adapter.file.FileManagedConnectionFactory;
