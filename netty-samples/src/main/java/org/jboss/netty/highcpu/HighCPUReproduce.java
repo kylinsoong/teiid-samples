@@ -1,5 +1,8 @@
 package org.jboss.netty.highcpu;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,24 +18,25 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
 public class HighCPUReproduce {
 
+
 	@SuppressWarnings("static-access")
-	public static void main(String[] args) throws InterruptedException {
-
-		ExecutorService nettyPool = Executors.newCachedThreadPool();
-		ChannelFactory factory = new NioServerSocketChannelFactory(nettyPool, nettyPool, 1);
-		ServerBootstrap bootstrap = new ServerBootstrap(factory);
-		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-
-			public ChannelPipeline getPipeline() throws Exception {
-				return Channels.pipeline(new SimpleChannelHandler());
-			}});
-		bootstrap.setOption("keepAlive", Boolean.TRUE);
-		Channel serverChanel = bootstrap.bind(new InetSocketAddress(0));
-		
-		serverChanel.close();
-		nettyPool.shutdownNow();
-		
-		Thread.currentThread().sleep(Long.MAX_VALUE);
-	}
+		public static void main(String[] args) throws InterruptedException {
+			
+			ExecutorService nettyPool = Executors.newCachedThreadPool();
+			ChannelFactory factory = new NioServerSocketChannelFactory(nettyPool, nettyPool, 1);
+			ServerBootstrap bootstrap = new ServerBootstrap(factory);
+			bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
+	
+				public ChannelPipeline getPipeline() throws Exception {
+					return Channels.pipeline(new SimpleChannelHandler());
+				}});
+			bootstrap.setOption("keepAlive", Boolean.TRUE);
+			Channel serverChanel = bootstrap.bind(new InetSocketAddress(0));
+			
+			serverChanel.close();
+			nettyPool.shutdownNow();
+			
+			Thread.currentThread().sleep(Long.MAX_VALUE);
+		}
 
 }
