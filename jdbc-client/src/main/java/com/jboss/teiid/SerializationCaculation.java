@@ -11,6 +11,8 @@ import java.util.Date;
 
 import javax.naming.Context;
 
+import org.teiid.client.plan.PlanNode;
+import org.teiid.jdbc.TeiidStatement;
 import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
 import org.teiid.translator.ExecutionFactory;
@@ -29,7 +31,7 @@ import bitronix.tm.resource.jdbc.PoolingDataSource;
  * 
  * mvn clean install dependency:copy-dependencies
  * 
- * java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/* -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.logXX:+PrintGCDetails -XX:+PrintGCDateStamps com.jboss.teiid.SerializationCaculation 1000000000
+ * java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/* -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.logXX:+PrintGCDetails -XX:+PrintGCDateStamps com.jboss.teiid.SerializationCaculation plan -s 1000000000
  * 
  * 
  */
@@ -95,15 +97,21 @@ public class SerializationCaculation {
 	private Connection getConn() throws SQLException {
 		return server.getDriver().connect("jdbc:teiid:MysqlVDB", null);
 	}
+	
+	private static boolean showPlan = false; 
 
 	private static long caculation(String query, Connection conn) throws Exception {
 
 		Statement stmt = conn .createStatement();
+		if(showPlan){
+			stmt.execute("set showplan on");
+		}
 		ResultSet rs = null;
 		long time = 0;
 		
 		try {
 			rs = stmt.executeQuery(query);
+			printQueryPlan(stmt, query);
 			Thread.currentThread().sleep(1000 * 20);
 			System.out.println("Start count: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date(System.currentTimeMillis())));
 			long start = System.currentTimeMillis();
@@ -123,19 +131,33 @@ public class SerializationCaculation {
 		}
 		return time;
 	}
+	
+	private static void printQueryPlan(Statement stmt, String sql) throws SQLException {
+		System.out.println("Query Plans for execute " + sql);
+		TeiidStatement tstatement = stmt.unwrap(TeiidStatement.class);
+		PlanNode queryPlan = tstatement.getPlanDescription();
+		System.out.println(queryPlan);
+	}
 
 	public static void main(String[] args) throws Exception {
 		SerializationCaculation caculation = new SerializationCaculation();
+
 		if(args.length > 0) {
-			int size = Integer.parseInt(args[0]);
-			long rows = size / 100;
-			String query = "SELECT * FROM SERIALTESTVIEW WHERE id < " + rows;
-			System.out.println("Deserialize " + size + " bytes spend time: " + caculation(query, conn) + " ms\n");
+			for(int i = 0; i < args.length; i++) {
+				
+				if(args[i].equals("-s") || args[i].equals("-size")){
+					int size = Integer.parseInt(args[++i]);
+					long rows = size / 100;
+					String query = "SELECT * FROM SERIALTESTVIEW WHERE id < " + rows;
+					System.out.println("Deserialize " + size + " bytes spend time: " + caculation(query, conn) + " ms\n");
+				}
+				
+				if(args[i].equals("plan")){
+					showPlan = true;
+				}
+			}
 		} else {
 			caculation.query();
-		}
-		
-		
+		}	
 	}
-
 }
