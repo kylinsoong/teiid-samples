@@ -13,9 +13,9 @@ public class MYSQLInsert {
 	static final String JDBC_USER = "jdv_user";
 	static final String JDBC_PASS = "jdv_pass";
 	
-	static final String COL_A = "abcdefghabcd";
-	static final String COL_B = "abcdefghigklmnopqrstabcdefghigklmnopqrst";
-	static final String COL_C = "1234567890123456789012345678901234567890";
+	static final String COL_A = "12341234";
+	static final String COL_B = "123412341234";
+	static final String COL_C = "123412341234";
 	
 	static final String INSERT_SQL = "insert into SERIALTEST values(?, ?, ?, ?)";
 	

@@ -24,7 +24,7 @@ import com.jboss.teiid.client.util.JDBCUtil;
 import bitronix.tm.resource.jdbc.PoolingDataSource;
 
 /*
- * CREATE TABLE SERIALTEST(id BIGINT, col_a CHAR(12), col_b CHAR(40), col_c CHAR(40));
+ * CREATE TABLE SERIALTEST(id BIGINT, col_a CHAR(8), col_b CHAR(12), col_c CHAR(12));
  * 
  * SELECT sum(table_rows) from information_schema.TABLES WHERE table_name = 'SERIALTEST';
  * SELECT sum(data_length) from information_schema.TABLES WHERE table_name = 'SERIALTEST';
