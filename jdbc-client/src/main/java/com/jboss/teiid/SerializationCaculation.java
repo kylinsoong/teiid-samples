@@ -31,7 +31,7 @@ import bitronix.tm.resource.jdbc.PoolingDataSource;
  * 
  * mvn clean install dependency:copy-dependencies
  * 
- * java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/* -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.logXX:+PrintGCDetails -XX:+PrintGCDateStamps com.jboss.teiid.SerializationCaculation plan -s 1000000000
+ * java -cp target/teiid-jdbc-client-1.0-SNAPSHOT.jar:target/dependency/* -Xms5096m -Xmx5096m -XX:MaxPermSize=512m -verbose:gc -Xloggc:gc.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps com.jboss.teiid.SerializationCaculation plan -s 1000000000
  * 
  * 
  */
@@ -80,16 +80,16 @@ public class SerializationCaculation {
 		pds.init();
 	}
 	
-	static Integer[] array = new Integer[] {1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000};
+	static Integer[] array = new Integer[] {5, 50, 500, 5000, 50000, 500000, 5000000};
 	
 	public void query() throws Exception {
 		
 		for(long size : array){
-			long rows = size / 100;
-			String query = "SELECT * FROM SERIALTESTVIEW WHERE id < " + rows;
+
+			String query = "SELECT * FROM SERIALTESTVIEW WHERE id < " + size;
 			Connection conn = getConn();
 			
-			System.out.println("Serialize " + size + " bytes spend time: " + caculation(query, conn) + " ms\n");
+			System.out.println("Serialize " + size * 200 + " bytes spend time: " + caculation(query, conn) + " ms\n");
 		}
 		
 	}
@@ -133,6 +133,9 @@ public class SerializationCaculation {
 	}
 	
 	private static void printQueryPlan(Statement stmt, String sql) throws SQLException {
+		if(!showPlan){
+			return;
+		}
 		System.out.println("Query Plans for execute " + sql);
 		TeiidStatement tstatement = stmt.unwrap(TeiidStatement.class);
 		PlanNode queryPlan = tstatement.getPlanDescription();
@@ -145,14 +148,13 @@ public class SerializationCaculation {
 		if(args.length > 0) {
 			for(int i = 0; i < args.length; i++) {
 				
-				if(args[i].equals("-s") || args[i].equals("-size")){
+				if(args[i].equals("-s") || args[i].equals("--size")){
 					int size = Integer.parseInt(args[++i]);
-					long rows = size / 100;
-					String query = "SELECT * FROM SERIALTESTVIEW WHERE id < " + rows;
-					System.out.println("Deserialize " + size + " bytes spend time: " + caculation(query, conn) + " ms\n");
+					String query = "SELECT * FROM SERIALTESTVIEW WHERE id < " + size;
+					System.out.println("Serialize " + size * 200 + " bytes spend time: " + caculation(query, conn) + " ms\n");
 				}
 				
-				if(args[i].equals("plan")){
+				if(args[i].equals("-p") || args[i].equals("--plan")){
 					showPlan = true;
 				}
 			}
