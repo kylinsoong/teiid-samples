@@ -2,12 +2,16 @@ package com.teiid.quickstart.ldap;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javax.naming.Context;
-import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
@@ -16,17 +20,20 @@ import javax.naming.ldap.InitialLdapContext;
 import javax.resource.ResourceException;
 
 import org.junit.Test;
+import org.teiid.deployers.VirtualDatabaseException;
+import org.teiid.dqp.internal.datamgr.ConnectorManagerRepository.ConnectorManagerException;
 import org.teiid.language.Command;
 import org.teiid.resource.adapter.ldap.LDAPConnectionImpl;
 import org.teiid.resource.adapter.ldap.LDAPManagedConnectionFactory;
+import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
 import org.teiid.translator.TranslatorException;
 import org.teiid.translator.ldap.LDAPDirectSearchQueryExecution;
 import org.teiid.translator.ldap.LDAPExecutionFactory;
-import org.teiid.translator.ldap.LDAPSearchDetails;
 
 import com.teiid.quickstart.FakeTranslationFactory;
 import com.teiid.quickstart.TranslationUtility;
+import com.teiid.quickstart.util.JDBCUtil;
 
 public class TestLDAPDataSource {
 	
@@ -34,7 +41,7 @@ public class TestLDAPDataSource {
 	static Connection conn = null;
 	
 	@Test
-	public void testConnection() throws ResourceException, TranslatorException{
+	public void testConnection() throws ResourceException, TranslatorException, NamingException{
 
 		LDAPManagedConnectionFactory factory = new LDAPManagedConnectionFactory();
 		factory.setLdapUrl("ldap://10.66.218.46:389");
@@ -42,6 +49,9 @@ public class TestLDAPDataSource {
 		factory.setLdapAdminUserPassword("redhat");
 		
 		LDAPConnectionImpl connection = factory.createConnectionFactory().getConnection();
+		
+		Object obj = connection.lookup("ou=People,dc=example,dc=com");
+		System.out.println(obj);
 				
 		assertNotNull(connection);
 	}
@@ -59,14 +69,14 @@ public class TestLDAPDataSource {
 		factory.setLdapAdminUserPassword("redhat");
 		LDAPConnectionImpl connection = factory.createConnectionFactory().getConnection();
 		
-		String input = "exec native('search;context-name=corporate;filter=(objectClass=*);count-limit=5;timeout=6;search-scope=ONELEVEL_SCOPE;attributes=uid,cn')"; 
+		String input = "exec native('search;context-name=ou=People,dc=example,dc=com;filter=(objectClass=*);count-limit=5;timeout=6;search-scope=ONELEVEL_SCOPE;attributes=uid,cn')"; 
 
         TranslationUtility util = FakeTranslationFactory.getInstance().getExampleTranslationUtility();
         Command command = util.parseCommand(input);
         
-        LDAPDirectSearchQueryExecution execution = (LDAPDirectSearchQueryExecution) translator.createExecution(command, null, null, connection);
+        LDAPDirectSearchQueryExecution execution = (LDAPDirectSearchQueryExecution) translator.createExecution(command, null, util.createRuntimeMetadata(), connection);
         execution.execute();
-//        LDAPSearchDetails details = execution.g
+
         
         System.out.println(execution);
 	}
@@ -130,7 +140,7 @@ public class TestLDAPDataSource {
 		
 	}
 	
-	public void test() throws TranslatorException, ResourceException {
+	public void test() throws Exception {
 		server = new EmbeddedServer();
 		
 		LDAPExecutionFactory executionFactory = new LDAPExecutionFactory();
@@ -139,12 +149,23 @@ public class TestLDAPDataSource {
 		
 		LDAPManagedConnectionFactory managedconnectionFactory = new LDAPManagedConnectionFactory();
 		managedconnectionFactory.setLdapUrl("ldap://10.66.218.46:389");
-//		managedconnectionFactory.s
+		managedconnectionFactory.setLdapAdminUserDN("cn=Manager,dc=example,dc=com");
+		managedconnectionFactory.setLdapAdminUserPassword("redhat");
 		server.addConnectionFactory("java:/ldapDS", managedconnectionFactory.createConnectionFactory());
+		
+		server.start(new EmbeddedConfiguration());
+		server.deployVDB(new FileInputStream(new File("src/vdb/ldap-vdb.xml")));
+		
+		conn = server.getDriver().connect("jdbc:teiid:ldapVDB", null);
+		
+		JDBCUtil.executeQuery(conn, "SELECT * FROM HR_Group");
+		
+		
+		JDBCUtil.close(conn);
 	}
 
 	public static void main(String[] args) throws Exception {
-		new TestLDAPDataSource().testInitialization();
+		new TestLDAPDataSource().test();
 	}
 
 }

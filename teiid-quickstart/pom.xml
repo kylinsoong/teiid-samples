@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jboss.teiid</groupId>
@@ -32,53 +32,53 @@
 	<dependency>
 		<groupId>org.jboss.teiid</groupId>
 		<artifactId>teiid-runtime</artifactId>
-		<version>8.9.0.Alpha2-SNAPSHOT</version>
+		<version>8.9.0.Beta3-SNAPSHOT</version>
 	</dependency>
 
 		<dependency>
 			<groupId>org.jboss.teiid</groupId>
 			<artifactId>teiid-admin</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.teiid</groupId>
 			<artifactId>teiid-client</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>translator-file</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>translator-object</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>translator-excel</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>translator-jdbc</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>connector-infinispan</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<classifier>lib</classifier>
 			<scope>test</scope>
 		</dependency>
@@ -86,7 +86,7 @@
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>connector-file</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<classifier>lib</classifier>
 			<scope>test</scope>
 		</dependency>
@@ -94,14 +94,21 @@
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>translator-cassandra</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.teiid.connectors</groupId>
+			<artifactId>translator-loopback</artifactId>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>connector-cassandra</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<classifier>lib</classifier>
 			<scope>test</scope>
 		</dependency>
@@ -109,7 +116,7 @@
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>connector-mongodb</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<classifier>lib</classifier>
 			<scope>test</scope>
 		</dependency>
@@ -117,14 +124,14 @@
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>translator-mongodb</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>connector-ws</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<classifier>lib</classifier>
 			<scope>test</scope>
 		</dependency>
@@ -132,7 +139,7 @@
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>connector-ldap</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<classifier>lib</classifier>
 			<scope>test</scope>
 		</dependency>
@@ -140,28 +147,28 @@
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>translator-ldap</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.jboss.teiid.connectors</groupId>
 			<artifactId>translator-ws</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.jboss.teiid</groupId>
 			<artifactId>teiid-engine</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<classifier>tests</classifier>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.jboss.teiid</groupId>
 			<artifactId>teiid-metadata</artifactId>
-			<version>8.9.0.Alpha2-SNAPSHOT</version>
+			<version>8.9.0.Beta3-SNAPSHOT</version>
 			<scope>test</scope>
 		</dependency>
 

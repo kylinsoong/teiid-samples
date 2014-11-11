@@ -13,5 +13,9 @@ public class FakeTranslationFactory {
 	public TranslationUtility getExampleTranslationUtility() {
 		return new TranslationUtility(RealMetadataFactory.example1());
 	}
+	
+	public TranslationUtility getBQTTranslationUtility() {
+		return new TranslationUtility(RealMetadataFactory.exampleBQTCached());
+	}
 
 }
