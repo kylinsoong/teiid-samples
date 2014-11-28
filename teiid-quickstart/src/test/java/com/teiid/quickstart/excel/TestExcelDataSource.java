@@ -77,7 +77,7 @@ public class TestExcelDataSource {
 		TestExcelDataSource test = new TestExcelDataSource();
 		test.init();
 		JDBCUtil.executeQuery(conn, "SELECT * FROM Sheet1");
-		JDBCUtil.executeQuery(conn, "SELECT * FROM PersonalHoldings");
+//		JDBCUtil.executeQuery(conn, "SELECT * FROM PersonalHoldings");
 		JDBCUtil.close(conn);
 	}
 

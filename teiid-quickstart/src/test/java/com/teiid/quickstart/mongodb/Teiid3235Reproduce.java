@@ -12,25 +12,21 @@ import org.teiid.translator.mongodb.MongoDBExecutionFactory;
 
 import com.teiid.quickstart.util.JDBCUtil;
 
-public class TestMongoDataSource {
-	
-	static {
-		System.setProperty("java.util.logging.config.file", "/home/kylin/tmp/logging.properties");
-	}
+public class Teiid3235Reproduce {
 	
 	private static final String SERVERLIST = "10.66.218.46:27017" ;
 	private static final String DBNAME = "mydb" ;
 	
 	static EmbeddedServer server = null;
 	private static Connection conn = null;
-	
-	public void init() throws Exception {
-		
+
+	public static void main(String[] args) throws Exception {
+
 		server = new EmbeddedServer();
 		
 		MongoDBExecutionFactory executionFactory = new MongoDBExecutionFactory();
 		executionFactory.start();
-		server.addTranslator("translator-mongodb", executionFactory);
+		server.addTranslator("mongodb", executionFactory);
 		
 		MongoDBManagedConnectionFactory managedconnectionFactory = new MongoDBManagedConnectionFactory();
 		managedconnectionFactory.setRemoteServerList(SERVERLIST);
@@ -38,25 +34,17 @@ public class TestMongoDataSource {
 		server.addConnectionFactory("java:/mongoDS", managedconnectionFactory.createConnectionFactory());
 		
 		server.start(new EmbeddedConfiguration());
-		server.deployVDB(new FileInputStream(new File("src/vdb/mongodb-vdb.xml")));
-		conn = server.getDriver().connect("jdbc:teiid:nothwind", null);
+		server.deployVDB(new FileInputStream(new File("src/vdb/mongo-vdb-3235.xml")));
+		conn = server.getDriver().connect("jdbc:teiid:mongodb", null);
 		
-		JDBCUtil.executeUpdate(conn, "DELETE FROM Customer");
-		
-		JDBCUtil.executeUpdate(conn, "INSERT INTO Customer(customer_id, FirstName, LastName) VALUES (1, 'Kylin', 'Soong')");
-		JDBCUtil.executeUpdate(conn, "INSERT INTO Customer(customer_id, FirstName, LastName) VALUES (2, 'Kylin', 'Soong')");
-		JDBCUtil.executeUpdate(conn, "INSERT INTO Customer(customer_id, FirstName, LastName) VALUES (3, 'Kylin', 'Soong')");
-		
-		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer");
-		
+		JDBCUtil.executeQuery(conn, "SELECT IntKey FROM BQT1.SmallA");
+		JDBCUtil.executeQuery(conn, "SELECT IntKey FROM BQT1.SmallA GROUP BY IntKey");
+//		JDBCUtil.executeQuery(conn, "SELECT IntKey, IntNum FROM BQT1.SmallA GROUP BY IntKey, IntNum");
+//		JDBCUtil.executeQuery(conn, "SELECT intKey, SUM(IntNum) FROM BQT1.SmallA GROUP BY intKey");
 		
 		JDBCUtil.close(conn);
-	}
-
-	public static void main(String[] args) throws Exception {
 		
-		TestMongoDataSource test = new TestMongoDataSource();
-		test.init();
+//		System.out.println(conn);
 	}
 
 }

@@ -3,8 +3,11 @@ package com.teiid.quickstart.excel;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
+import org.apache.poi.hssf.eventusermodel.HSSFEventFactory;
 import org.apache.poi.hssf.eventusermodel.HSSFListener;
+import org.apache.poi.hssf.eventusermodel.HSSFRequest;
 import org.apache.poi.hssf.record.BOFRecord;
 import org.apache.poi.hssf.record.BoundSheetRecord;
 import org.apache.poi.hssf.record.LabelSSTRecord;
@@ -12,14 +15,19 @@ import org.apache.poi.hssf.record.NumberRecord;
 import org.apache.poi.hssf.record.Record;
 import org.apache.poi.hssf.record.RowRecord;
 import org.apache.poi.hssf.record.SSTRecord;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 public class EventExample implements HSSFListener {
 	
 	public static void main(String[] args) throws IOException {
 		File xlsFile = new File("src/file/otherholdings.xls");
-		FileInputStream xlsFileStream = new FileInputStream(xlsFile);
-		POIFSFileSystem poifs = new POIFSFileSystem(xlsFileStream);
+		InputStream xlsFileStream = new FileInputStream(xlsFile);
+//		POIFSFileSystem poifs = new POIFSFileSystem(xlsFileStream);
+		HSSFRequest req = new HSSFRequest();
+		req.addListenerForAllRecords(new EventExample());
+		HSSFEventFactory factory = new HSSFEventFactory();
+		factory.processEvents(req, xlsFileStream);
+		xlsFileStream.close();
+		System.out.println("done.");
 	}
 	
 	private SSTRecord sstrec;

@@ -14,6 +14,14 @@
 
     SET NAMESPACE 'http://www.teiid.org/translator/excel/2014' AS teiid_excel;
 
+	CREATE FOREIGN TABLE Sheet1 (
+	    StringNum string OPTIONS (SEARCHABLE 'Unsearchable', "teiid_excel:CELL_NUMBER" '1')
+	) OPTIONS ("teiid_excel:FILE" 'smalla.xlsx', "teiid_excel:FIRST_DATA_ROW_NUMBER" '2');
+                             
+     ]]> </metadata>
+   </model>
+
+<!-- 
     CREATE FOREIGN TABLE Sheet1 (
       ROW_ID integer OPTIONS (SEARCHABLE 'All_Except_Like', "teiid_excel:CELL_NUMBER" 'ROW_ID'),
       ACCOUNT_ID integer OPTIONS (SEARCHABLE 'Unsearchable', "teiid_excel:CELL_NUMBER" '1'),
@@ -21,11 +29,8 @@
       PRODUCT_VALUE string OPTIONS (SEARCHABLE 'Unsearchable', "teiid_excel:CELL_NUMBER" '3'),
       CONSTRAINT PK0 PRIMARY KEY(ROW_ID)
     ) OPTIONS ("teiid_excel:FILE" 'otherholdings.xls', "teiid_excel:FIRST_DATA_ROW_NUMBER" '2');
-                                            
-     ]]> </metadata>
-   </model>
-
-  <model name="OtherHoldings" type="VIRTUAL">
+    
+    <model name="OtherHoldings" type="VIRTUAL">
     <metadata type="DDL"><![CDATA[
                   
       CREATE VIEW PersonalHoldings (
@@ -36,8 +41,7 @@
         AS  
       SELECT S.ACCOUNT_ID, S.PRODUCT_TYPE, CONVERT(S.PRODUCT_VALUE, bigdecimal)  FROM PersonalValuations.Sheet1 as S
      ]]></metadata>
-                                                                                                                                                                                                                                               </model>
-
-
+        
+ -->
 
 </vdb>
