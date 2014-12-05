@@ -1,0 +1,14 @@
+<vdb name="mongodb" version="1">
+    <model name="BQT1">
+        <source name="local" translator-name="mongodb" connection-jndi-name="java:/mongoDS"/>
+            <metadata type="DDL"><![CDATA[
+                CREATE FOREIGN TABLE smalla (
+                    INTNUM integer,
+		    		INTKEY integer,
+		   		    STRINGKEY string,
+		    		STRINGNUM string
+                ) OPTIONS(UPDATABLE 'TRUE');
+            ]]> </metadata>
+    </model>
+
+  </vdb>
