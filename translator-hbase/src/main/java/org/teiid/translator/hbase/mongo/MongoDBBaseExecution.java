@@ -19,48 +19,24 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
  */
-package org.teiid.translator.hbase;
+package org.teiid.translator.hbase.mongo;
 
-import java.util.LinkedHashMap;
+import org.teiid.metadata.RuntimeMetadata;
+import org.teiid.mongodb.MongoDBConnection;
+import org.teiid.translator.ExecutionContext;
 
-import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
 
-public class IDRef implements Cloneable {
-	LinkedHashMap<String, Object> pk = new LinkedHashMap<String, Object>(); 
+public class MongoDBBaseExecution {
+	protected ExecutionContext executionContext;
+	protected RuntimeMetadata metadata;
+	protected MongoDBConnection connection;
+	protected DB mongoDB;
 
-	public void addColumn(String key, Object value) {
-		// only add if not added before
-		if (this.pk.get(key) == null) {
-			this.pk.put(key, value);
-		}
-	}
-
-	public Object getValue() {
-		if (this.pk.size() == 1) {
-			for (String key:this.pk.keySet()) {
-				return this.pk.get(key);
-			}
-		}
-		BasicDBObject value = new BasicDBObject();
-		for (String key:this.pk.keySet()) {
-			value.append(key, this.pk.get(key));
-		}
-		return value;
-	}
-
-	@Override
-	public String toString() {
-		Object obj =  getValue();
-		if (obj != null) {
-			return obj.toString();
-		}
-		return null;
-	}
-
-	@Override
-	public IDRef clone() {
-		IDRef clone = new IDRef();
-		clone.pk.putAll(this.pk);
-		return clone;
+	protected MongoDBBaseExecution(ExecutionContext executionContext, RuntimeMetadata metadata, MongoDBConnection connection) {
+		this.executionContext = executionContext;
+		this.metadata = metadata;
+		this.connection = connection;
+		this.mongoDB = connection.getDatabase();
 	}
 }

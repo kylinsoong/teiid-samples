@@ -33,6 +33,24 @@
             <artifactId>connector-hbase</artifactId>
             <version>8.10.0.Alpha1-SNAPSHOT</version>
         </dependency> 
+        
+        <dependency>
+			<groupId>org.jboss.teiid</groupId>
+			<artifactId>teiid-runtime</artifactId>
+			<version>8.10.0.Alpha1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.teiid</groupId>
+			<artifactId>teiid-admin</artifactId>
+			<version>8.10.0.Alpha1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.teiid</groupId>
+			<artifactId>teiid-client</artifactId>
+			<version>8.10.0.Alpha1-SNAPSHOT</version>
+		</dependency>
 
         <dependency>
             <groupId>org.jboss.teiid.connectors</groupId>

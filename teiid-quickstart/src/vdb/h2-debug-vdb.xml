@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<vdb name="H2VDB" version="1">
+
+    <description>The Account Dynamic VDB</description>
+    
+    <!-- 
+      Setting to use connector supplied metadata. Can be "true" or "cached".  
+      "true" will obtain metadata once for every launch of Teiid. 
+      "cached" will save a file containing the metadata into 
+      the deploy/<vdb name>/<vdb version/META-INF directory
+    -->
+    <property name="UseConnectorMetadata" value="true" />
+
+
+
+    <model name="Accounts">
+        <!-- 
+          JDBC Import settings 
+          
+          importer.useFullSchemaName directs the importer to drop the source 
+          schema from the Teiid object name, so that the Teiid fully qualified name
+          will be in the form of <model name>.<table name>
+        -->
+        <property name="importer.useFullSchemaName" value="false"/>
+           
+         <!--
+            This connector is defined to reference the Mysql localDS" 
+          -->
+        <source name="h2-connector" translator-name="translator-h2" connection-jndi-name="java:/accounts-ds"/>
+    </model>
+    
+    <model name="Product" type="VIRTUAL">
+        <metadata type="DDL"><![CDATA[
+        
+        
+        CREATE VIEW PROUDCTVIEW (
+            product_id integer,
+            company_name   varchar(255)
+          )
+            AS
+         SELECT  A.ID, A.COMPANY_NAME FROM Accounts.PRODUCT AS A;
+                
+        ]]> </metadata>
+    </model>
+    
+</vdb>

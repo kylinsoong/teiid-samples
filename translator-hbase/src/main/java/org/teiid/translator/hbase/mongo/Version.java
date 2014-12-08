@@ -20,7 +20,7 @@
  * 02110-1301 USA.
  */
 
-package org.teiid.translator.hbase;
+package org.teiid.translator.hbase.mongo;
 
 import java.util.ArrayList;
 import java.util.Arrays;

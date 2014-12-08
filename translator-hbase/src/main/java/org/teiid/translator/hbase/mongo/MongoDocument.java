@@ -19,14 +19,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
  */
-package org.teiid.translator.hbase;
+package org.teiid.translator.hbase.mongo;
 
 import java.util.*;
 import java.util.Map.Entry;
 
 import org.teiid.metadata.*;
 import org.teiid.translator.TranslatorException;
-import org.teiid.translator.hbase.MutableDBRef.Association;
+import org.teiid.translator.hbase.mongo.MutableDBRef.Association;
 
 import com.mongodb.*;
 
