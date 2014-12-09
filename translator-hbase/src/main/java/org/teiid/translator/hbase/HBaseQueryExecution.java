@@ -6,8 +6,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.teiid.language.DerivedTable;
+import org.teiid.language.Join;
+import org.teiid.language.NamedTable;
 import org.teiid.language.QueryExpression;
 import org.teiid.language.Select;
+import org.teiid.language.TableReference;
 import org.teiid.logging.LogConstants;
 import org.teiid.logging.LogManager;
 import org.teiid.metadata.RuntimeMetadata;
@@ -32,69 +36,93 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 		super(executionFactory, executionContext, metadata, hbconnection);
 		this.command = (Select) command;
 		this.columnDataTypes = command.getColumnTypes();
+		
+//		phoenixTableCreation();
+		SQLConversionVisitor visitor = new SQLConversionVisitor(executionFactory);
+		visitor.visitNode(command);
+	}
+	
+	@Override
+	protected List<String> getTableName() {
+		List<TableReference> list = command.getFrom();
+		List<String> namelist = new ArrayList<String>();
+		for(TableReference reference : list) {
+			if(reference instanceof NamedTable) {
+				NamedTable table = (NamedTable) reference;
+				namelist.add(table.getName());
+			} 
+		}
+		return namelist;
 	}
 	
 	@Override
 	public void execute() throws TranslatorException {
-
-		LogManager.logInfo(LogConstants.CTX_CONNECTOR, this.command);
 		
-		boolean usingTxn = false;
-		boolean success = false;
-		try {
-			TranslatedCommand translatedComm = null;
-			
-			translatedComm = translateCommand(command);
-			String sql = translatedComm.getSql();
-			
-			if (!translatedComm.isPrepared()) {
-			    results = getStatement().executeQuery(sql);
-			} else {
-				PreparedStatement pstatement = getPreparedStatement(sql);
-				bind(pstatement, translatedComm.getPreparedValues(), null);
-				results = pstatement.executeQuery();
-				success = true;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			if (usingTxn) {
-	        	try {
-		        	try {
-			        	if (success) {
-			        		connection.commit();
-			        	} else {
-			        		connection.rollback();
-			        	}
-		        	} finally {
-			    		connection.setAutoCommit(true);
-		        	}
-	        	} catch (SQLException e) {
-	        	}
-        	}
-		}
+		TranslatedCommand translatedComm = null;
+		
+		translatedComm = translateCommand(command);
+		String sql = translatedComm.getSql();
+		
+		System.out.println(sql);
+
+//		LogManager.logInfo(LogConstants.CTX_CONNECTOR, this.command);
+//		
+//		boolean usingTxn = false;
+//		boolean success = false;
+//		try {
+//			TranslatedCommand translatedComm = null;
+//			
+//			translatedComm = translateCommand(command);
+//			String sql = translatedComm.getSql();
+//			
+//			if (!translatedComm.isPrepared()) {
+//			    results = getStatement().executeQuery(sql);
+//			} else {
+//				PreparedStatement pstatement = getPreparedStatement(sql);
+//				bind(pstatement, translatedComm.getPreparedValues(), null);
+//				results = pstatement.executeQuery();
+//				success = true;
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} finally {
+//			if (usingTxn) {
+//	        	try {
+//		        	try {
+//			        	if (success) {
+//			        		connection.commit();
+//			        	} else {
+//			        		connection.rollback();
+//			        	}
+//		        	} finally {
+//			    		connection.setAutoCommit(true);
+//		        	}
+//	        	} catch (SQLException e) {
+//	        	}
+//        	}
+//		}
 	}
 	
 	@Override
 	public List<?> next() throws TranslatorException, DataNotAvailableException {
 		
-		try {
-			if (results.next()) {
-				List<Object> vals = new ArrayList<Object>(columnDataTypes.length);
-				
-				for (int i = 0; i < columnDataTypes.length; i++) {
-                    // Convert from 0-based to 1-based
-                    Object value = this.executionFactory.retrieveValue(results, i+1, columnDataTypes[i]);
-                    vals.add(value); 
-                }
-
-                return vals;
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			if (results.next()) {
+//				List<Object> vals = new ArrayList<Object>(columnDataTypes.length);
+//				
+//				for (int i = 0; i < columnDataTypes.length; i++) {
+//                    // Convert from 0-based to 1-based
+//                    Object value = this.executionFactory.retrieveValue(results, i+1, columnDataTypes[i]);
+//                    vals.add(value); 
+//                }
+//
+//                return vals;
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 		return null;
 	}
@@ -110,8 +138,6 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 		// TODO Auto-generated method stub
 
 	}
-
-	
 
 	
 

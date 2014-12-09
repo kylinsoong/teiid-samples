@@ -3,12 +3,16 @@ package org.teiid.translator.hbase;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Struct;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.resource.cci.ConnectionFactory;
+import javax.sql.rowset.serial.SerialStruct;
 
+import org.teiid.core.types.ArrayImpl;
 import org.teiid.language.Command;
 import org.teiid.language.LanguageObject;
 import org.teiid.language.QueryExpression;
@@ -26,6 +30,8 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
 	
 	private static final Map<Class<?>, Integer> TYPE_CODE_MAP = new HashMap<Class<?>, Integer>();
     
+	private StructRetrieval structRetrieval = StructRetrieval.OBJECT;
+	
     private static final int INTEGER_CODE = 0;
     private static final int LONG_CODE = 1;
     private static final int DOUBLE_CODE = 2;
@@ -42,6 +48,12 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
 	public HBaseExecutionFactory() {
 		
 	}
+	
+	public enum StructRetrieval {
+    	OBJECT,
+    	COPY,
+    	ARRAY
+    }
 
 	@Override
 	public void start() throws TranslatorException {
@@ -88,14 +100,9 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
         } 
 	}
 
-	public Object retrieveValue(ResultSet results, int columnIndex, Class<?> expectedType) {
+	public Object retrieveValue(ResultSet results, int columnIndex, Class<?> expectedType) throws SQLException {
 		Integer code = TYPE_CODE_MAP.get(expectedType);
         if(code != null) {
-            // Calling the specific methods here is more likely to get uniform (and fast) results from different
-            // data sources as the driver likely knows the best and fastest way to convert from the underlying
-            // raw form of the data to the expected type.  We use a switch with codes in order without gaps
-            // as there is a special bytecode instruction that treats this case as a map such that not every value 
-            // needs to be tested, which means it is very fast.
             switch(code.intValue()) {
                 case INTEGER_CODE:  {
                     int value = results.getInt(columnIndex);                    
@@ -136,13 +143,13 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
                     return Float.valueOf(value);
                 }
                 case TIME_CODE: {
-            		return results.getTime(columnIndex, getDatabaseCalendar());
+            		return results.getTime(columnIndex);
                 }
                 case DATE_CODE: {
-            		return results.getDate(columnIndex, getDatabaseCalendar());
+            		return results.getDate(columnIndex);
                 }
                 case TIMESTAMP_CODE: {
-            		return results.getTimestamp(columnIndex, getDatabaseCalendar());
+            		return results.getTimestamp(columnIndex);
                 }
     			case BLOB_CODE: {
     				try {
@@ -176,5 +183,19 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
         	return convertObject(result);
         }
 		return result;
+	}
+	
+	protected Object convertObject(Object object) throws SQLException {
+    	if (object instanceof Struct) {
+    		switch (structRetrieval) {
+    		case OBJECT:
+    			return object;
+    		case ARRAY:
+    			return new ArrayImpl(((Struct)object).getAttributes());
+    		case COPY:
+    			return new SerialStruct((Struct)object, Collections.<String, Class<?>> emptyMap());
+    		}
+    	}
+    	return object;
 	}
 }

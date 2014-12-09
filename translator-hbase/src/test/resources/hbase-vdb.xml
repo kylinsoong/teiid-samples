@@ -2,15 +2,18 @@
 <vdb name="hbasevdb" version="1">
     <model name="Customer">
         <source name="local" translator-name="translator-hbase" connection-jndi-name="java:/hbaseDS"/>
-            <metadata type="DDL"><![CDATA[
+        <metadata type="DDL"><![CDATA[
+            
+                SET NAMESPACE 'http://www.teiid.org/translator/hbase/2014' AS teiid_hbase;
+            
                 CREATE FOREIGN TABLE Customer (
-                	PK string,
-                    city string,
-                    name string,
-                    amount string,
-                    product string,
+                	PK string OPTIONS ("teiid_hbase:CELL" 'ROW_ID'),
+                    city string OPTIONS ("teiid_hbase:CELL" 'customer.city'),
+                    name string OPTIONS ("teiid_hbase:CELL" 'customer.name'),
+                    amount string OPTIONS ("teiid_hbase:CELL" 'sales.amount'),
+                    product string OPTIONS ("teiid_hbase:CELL" 'sales.product'),
                     CONSTRAINT PK0 PRIMARY KEY(PK)
-                ) OPTIONS(UPDATABLE 'TRUE');
+                ) OPTIONS("teiid_hbase:TABLE" 'Customer', "UPDATABLE" 'TRUE');
             ]]> </metadata>
     </model>
 </vdb>

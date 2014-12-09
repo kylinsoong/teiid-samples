@@ -8,17 +8,19 @@ import java.sql.Statement;
 import java.util.List;
 
 import org.teiid.language.Command;
+import org.teiid.language.LanguageObject;
 import org.teiid.language.Literal;
 import org.teiid.language.Parameter;
 import org.teiid.logging.LogConstants;
 import org.teiid.logging.LogManager;
 import org.teiid.logging.MessageLevel;
 import org.teiid.metadata.RuntimeMetadata;
+import org.teiid.metadata.Table;
 import org.teiid.resource.adapter.hbase.HBaseConnection;
 import org.teiid.translator.ExecutionContext;
 import org.teiid.translator.TranslatorException;
 
-public class HBaseExecution {
+public abstract class HBaseExecution {
 	
 	protected HBaseExecutionFactory executionFactory;
 	protected ExecutionContext executionContext;
@@ -36,6 +38,22 @@ public class HBaseExecution {
 		this.connection = hbconnection.getConnection();
 	}
 	
+	protected void phoenixTableCreation() {
+		List<String> list = getTableName();
+		try {
+			for(String name : list) {
+				Table table = metadata.getTable(name);
+				String hbaseTableName = table.getProperty(HBaseMetadataProcessor.TABLE, false);
+				
+				System.out.println(hbaseTableName);
+			}
+		} catch (TranslatorException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	protected abstract List<String> getTableName() ;
+
 	protected TranslatedCommand translateCommand(Command command) throws TranslatorException {
 		TranslatedCommand translatedCommand = new TranslatedCommand(this.executionContext, this.executionFactory);
 		translatedCommand.translateCommand(command);
