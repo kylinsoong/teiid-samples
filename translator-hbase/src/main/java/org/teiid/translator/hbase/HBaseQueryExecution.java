@@ -15,6 +15,7 @@ import org.teiid.language.TableReference;
 import org.teiid.logging.LogConstants;
 import org.teiid.logging.LogManager;
 import org.teiid.metadata.RuntimeMetadata;
+import org.teiid.metadata.Table;
 import org.teiid.resource.adapter.hbase.HBaseConnection;
 import org.teiid.translator.DataNotAvailableException;
 import org.teiid.translator.ExecutionContext;
@@ -37,19 +38,18 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 		this.command = (Select) command;
 		this.columnDataTypes = command.getColumnTypes();
 		
-//		phoenixTableCreation();
-		SQLConversionVisitor visitor = new SQLConversionVisitor(executionFactory);
-		visitor.visitNode(command);
+		phoenixTableCreation();
 	}
 	
 	@Override
-	protected List<String> getTableName() {
+	protected List<Table> getlMetaDataTable() {
 		List<TableReference> list = command.getFrom();
-		List<String> namelist = new ArrayList<String>();
+		List<Table> namelist = new ArrayList<Table>();
 		for(TableReference reference : list) {
 			if(reference instanceof NamedTable) {
-				NamedTable table = (NamedTable) reference;
-				namelist.add(table.getName());
+				NamedTable namedtable = (NamedTable) reference;
+				Table table = namedtable.getMetadataObject();
+				namelist.add(table);
 			} 
 		}
 		return namelist;
