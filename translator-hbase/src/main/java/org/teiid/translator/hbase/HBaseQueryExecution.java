@@ -38,7 +38,9 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 		this.command = (Select) command;
 		this.columnDataTypes = command.getColumnTypes();
 		
-		phoenixTableCreation();
+		SQLConversionVisitor vistor = new SQLConversionVisitor(executionFactory);
+		vistor.visitNode(command);
+//		phoenixTableCreation();
 	}
 	
 	@Override

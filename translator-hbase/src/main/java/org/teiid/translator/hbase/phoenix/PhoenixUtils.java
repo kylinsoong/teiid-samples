@@ -1,4 +1,4 @@
-package org.teiid.translator.hbase;
+package org.teiid.translator.hbase.phoenix;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +8,25 @@ import java.util.List;
 import java.util.Map;
 
 public class PhoenixUtils {
+	
+	public static String hbaseTableMappingDDL(String tname, String rname, Map<String, List<String>> quaMap){
+		StringBuffer sb = new StringBuffer();
+		sb.append("CREATE TABLE IF NOT EXISTS").append(" ").append("\"" + tname + "\"");
+		sb.append(" (").append(rname).append(" ").append("VARCHAR PRIMARY KEY,");
+		for(String family : quaMap.keySet()) {
+			for(String qualifier: quaMap.get(family)) {
+				sb.append(" ");
+				sb.append("\"").append(family).append("\"");
+				sb.append(".");
+				sb.append("\"").append(qualifier).append("\"");
+				sb.append(" ");
+				sb.append("VARCHAR,");
+			}
+		}
+		String ddl = sb.toString();
+		ddl = ddl.substring(0, ddl.length() - 1) + ")";
+		return ddl;
+	}
 	
 	public static void hbaseTableMapping(Connection conn, String tname, String rname, Map<String, List<String>> quaMap) throws SQLException{
 		StringBuffer sb = new StringBuffer();

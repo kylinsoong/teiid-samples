@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+import org.teiid.translator.hbase.phoenix.PhoenixUtils;
 
 public class TestPhoenixDriver {
 
