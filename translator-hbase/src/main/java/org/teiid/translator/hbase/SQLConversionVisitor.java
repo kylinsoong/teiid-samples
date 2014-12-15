@@ -1,5 +1,6 @@
 package org.teiid.translator.hbase;
 
+import static org.teiid.language.SQLConstants.Reserved.AS;
 import static org.teiid.language.SQLConstants.Reserved.DISTINCT;
 import static org.teiid.language.SQLConstants.Reserved.FROM;
 import static org.teiid.language.SQLConstants.Reserved.HAVING;
@@ -7,20 +8,17 @@ import static org.teiid.language.SQLConstants.Reserved.SELECT;
 import static org.teiid.language.SQLConstants.Reserved.WHERE;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.phoenix.schema.PColumn;
 import org.apache.phoenix.schema.PDataType;
-import org.apache.phoenix.schema.PTableImpl;
+import org.apache.phoenix.schema.PName;
+import org.apache.phoenix.schema.PTable;
 import org.teiid.language.Argument;
 import org.teiid.language.ColumnReference;
 import org.teiid.language.DerivedColumn;
-import org.teiid.language.LanguageObject;
 import org.teiid.language.NamedTable;
 import org.teiid.language.Select;
 import org.teiid.language.TableReference;
@@ -31,6 +29,8 @@ import org.teiid.metadata.Table;
 import org.teiid.translator.ExecutionContext;
 import org.teiid.translator.hbase.phoenix.PColumnTeiidImpl;
 import org.teiid.translator.hbase.phoenix.PNameTeiidImpl;
+import org.teiid.translator.hbase.phoenix.PTableTeiidImpl;
+import org.teiid.translator.hbase.phoenix.PhoenixUtils;
 
 public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringVisitor.Substitutor {
 	
@@ -38,14 +38,15 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 	private ExecutionContext context ;
 	
 	// used to map hbase table to phoenix
-	private PTableImpl ptable;
+	private PTable ptable;
 	
 	private boolean prepared;
 	
 	private List preparedValues = new ArrayList();
 	
-	private Set<LanguageObject> recursionObjects = Collections.newSetFromMap(new IdentityHashMap<LanguageObject, Boolean>());
-	private Map<LanguageObject, Object> translations = new IdentityHashMap<LanguageObject, Object>(); 
+	private Map<Column, PColumn> columnsMap = new HashMap<Column, PColumn> ();
+	
+	private String mappingDDL; 
 	
 	public SQLConversionVisitor(HBaseExecutionFactory ef) {
 		this.executionFactory = ef;
@@ -68,7 +69,11 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 		this.prepared = prepared;
 	}
 	
-	public PTableImpl getMappingDDL() {
+	public String getMappingDDL() {
+		return mappingDDL;
+	}
+	
+	public PTable getPhoenixTable() {
 		return ptable;
 	}
 
@@ -92,8 +97,8 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
         }
         append(obj.getDerivedColumns());
         if (obj.getFrom() != null && !obj.getFrom().isEmpty()) {
-        	buffer.append(Tokens.SPACE).append(FROM).append(Tokens.SPACE);      
-            append(obj.getFrom());
+        	buffer.append(Tokens.SPACE).append(FROM).append(Tokens.SPACE);    
+        	buffer.append(ptable.getTableName().getString()).append(Tokens.SPACE).append(AS).append(Tokens.SPACE).append(ptable.getName().getString());
         }
         if (obj.getWhere() != null) {
             buffer.append(Tokens.SPACE)
@@ -123,8 +128,6 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 	
 	private void phoenixTableMapping(List<TableReference> list) {
 		
-		
-
 		Table table = null;
 		for(TableReference reference : list) {
 			if(reference instanceof NamedTable) {
@@ -137,8 +140,8 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 			return ;
 		}
 		
-		Map<String, List<String>> quaMap = new HashMap<String, List<String>> ();
 		String tname = table.getProperty(HBaseMetadataProcessor.TABLE, false);
+		PName tableName = PNameTeiidImpl.makePName(tname);
 		
 		List<PColumn> columns = new ArrayList<PColumn>();
 		for(Column column : table.getColumns()) {
@@ -146,29 +149,17 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 			String cell = column.getProperty(HBaseMetadataProcessor.CELL, false);
 			String[] qua =  cell.split(":");
 			if(qua.length != 2) {
-				String rname = cell;
 				pcolumn = new PColumnTeiidImpl(PNameTeiidImpl.makePName(cell), null, convertType(column));
 			} else {
-				
-				if(quaMap.get(qua[0]) == null) {
-					List<String> qualist = new ArrayList<String>();
-					quaMap.put(qua[0], qualist);
-				}
-				quaMap.get(qua[0]).add(qua[1]);
 				pcolumn = new PColumnTeiidImpl(PNameTeiidImpl.makePName(qua[1]), PNameTeiidImpl.makePName(qua[0]), convertType(column));
 			}	
 			columns.add(pcolumn);
+			columnsMap.put(column, pcolumn);
 		}
 		
-		String rname = null ;
-		
-					
+		ptable = PTableTeiidImpl.makeTable(tableName, columns);
 			
-			
-			
-		
-		
-//		this.mappingDDL = PhoenixUtils.hbaseTableMappingDDL(tname, rname, quaMap);
+		this.mappingDDL = PhoenixUtils.hbaseTableMappingDDL(ptable);
 	}
 
 	private PDataType convertType(Column column) {
@@ -185,45 +176,18 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 	}
 
 	@Override
-	public void visit(ColumnReference obj) {
-		// TODO Auto-generated method stub
-		super.visit(obj);
-	}
-
-	@Override
 	public void visit(DerivedColumn obj) {
-		// TODO Auto-generated method stub
-		super.visit(obj);
+		
+		ColumnReference columnReference = (ColumnReference) obj.getExpression();
+		Column column = columnReference.getMetadataObject();
+		PColumn pcolumn = columnsMap.get(column);
+		buffer.append(ptable.getName().getString() + Tokens.DOT + pcolumn.getName().getString());
 	}
 
-	@Override
-	public void append(LanguageObject obj) {
-		
-		List<?> parts = null;
-		if (!recursionObjects.contains(obj)) {
-			Object trans = this.translations.get(obj);
-    		if (trans instanceof List<?>) {
-    			parts = (List<?>)trans;
-    		} else if (trans instanceof LanguageObject) {
-    			obj = (LanguageObject)trans;
-    		} else {
-    			parts = executionFactory.translate(obj, context);
-    		}
-		}
-		
-		if(parts != null) {
-			recursionObjects.add(obj);
-			for (Object part : parts) {
-				if(part instanceof LanguageObject) {
-			        append((LanguageObject)part);
-			    } else {
-			        buffer.append(part);
-			    }
-			}
-			recursionObjects.remove(obj);
-		} else {
-			super.append(obj);
-		}
+	
+	
+	public String getSQL(){
+		return buffer.toString();
 	}
 
 	@Override

@@ -15,13 +15,8 @@ public class TestSQLConversionVisitor {
 		
 		HBaseExecutionFactory ef = new HBaseExecutionFactory();
 		ef.start();
-		TranslatedCommand translatedComm = new TranslatedCommand(null, ef);
-		translatedComm.translateCommand(command);
-		
-		System.out.println(translatedComm.getSql());
+
 	}
-	
-	
 	
 	private static TranslationUtility translationUtility = new TranslationUtility(TestHBaseUtil.queryMetadataInterface());
 	

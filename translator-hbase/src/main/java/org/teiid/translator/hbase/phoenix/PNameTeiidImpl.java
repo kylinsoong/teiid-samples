@@ -8,6 +8,10 @@ public class PNameTeiidImpl implements PName {
 	private String name;
 
 	public static PNameTeiidImpl makePName(String name) {
+		return new PNameTeiidImpl("\"" +name + "\"");
+	}
+	
+	public static PNameTeiidImpl makePNameWithoutQuote(String name) {
 		return new PNameTeiidImpl(name);
 	}
 

@@ -1,13 +1,11 @@
 package org.teiid.translator.hbase;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.teiid.language.DerivedTable;
-import org.teiid.language.Join;
+
 import org.teiid.language.NamedTable;
 import org.teiid.language.QueryExpression;
 import org.teiid.language.Select;
@@ -21,6 +19,7 @@ import org.teiid.translator.DataNotAvailableException;
 import org.teiid.translator.ExecutionContext;
 import org.teiid.translator.ResultSetExecution;
 import org.teiid.translator.TranslatorException;
+import org.teiid.translator.hbase.phoenix.PhoenixUtils;
 
 public class HBaseQueryExecution extends HBaseExecution implements ResultSetExecution {
 	
@@ -28,6 +27,8 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 	private Class<?>[] columnDataTypes;
 	
 	protected ResultSet results;
+	
+	private SQLConversionVisitor vistor;
 
 	public HBaseQueryExecution(HBaseExecutionFactory executionFactory
 							 , QueryExpression command
@@ -38,9 +39,8 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 		this.command = (Select) command;
 		this.columnDataTypes = command.getColumnTypes();
 		
-		SQLConversionVisitor vistor = new SQLConversionVisitor(executionFactory);
+		vistor = new SQLConversionVisitor(executionFactory);
 		vistor.visitNode(command);
-//		phoenixTableCreation();
 	}
 	
 	@Override
@@ -57,82 +57,79 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 		return namelist;
 	}
 	
+	boolean idMapped = false;
+	
 	@Override
 	public void execute() throws TranslatorException {
-		
-		TranslatedCommand translatedComm = null;
-		
-		translatedComm = translateCommand(command);
-		String sql = translatedComm.getSql();
-		
-		System.out.println(sql);
 
-//		LogManager.logInfo(LogConstants.CTX_CONNECTOR, this.command);
-//		
-//		boolean usingTxn = false;
-//		boolean success = false;
-//		try {
-//			TranslatedCommand translatedComm = null;
-//			
-//			translatedComm = translateCommand(command);
-//			String sql = translatedComm.getSql();
-//			
-//			if (!translatedComm.isPrepared()) {
-//			    results = getStatement().executeQuery(sql);
-//			} else {
-//				PreparedStatement pstatement = getPreparedStatement(sql);
-//				bind(pstatement, translatedComm.getPreparedValues(), null);
-//				results = pstatement.executeQuery();
-//				success = true;
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} finally {
-//			if (usingTxn) {
-//	        	try {
-//		        	try {
-//			        	if (success) {
-//			        		connection.commit();
-//			        	} else {
-//			        		connection.rollback();
-//			        	}
-//		        	} finally {
-//			    		connection.setAutoCommit(true);
-//		        	}
-//	        	} catch (SQLException e) {
-//	        	}
-//        	}
-//		}
+		LogManager.logInfo(LogConstants.CTX_CONNECTOR, this.command);
+		
+		boolean usingTxn = false;
+		boolean success = false;
+		try {
+			
+			if(!idMapped) {
+				PhoenixUtils.executeUpdate(connection, vistor.getMappingDDL());
+				idMapped = true;
+			}
+			
+			results = getStatement().executeQuery(vistor.getSQL());
+			success = true;
+		} catch (SQLException e) {
+			// TODO-- 
+			throw new RuntimeException(e);
+		} finally {
+			if (usingTxn) {
+	        	try {
+		        	try {
+			        	if (success) {
+			        		connection.commit();
+			        	} else {
+			        		connection.rollback();
+			        	}
+		        	} finally {
+			    		connection.setAutoCommit(true);
+		        	}
+	        	} catch (SQLException e) {
+	        	}
+        	}
+		}
 	}
 	
 	@Override
 	public List<?> next() throws TranslatorException, DataNotAvailableException {
 		
-//		try {
-//			if (results.next()) {
-//				List<Object> vals = new ArrayList<Object>(columnDataTypes.length);
-//				
-//				for (int i = 0; i < columnDataTypes.length; i++) {
-//                    // Convert from 0-based to 1-based
-//                    Object value = this.executionFactory.retrieveValue(results, i+1, columnDataTypes[i]);
-//                    vals.add(value); 
-//                }
-//
-//                return vals;
-//			}
-//		} catch (SQLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			if (results.next()) {
+				List<Object> vals = new ArrayList<Object>(columnDataTypes.length);
+				
+				for (int i = 0; i < columnDataTypes.length; i++) {
+                    // Convert from 0-based to 1-based
+                    Object value = this.executionFactory.retrieveValue(results, i+1, columnDataTypes[i]);
+                    vals.add(value); 
+                }
+
+                return vals;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e);
+		}
 		
 		return null;
 	}
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
 
+		if (results != null) {
+            try {
+                results.close();
+                results = null;
+            } catch (SQLException e) {
+            	LogManager.logDetail(LogConstants.CTX_CONNECTOR, e, "Exception closing"); 
+            }
+        }
 	}
 
 	@Override

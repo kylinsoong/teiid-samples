@@ -4,53 +4,48 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-import java.util.Map;
+
+
+import org.apache.phoenix.schema.PColumn;
+import org.apache.phoenix.schema.PTable;
+import org.teiid.language.SQLConstants.Tokens;
 
 public class PhoenixUtils {
 	
-	public static String hbaseTableMappingDDL(String tname, String rname, Map<String, List<String>> quaMap){
+	public static final String QUOTE = "\"";
+	
+	public static String hbaseTableMappingDDL(PTable ptable) {
+		
 		StringBuffer sb = new StringBuffer();
-		sb.append("CREATE TABLE IF NOT EXISTS").append(" ").append("\"" + tname + "\"");
-		sb.append(" (").append(rname).append(" ").append("VARCHAR PRIMARY KEY,");
-		for(String family : quaMap.keySet()) {
-			for(String qualifier: quaMap.get(family)) {
-				sb.append(" ");
-				sb.append("\"").append(family).append("\"");
-				sb.append(".");
-				sb.append("\"").append(qualifier).append("\"");
-				sb.append(" ");
-				sb.append("VARCHAR,");
+		sb.append("CREATE TABLE IF NOT EXISTS").append(Tokens.SPACE).append(ptable.getTableName().getString());
+		sb.append(Tokens.SPACE).append(Tokens.LPAREN);
+		
+		for (PColumn pColumn : ptable.getColumns()) {
+			if(pColumn.getFamilyName() == null) {
+				String pk = pColumn.getName().getString();
+				sb.append(pk).append(Tokens.SPACE).append(pColumn.getDataType()).append(Tokens.SPACE).append("PRIMARY KEY").append(Tokens.COMMA).append(Tokens.SPACE);
+			} else {
+				String family = pColumn.getFamilyName().getString();
+				String qualifier = pColumn.getName().getString();
+				sb.append(family).append(Tokens.DOT).append(qualifier).append(Tokens.SPACE).append(pColumn.getDataType()).append(Tokens.COMMA).append(Tokens.SPACE);
 			}
 		}
+		
+//		String pks = "";
+//		for(PColumn pkColumn: ptable.getPKColumns()) {
+//			pks += pkColumn.getName().getString();
+//			pks += Tokens.COMMA;
+//			pks += Tokens.SPACE;
+//		}
+//		pks = pks.substring(0, pks.length() - 2);
+//		sb.append("CONSTRAINT").append(Tokens.SPACE).append("PK_" + ptable.getTableName().getString()).append(Tokens.SPACE) ;
+//		sb.append("PRIMARY KEY").append(Tokens.SPACE).append(Tokens.LPAREN).append(pks).append(Tokens.RPAREN);
 		String ddl = sb.toString();
-		ddl = ddl.substring(0, ddl.length() - 1) + ")";
+		ddl = ddl.substring(0, ddl.length() - 2) + Tokens.RPAREN ;
 		return ddl;
 	}
 	
-	public static void hbaseTableMapping(Connection conn, String tname, String rname, Map<String, List<String>> quaMap) throws SQLException{
-		StringBuffer sb = new StringBuffer();
-		sb.append("CREATE TABLE IF NOT EXISTS").append(" ").append("\"" + tname + "\"");
-		sb.append(" (").append(rname).append(" ").append("VARCHAR PRIMARY KEY,");
-		for(String family : quaMap.keySet()) {
-			for(String qualifier: quaMap.get(family)) {
-				sb.append(" ");
-				sb.append("\"").append(family).append("\"");
-				sb.append(".");
-				sb.append("\"").append(qualifier).append("\"");
-				sb.append(" ");
-				sb.append("VARCHAR,");
-			}
-		}
-		String ddl = sb.toString();
-		ddl = ddl.substring(0, ddl.length() - 1) + ")";
-		if(executeUpdate(conn, ddl)){
-			System.out.println("Mapping HBase Table " + tname + ": " + ddl);
-		}
-	}
-	
 	public static boolean executeUpdate(Connection conn, String sql) throws SQLException {
-		
 		
 		Statement stmt = null;
 		
@@ -85,5 +80,7 @@ public class PhoenixUtils {
 		conn.setAutoCommit(true);
 		return conn;
 	}
+
+	
 
 }
