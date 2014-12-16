@@ -184,8 +184,14 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 		buffer.append(ptable.getName().getString() + Tokens.DOT + pcolumn.getName().getString());
 	}
 
-	
-	
+	@Override
+	public void visit(ColumnReference obj) {
+		
+		Column column = obj.getMetadataObject();
+		PColumn pcolumn = columnsMap.get(column);
+		buffer.append(ptable.getName().getString() + Tokens.DOT + pcolumn.getName().getString());
+	}
+
 	public String getSQL(){
 		return buffer.toString();
 	}
