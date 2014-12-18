@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.sql.Struct;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.resource.cci.ConnectionFactory;
@@ -14,7 +13,6 @@ import javax.sql.rowset.serial.SerialStruct;
 
 import org.teiid.core.types.ArrayImpl;
 import org.teiid.language.Command;
-import org.teiid.language.LanguageObject;
 import org.teiid.language.QueryExpression;
 import org.teiid.metadata.RuntimeMetadata;
 import org.teiid.resource.adapter.hbase.HBaseConnection;
@@ -23,10 +21,14 @@ import org.teiid.translator.ExecutionFactory;
 import org.teiid.translator.ResultSetExecution;
 import org.teiid.translator.Translator;
 import org.teiid.translator.TranslatorException;
+import org.teiid.translator.TranslatorProperty;
 import org.teiid.translator.TypeFacility;
+import org.teiid.translator.UpdateExecution;
 
 @Translator(name="hbase", description="HBase Translator, reads and writes the data to HBase")
 public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, HBaseConnection> {
+	
+	private int maxInsertBatchSize = 2048;
 	
 	private static final Map<Class<?>, Integer> TYPE_CODE_MAP = new HashMap<Class<?>, Integer>();
     
@@ -85,6 +87,15 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
 		return new HBaseQueryExecution(this, command, executionContext, metadata, connection);
 	}
 	
+	@Override
+	public UpdateExecution createUpdateExecution(Command command
+											   , ExecutionContext executionContext
+											   , RuntimeMetadata metadata
+											   , HBaseConnection connection) throws TranslatorException {
+
+		return new HBaseUpdateExecution(this, command, executionContext, metadata, connection);
+	}
+
 	public SQLConversionVisitor getSQLConversionVisitor() {
 		return new SQLConversionVisitor(this);
 	}
@@ -94,18 +105,21 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
 		return false;
 	}
 
-	public List<?> translate(LanguageObject obj, ExecutionContext context) {
-		List<?> parts = null;
-		if(obj instanceof Command) {
-			parts = translateCommand((Command)obj, context);
-		}
-		
-		return parts;
-	}
-	
-	public List<?> translateCommand(Command command, ExecutionContext context) {
-    	return null;
+	 /**
+     * Get the max number of inserts to perform in one batch.
+     * @return
+     */
+    @TranslatorProperty(display="Max Prepared Insert Batch Size", description="The max size of a prepared insert batch.  Default 2048.", advanced=true)
+    public int getMaxPreparedInsertBatchSize() {
+    	return maxInsertBatchSize;
     }
+    
+    public void setMaxPreparedInsertBatchSize(int maxInsertBatchSize) {
+    	if (maxInsertBatchSize < 1) {
+    		throw new AssertionError("Max prepared batch insert size must be greater than 0"); //$NON-NLS-1$
+    	}
+		this.maxInsertBatchSize = maxInsertBatchSize;
+	}
 
 	public void bindValue(PreparedStatement stmt, Object param, Class<?> paramType, int i) throws SQLException {
 
@@ -214,4 +228,6 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
     	}
     	return object;
 	}
+
+	
 }

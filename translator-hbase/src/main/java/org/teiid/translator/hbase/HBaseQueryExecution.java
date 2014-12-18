@@ -39,11 +39,10 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 		this.command = (Select) command;
 		this.columnDataTypes = command.getColumnTypes();
 		
-		vistor = new SQLConversionVisitor(executionFactory);
+		vistor = this.executionFactory.getSQLConversionVisitor();
 		vistor.visitNode(command);
 	}
 	
-	@Override
 	protected List<Table> getlMetaDataTable() {
 		List<TableReference> list = command.getFrom();
 		List<Table> namelist = new ArrayList<Table>();
@@ -57,7 +56,7 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 		return namelist;
 	}
 	
-	boolean idMapped = false;
+	boolean isMapped = false;
 	
 	@Override
 	public void execute() throws TranslatorException {
@@ -68,9 +67,11 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 		boolean success = false;
 		try {
 			
-			if(!idMapped) {
-				PhoenixUtils.executeUpdate(connection, vistor.getMappingDDL());
-				idMapped = true;
+			if(!isMapped) {
+				for(String ddl : vistor.getMappingDDLList()){
+					PhoenixUtils.executeUpdate(connection, ddl);
+				}			
+				isMapped = true;
 			}
 			
 			results = getStatement().executeQuery(vistor.getSQL());

@@ -36,9 +36,7 @@ public abstract class HBaseExecution {
 		this.hbconnection = hbconnection;
 		this.connection = hbconnection.getConnection();
 	}
-	
-	protected abstract List<Table> getlMetaDataTable() ;
-	
+		
 	protected synchronized Statement getStatement() throws SQLException {
         if (statement != null) {
             statement.close();

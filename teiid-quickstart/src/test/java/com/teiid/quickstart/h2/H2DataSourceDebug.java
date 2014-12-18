@@ -49,7 +49,7 @@ public class H2DataSourceDebug {
 		
 		conn = server.getDriver().connect("jdbc:teiid:H2VDB", null);	
 				
-		JDBCUtil.executeQuery(conn, "SELECT * FROM PROUDCTVIEW");
+		JDBCUtil.executeQuery(conn, "SELECT company_name, COUNT(product_id) FROM PROUDCTVIEW GROUP BY company_name");
 		
 		JDBCUtil.close(conn);
 		

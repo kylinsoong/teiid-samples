@@ -4,6 +4,7 @@ import static org.teiid.language.SQLConstants.Reserved.AS;
 import static org.teiid.language.SQLConstants.Reserved.DISTINCT;
 import static org.teiid.language.SQLConstants.Reserved.FROM;
 import static org.teiid.language.SQLConstants.Reserved.HAVING;
+import static org.teiid.language.SQLConstants.Reserved.INTO;
 import static org.teiid.language.SQLConstants.Reserved.SELECT;
 import static org.teiid.language.SQLConstants.Reserved.WHERE;
 
@@ -19,11 +20,13 @@ import org.apache.phoenix.schema.PTable;
 import org.teiid.language.Argument;
 import org.teiid.language.ColumnReference;
 import org.teiid.language.DerivedColumn;
+import org.teiid.language.Insert;
 import org.teiid.language.NamedTable;
 import org.teiid.language.Select;
 import org.teiid.language.TableReference;
 import org.teiid.language.SQLConstants.Tokens;
 import org.teiid.language.visitor.SQLStringVisitor;
+import org.teiid.metadata.AbstractMetadataRecord;
 import org.teiid.metadata.Column;
 import org.teiid.metadata.Table;
 import org.teiid.translator.ExecutionContext;
@@ -34,19 +37,23 @@ import org.teiid.translator.hbase.phoenix.PhoenixUtils;
 
 public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringVisitor.Substitutor {
 	
+	public static final String INSERT = "UPSERT";
+	
 	private HBaseExecutionFactory executionFactory ;
 	private ExecutionContext context ;
 	
 	// used to map hbase table to phoenix
-	private PTable ptable;
+//	private PTable ptable;
 	
 	private boolean prepared;
 	
 	private List preparedValues = new ArrayList();
 	
 	private Map<Column, PColumn> columnsMap = new HashMap<Column, PColumn> ();
+	private Map<Table, PTable> tablesMap = new HashMap<Table, PTable> ();
+	private List<String> mappingDDLlist = new ArrayList<String>();
 	
-	private String mappingDDL; 
+//	private String mappingDDL; 
 	
 	public SQLConversionVisitor(HBaseExecutionFactory ef) {
 		this.executionFactory = ef;
@@ -69,17 +76,13 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 		this.prepared = prepared;
 	}
 	
-	public String getMappingDDL() {
-		return mappingDDL;
-	}
-	
-	public PTable getPhoenixTable() {
-		return ptable;
+	public List<String> getMappingDDLList() {
+		return mappingDDLlist;
 	}
 
 	@Override
 	public void visit(Select obj) {
-		
+				
 		if (obj.getFrom() != null && !obj.getFrom().isEmpty()) {
 			phoenixTableMapping(obj.getFrom());
 		}
@@ -97,8 +100,10 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
         }
         append(obj.getDerivedColumns());
         if (obj.getFrom() != null && !obj.getFrom().isEmpty()) {
-        	buffer.append(Tokens.SPACE).append(FROM).append(Tokens.SPACE);    
-        	buffer.append(ptable.getTableName().getString()).append(Tokens.SPACE).append(AS).append(Tokens.SPACE).append(ptable.getName().getString());
+        	buffer.append(Tokens.SPACE).append(FROM).append(Tokens.SPACE);      
+            append(obj.getFrom());
+//        	buffer.append(Tokens.SPACE).append(FROM).append(Tokens.SPACE);    
+//        	buffer.append(ptable.getTableName().getString()).append(Tokens.SPACE).append(AS).append(Tokens.SPACE).append(ptable.getName().getString());
         }
         if (obj.getWhere() != null) {
             buffer.append(Tokens.SPACE)
@@ -126,19 +131,31 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
         }
     }
 	
-	private void phoenixTableMapping(List<TableReference> list) {
+	@Override
+	public void visit(Insert obj) {
 		
-		Table table = null;
-		for(TableReference reference : list) {
-			if(reference instanceof NamedTable) {
-				NamedTable namedtable = (NamedTable) reference;
-				table = namedtable.getMetadataObject();
-			} 
-		}
+		phoenixTableMapping(obj.getTable());
 		
-		if(null == table) {
-			return ;
-		}
+		buffer.append(INSERT).append(Tokens.SPACE);
+		buffer.append(INTO).append(Tokens.SPACE);
+		
+		PTable ptable = tablesMap.get(obj.getTable().getMetadataObject());
+    	buffer.append(ptable.getTableName().getString());
+    	
+		buffer.append(Tokens.SPACE).append(Tokens.LPAREN);
+
+		this.shortNameOnly = true;
+		append(obj.getColumns());
+		this.shortNameOnly = false;
+
+		buffer.append(Tokens.RPAREN);
+        buffer.append(Tokens.SPACE);
+        append(obj.getValueSource());
+	}
+	
+	private void phoenixTableMapping(NamedTable namedtable) {
+		
+		Table table = namedtable.getMetadataObject();
 		
 		String tname = table.getProperty(HBaseMetadataProcessor.TABLE, false);
 		PName tableName = PNameTeiidImpl.makePName(tname);
@@ -157,9 +174,25 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 			columnsMap.put(column, pcolumn);
 		}
 		
-		ptable = PTableTeiidImpl.makeTable(tableName, columns);
-			
-		this.mappingDDL = PhoenixUtils.hbaseTableMappingDDL(ptable);
+		PTable ptable = PTableTeiidImpl.makeTable(tableName, columns);
+		
+		tablesMap.put(table, ptable);
+		
+		mappingDDLlist.add(PhoenixUtils.hbaseTableMappingDDL(ptable));	
+	}
+
+	
+	private void phoenixTableMapping(List<TableReference> list) {
+		
+		// TODO TableReference list
+		for(TableReference reference : list) {
+			if(reference instanceof NamedTable) {
+				NamedTable namedtable = (NamedTable) reference;
+				phoenixTableMapping(namedtable);
+			} 
+		}
+	
+		
 	}
 
 	private PDataType convertType(Column column) {
@@ -178,18 +211,60 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 	@Override
 	public void visit(DerivedColumn obj) {
 		
-		ColumnReference columnReference = (ColumnReference) obj.getExpression();
-		Column column = columnReference.getMetadataObject();
-		PColumn pcolumn = columnsMap.get(column);
-		buffer.append(ptable.getName().getString() + Tokens.DOT + pcolumn.getName().getString());
+		append(obj.getExpression());
 	}
 
 	@Override
 	public void visit(ColumnReference obj) {
-		
+		String groupName = getGroupName(obj, !shortNameOnly);
 		Column column = obj.getMetadataObject();
 		PColumn pcolumn = columnsMap.get(column);
-		buffer.append(ptable.getName().getString() + Tokens.DOT + pcolumn.getName().getString());
+		if(null != groupName){
+			buffer.append(groupName + Tokens.DOT + pcolumn.getName().getString());
+		} else {
+			buffer.append(pcolumn.getName().getString());
+		}
+	}
+	
+	@Override
+	public void visit(NamedTable obj) {
+		
+		PTable ptable = tablesMap.get(obj.getMetadataObject());
+		buffer.append(ptable.getTableName().getString());
+		String groupName = getGroupName(obj, !shortNameOnly);
+        if (groupName != null) {
+            buffer.append(Tokens.SPACE);
+            if (useAsInGroupAlias()){
+                buffer.append(AS).append(Tokens.SPACE);
+            }
+        	buffer.append(groupName);
+        }
+	}
+	
+	private String getGroupName(NamedTable group, boolean qualify) {
+		
+		String groupName = null;
+		
+		if (group != null && qualify) {
+            if(group.getCorrelationName() != null) { 
+                groupName = group.getCorrelationName();
+            } else {  
+                AbstractMetadataRecord groupID = group.getMetadataObject();
+                if(groupID != null) {              
+                    groupName = getName(groupID);
+                } else {
+                    groupName = group.getName();
+                }
+            }
+        }
+		
+		return groupName;
+	}
+	
+
+	private String getGroupName(ColumnReference obj, boolean qualify){
+		
+        return getGroupName(obj.getTable(), qualify);
 	}
 
 	public String getSQL(){
@@ -201,5 +276,6 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

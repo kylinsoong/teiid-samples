@@ -39,10 +39,9 @@ public class Teiid3235Reproduce {
 		server.deployVDB(new FileInputStream(new File("vdb/mongo-vdb-3235.xml")));
 		conn = server.getDriver().connect("jdbc:teiid:mongodb", null);
 		
-//		JDBCUtil.executeQuery(conn, "SELECT IntKey FROM BQT1.SmallA");
-		JDBCUtil.executeQuery(conn, "SELECT IntKey FROM BQT1.SmallA GROUP BY IntKey");
-//		JDBCUtil.executeQuery(conn, "SELECT IntKey, IntNum FROM BQT1.SmallA GROUP BY IntKey, IntNum");
-//		JDBCUtil.executeQuery(conn, "SELECT intKey, SUM(IntNum) FROM BQT1.SmallA GROUP BY intKey");
+		JDBCUtil.executeQuery(conn, "SELECT * FROM BQT1.SmallA");
+//		
+		JDBCUtil.executeUpdate(conn, "INSERT INTO BQT1.SmallA VALUES(4, 4, '4', '4') ");
 		
 		JDBCUtil.close(conn);
 		

@@ -37,8 +37,4 @@ public class TestPhoenixDriver {
 		assertEquals(expect, PhoenixUtils.hbaseTableMappingDDL(ptable));
 	
 	}
-
-	public static void main(String[] args) {
-		new TestPhoenixDriver().testHBaseTableMapping();
-	} 
 }
