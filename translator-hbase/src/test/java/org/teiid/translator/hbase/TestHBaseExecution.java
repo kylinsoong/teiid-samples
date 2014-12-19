@@ -1,5 +1,6 @@
 package org.teiid.translator.hbase;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
@@ -7,9 +8,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 import javax.resource.ResourceException;
+import javax.transaction.TransactionManager;
 
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
@@ -18,6 +21,7 @@ import org.apache.log4j.PatternLayout;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.teiid.core.util.SimpleMock;
 import org.teiid.deployers.VirtualDatabaseException;
 import org.teiid.dqp.internal.datamgr.ConnectorManagerRepository.ConnectorManagerException;
 import org.teiid.resource.adapter.hbase.HBaseConnection;
@@ -26,7 +30,7 @@ import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
 import org.teiid.translator.TranslatorException;
 
-public class TestHBaseQueryExecution {
+public class TestHBaseExecution {
 	
 	static {
 	      String pattern = "%d %-5p [%c] (%t) %m%n";
@@ -51,10 +55,30 @@ public class TestHBaseQueryExecution {
 		managedconnectionFactory.setZkQuorum("localhost:2181");
 		server.addConnectionFactory("java:/hbaseDS", managedconnectionFactory.createConnectionFactory());
 		
-		server.start(new EmbeddedConfiguration());
+		EmbeddedConfiguration config = new EmbeddedConfiguration();
+		config.setTransactionManager(SimpleMock.createSimpleMock(TransactionManager.class));
+		server.start(config);
 		server.deployVDB(new FileInputStream(new File("src/test/resources/hbase-vdb.xml")));
 		conn = server.getDriver().connect("jdbc:teiid:hbasevdb", null);
 	}
+	
+	@Test
+	public void testInsert() throws Exception {
+		JDBCUtil.executeUpdate(conn, "INSERT INTO Customer VALUES('108', 'Beijing', 'Kylin Soong', '$8000.00', 'Crystal Orange')");
+		JDBCUtil.executeUpdate(conn, "INSERT INTO Customer(PK, city, name) VALUES ('109', 'Beijing', 'Kylin Soong')");
+	}
+	
+	@Test
+	public void testBatchedInsert() throws SQLException {
+		JDBCUtil.executeBatchedUpdate(conn, "INSERT INTO Customer VALUES (?, ?, ?, ?, ?)", 2);
+		JDBCUtil.executeBatchedUpdate(conn, "INSERT INTO Customer(PK, city, name, amount, product) VALUES (?, ?, ?, ?, ?)", 2);
+	}
+	
+	@Test
+	public void testUpdate() throws Exception {
+//		JDBCUtil.executeUpdate(conn, "UPDATE Customer SET name = 'Jack Black', city = 'St. Louis, MO' WHERE PK = '110'");
+	}
+	
 	
 	@Test
 	public void testSelect() throws Exception {
@@ -89,12 +113,24 @@ public class TestHBaseQueryExecution {
 		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY PK DESC LIMIT 3");
 	}
 	
+	/*
+	 * Teiid: https://docs.jboss.org/author/display/TEIID/Supported+Types
+	 * 
+	 * Phoenix: http://phoenix.apache.org/language/datatypes.html
+	 */
 	@Test
-	public void testConnection() throws ResourceException {
+	public void testDataTypes() throws Exception{
+		JDBCUtil.executeQuery(conn, "SELECT * FROM TypesTest");
+	}
+	
+	@Test
+	public void testConnection() throws ResourceException, SQLException {
 		HBaseManagedConnectionFactory connectionFactory = new HBaseManagedConnectionFactory();
 		connectionFactory.setZkQuorum("localhost:2181");
 		HBaseConnection connection = connectionFactory.createConnectionFactory().getConnection();
 		assertNotNull(connection);
+		DatabaseMetaData dbmd = connection.getConnection().getMetaData();
+		assertEquals(false, dbmd.supportsGetGeneratedKeys());
 		JDBCUtil.close(connection.getConnection());;
 	}
 	
@@ -119,13 +155,23 @@ public class TestHBaseQueryExecution {
 		managedconnectionFactory.setZkQuorum("localhost:2181");
 		server.addConnectionFactory("java:/hbaseDS", managedconnectionFactory.createConnectionFactory());
 		
-		server.start(new EmbeddedConfiguration());
+		EmbeddedConfiguration config = new EmbeddedConfiguration();
+		config.setTransactionManager(SimpleMock.createSimpleMock(TransactionManager.class));
+		server.start(config);
 		server.deployVDB(new FileInputStream(new File("src/test/resources/hbase-vdb.xml")));
 		Connection conn = server.getDriver().connect("jdbc:teiid:hbasevdb", null);
 		
 //		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer");
 		
-		JDBCUtil.executeUpdate(conn, "INSERT INTO Customer VALUES('106', 'Beijing', 'Kylin Soong', '$4000', 'Crystal Orange')");
+//		JDBCUtil.executeUpdate(conn, "INSERT INTO Customer VALUES('108', 'Beijing', 'Kylin Soong', '$4000.00', 'Crystal Orange')");
+		
+//		JDBCUtil.executeBatchedUpdate(conn, "INSERT INTO Customer(PK, city, name, amount, product) VALUES (?, ?, ?, ?, ?)", 2);
+		
+//		JDBCUtil.executeUpdate(conn, "UPDATE Customer SET name = 'Jack Black', city = 'St. Louis, MO' WHERE PK = '110'");
+		
+//		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer");
+		
+		JDBCUtil.executeQuery(conn, "SELECT * FROM TypesTest");
 		
 		JDBCUtil.close(conn);
 		

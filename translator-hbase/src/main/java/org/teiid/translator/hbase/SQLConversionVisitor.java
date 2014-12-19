@@ -8,6 +8,11 @@ import static org.teiid.language.SQLConstants.Reserved.INTO;
 import static org.teiid.language.SQLConstants.Reserved.SELECT;
 import static org.teiid.language.SQLConstants.Reserved.WHERE;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +22,10 @@ import org.apache.phoenix.schema.PColumn;
 import org.apache.phoenix.schema.PDataType;
 import org.apache.phoenix.schema.PName;
 import org.apache.phoenix.schema.PTable;
+import org.teiid.core.types.BinaryType;
+import org.teiid.core.types.BlobType;
+import org.teiid.core.types.ClobType;
+import org.teiid.core.types.XMLType;
 import org.teiid.language.Argument;
 import org.teiid.language.ColumnReference;
 import org.teiid.language.DerivedColumn;
@@ -183,8 +192,7 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 
 	
 	private void phoenixTableMapping(List<TableReference> list) {
-		
-		// TODO TableReference list
+
 		for(TableReference reference : list) {
 			if(reference instanceof NamedTable) {
 				NamedTable namedtable = (NamedTable) reference;
@@ -195,15 +203,57 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 		
 	}
 
+	/*
+	 * Convert teiid type to phoenix type, the following types not support by phoenix
+	 *    biginteger -> java.math.BigInteger
+	 *    object -> Any 
+	 *    blob   -> java.sql.Blob
+	 *    clob   -> java.sql.Clob
+	 *    xml    -> java.sql.SQLXML
+	 */
 	private PDataType convertType(Column column) {
 		
 		Class<?> clas = column.getJavaType();
 		
 		if(clas.equals(String.class)){
 			return PDataType.VARCHAR;
+		} else if (clas.equals(BinaryType.class)){
+			return PDataType.BINARY;
+		} else if (clas.equals(Character.class)){
+			return PDataType.CHAR;
+		} else if (clas.equals(Boolean.class)){
+			return PDataType.BOOLEAN;
+		} else if (clas.equals(Byte.class)){
+			return PDataType.TINYINT;
+		} else if (clas.equals(Short.class)){
+			return PDataType.SMALLINT;
 		} else if (clas.equals(Integer.class)){
 			return PDataType.INTEGER;
-		}
+		} else if (clas.equals(Long.class)){
+			return PDataType.LONG;
+		} else if (clas.equals(BigInteger.class)){
+			return PDataType.UNSIGNED_LONG;
+		} else if (clas.equals(Float.class)){
+			return PDataType.FLOAT;
+		} else if (clas.equals(Double.class)){
+			return PDataType.DOUBLE;
+		} else if (clas.equals(BigDecimal.class)){
+			return PDataType.DECIMAL;
+		} else if (clas.equals(Date.class)){
+			return PDataType.DATE;
+		} else if (clas.equals(Time.class)){
+			return PDataType.TIME;
+		} else if (clas.equals(Timestamp.class)){
+			return PDataType.TIMESTAMP;
+		} else if (clas.equals(BlobType.class)){
+			return PDataType.UNSIGNED_LONG_ARRAY;
+		} else if (clas.equals(ClobType.class)){
+			return PDataType.UNSIGNED_LONG_ARRAY;
+		} else if (clas.equals(XMLType.class)){
+			return PDataType.UNSIGNED_LONG_ARRAY;
+		} else if (clas.equals(Object.class)){
+			return PDataType.UNSIGNED_LONG_ARRAY;
+		} 
 		
 		return null;
 	}

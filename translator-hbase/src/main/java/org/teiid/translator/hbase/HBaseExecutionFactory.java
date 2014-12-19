@@ -3,10 +3,13 @@ package org.teiid.translator.hbase;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Struct;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.resource.cci.ConnectionFactory;
 import javax.sql.rowset.serial.SerialStruct;
@@ -29,6 +32,9 @@ import org.teiid.translator.UpdateExecution;
 public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, HBaseConnection> {
 	
 	private int maxInsertBatchSize = 2048;
+	
+	// use to store phoenix hbase table mapping ddl
+	private Set<String> cacheSet = Collections.synchronizedSet(new HashSet<String>());
 	
 	private static final Map<Class<?>, Integer> TYPE_CODE_MAP = new HashMap<Class<?>, Integer>();
     
@@ -227,6 +233,15 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
     		}
     	}
     	return object;
+	}
+
+	public Set<String> getDDLCacheSet() {
+		return cacheSet;
+	}
+
+	public void setFetchSize(Command command, ExecutionContext executionContext, Statement statement, int fetchSize) throws SQLException {
+		statement.setFetchSize(fetchSize);
+		
 	}
 
 	

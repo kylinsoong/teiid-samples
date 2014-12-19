@@ -19,11 +19,9 @@ import org.teiid.translator.DataNotAvailableException;
 import org.teiid.translator.ExecutionContext;
 import org.teiid.translator.ResultSetExecution;
 import org.teiid.translator.TranslatorException;
-import org.teiid.translator.hbase.phoenix.PhoenixUtils;
 
 public class HBaseQueryExecution extends HBaseExecution implements ResultSetExecution {
 	
-	private Select command;
 	private Class<?>[] columnDataTypes;
 	
 	protected ResultSet results;
@@ -34,30 +32,16 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 							 , QueryExpression command
 							 , ExecutionContext executionContext
 							 , RuntimeMetadata metadata
-							 , HBaseConnection hbconnection) {
-		super(executionFactory, executionContext, metadata, hbconnection);
-		this.command = (Select) command;
+							 , HBaseConnection hbconnection) throws HBaseExecutionException {
+		super(command, executionFactory, executionContext, metadata, hbconnection);
 		this.columnDataTypes = command.getColumnTypes();
 		
 		vistor = this.executionFactory.getSQLConversionVisitor();
 		vistor.visitNode(command);
+		
+		phoenixTableMapping(vistor.getMappingDDLList());
 	}
-	
-	protected List<Table> getlMetaDataTable() {
-		List<TableReference> list = command.getFrom();
-		List<Table> namelist = new ArrayList<Table>();
-		for(TableReference reference : list) {
-			if(reference instanceof NamedTable) {
-				NamedTable namedtable = (NamedTable) reference;
-				Table table = namedtable.getMetadataObject();
-				namelist.add(table);
-			} 
-		}
-		return namelist;
-	}
-	
-	boolean isMapped = false;
-	
+
 	@Override
 	public void execute() throws TranslatorException {
 
@@ -66,19 +50,10 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 		boolean usingTxn = false;
 		boolean success = false;
 		try {
-			
-			if(!isMapped) {
-				for(String ddl : vistor.getMappingDDLList()){
-					PhoenixUtils.executeUpdate(connection, ddl);
-				}			
-				isMapped = true;
-			}
-			
 			results = getStatement().executeQuery(vistor.getSQL());
 			success = true;
 		} catch (SQLException e) {
-			// TODO-- 
-			throw new RuntimeException(e);
+			throw new HBaseExecutionException(HBasePlugin.Event.TEIID27002, e, command);
 		} finally {
 			if (usingTxn) {
 	        	try {
@@ -113,8 +88,7 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
                 return vals;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException(e);
+			throw new HBaseExecutionException(HBasePlugin.Event.TEIID27002, e, HBasePlugin.Event.TEIID27011, command);
 		}
 		
 		return null;
@@ -128,17 +102,12 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
                 results.close();
                 results = null;
             } catch (SQLException e) {
-            	LogManager.logDetail(LogConstants.CTX_CONNECTOR, e, "Exception closing"); 
+            	LogManager.logDetail(LogConstants.CTX_CONNECTOR, e, "Exception closing ResultSet"); 
             }
         }
+		
+		super.close();
 	}
-
-	@Override
-	public void cancel() throws TranslatorException {
-		// TODO Auto-generated method stub
-
-	}
-
 	
 
 }

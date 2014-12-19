@@ -1,6 +1,17 @@
 package org.teiid.translator.hbase;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Iterator;
+import java.util.List;
+
+import org.teiid.language.BatchedCommand;
+import org.teiid.language.BatchedUpdates;
 import org.teiid.language.Command;
+import org.teiid.language.Insert;
+import org.teiid.logging.LogConstants;
+import org.teiid.logging.LogManager;
 import org.teiid.metadata.RuntimeMetadata;
 import org.teiid.resource.adapter.hbase.HBaseConnection;
 import org.teiid.translator.DataNotAvailableException;
@@ -10,9 +21,9 @@ import org.teiid.translator.UpdateExecution;
 
 public class HBaseUpdateExecution extends HBaseExecution implements UpdateExecution {
 	
-	private Command command;
 	private int[] result;
 	private int maxPreparedInsertBatchSize;
+	private boolean atomic = true;
 	
 	private SQLConversionVisitor vistor;
 	
@@ -20,39 +31,139 @@ public class HBaseUpdateExecution extends HBaseExecution implements UpdateExecut
 							  , Command command
 							  , ExecutionContext executionContext
 							  , RuntimeMetadata metadata
-							  , HBaseConnection connection) {
-		super(executionFactory, executionContext, metadata, connection);
-		this.command = command;
+							  , HBaseConnection connection) throws HBaseExecutionException {
+		super(command, executionFactory, executionContext, metadata, connection);
 		this.maxPreparedInsertBatchSize = this.executionFactory.getMaxPreparedInsertBatchSize();
 		
 		vistor = this.executionFactory.getSQLConversionVisitor();
 		vistor.visitNode(command);
+		
+		phoenixTableMapping(vistor.getMappingDDLList());
 	}
 
 	@Override
 	public void execute() throws TranslatorException {
 		
+		LogManager.logInfo(LogConstants.CTX_CONNECTOR, this.command);
+		
+		if(command instanceof BatchedUpdates) {
+			result = executeBatchedUpdate();
+		} else {
+			result = executeUpdate();
+		}
 	}
 
-	@Override
-	public int[] getUpdateCounts() throws DataNotAvailableException,
-			TranslatorException {
-		// TODO Auto-generated method stub
+	private int[] executeUpdate() throws HBaseExecutionException {
+		
+		String sql = vistor.getSQL();
+		
+		boolean commitType = false;
+        boolean succeeded = false;
+        
+        try {
+			int updateCount = 0;
+			Statement statement = null;
+			if(!vistor.isPrepared()) {
+				statement = getStatement();
+				updateCount = statement.executeUpdate(sql);
+				commitType = getAutoCommit();
+				if(!commitType){
+					connection.commit();
+				}
+				addStatementWarnings();
+			} else {
+				PreparedStatement pstatement = getPreparedStatement(sql);
+            	statement = pstatement;
+            	Iterator<? extends List<?>> vi = null;
+            	if (command instanceof BatchedCommand) {
+            		BatchedCommand batchCommand = (BatchedCommand)command;
+            		vi = batchCommand.getParameterValues();
+            	}
+            	
+                if (vi != null) {
+                    commitType = getAutoCommit();
+                    if (commitType) {
+                        connection.setAutoCommit(false);
+                    }
+					int maxBatchSize = (command instanceof Insert) ? maxPreparedInsertBatchSize : Integer.MAX_VALUE;
+            		boolean done = false;
+            		outer: while (!done) {
+            			for (int i = 0; i < maxBatchSize; i++) {
+            				if (vi.hasNext()) {
+    	            			List<?> values = vi.next();
+    	            			bind(pstatement, vistor.getPreparedValues(), values);
+            				} else {
+            					if (i == 0) {
+	            					break outer;
+	            				}
+	            				done = true;
+	            				break;
+            				}
+            			}
+            		    int[] results = pstatement.executeBatch();
+            		    
+            		    for (int i=0; i<results.length; i++) {
+            		        updateCount += results[i];
+            		    }
+            		}
+                } else {
+            		bind(pstatement, vistor.getPreparedValues(), null);
+        			updateCount = pstatement.executeUpdate();
+        			addStatementWarnings();
+                }
+                succeeded = true;
+			}
+			return new int[] {updateCount};
+		} catch (SQLException e) {
+			throw new HBaseExecutionException(HBasePlugin.Event.TEIID27003, e, command);
+		} finally {
+			if (commitType) {
+                restoreAutoCommit(!succeeded);
+            }
+		}
+		
+	}
+
+	private void restoreAutoCommit(boolean exceptionOccurred) throws HBaseExecutionException {
+		
+		 try {
+			if (exceptionOccurred) {
+			     connection.rollback();
+			 }
+		} catch (SQLException e) {
+			throw new HBaseExecutionException(HBasePlugin.Event.TEIID27003, e, HBasePlugin.Event.TEIID27013, command);
+		} finally {
+			try {
+        		if (!exceptionOccurred) {
+        			connection.commit();
+        		}
+        		connection.setAutoCommit(true);
+        	} catch (SQLException e) {
+        		throw new HBaseExecutionException(HBasePlugin.Event.TEIID27003, e, HBasePlugin.Event.TEIID27013, command);
+            }
+		}
+		
+	}
+
+	private boolean getAutoCommit() throws SQLException {
+		if (!atomic) {
+			return false;
+		}
+		return connection.getAutoCommit();
+	}
+
+	private int[] executeBatchedUpdate() {
+		
 		return null;
 	}
 
 	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-
+	public int[] getUpdateCounts() throws DataNotAvailableException, TranslatorException {
+		return result;
 	}
-
-	@Override
-	public void cancel() throws TranslatorException {
-		// TODO Auto-generated method stub
-
-	}
-
 	
+	public void setAtomic(boolean atomic) {
+		this.atomic = atomic;
+	}
 
 }

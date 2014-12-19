@@ -10,30 +10,51 @@ import org.teiid.translator.TranslatorException;
 public class TestSQLConversionVisitor {
 	
 	@Test
+	public void testInsert() throws TranslatorException {
+		String sql = "INSERT INTO Customer VALUES('106', 'Beijing', 'Kylin Soong', '$8000.00', 'Crystal Orange')";
+		String expected = "UPSERT INTO \"Customer\" (\"ROW_ID\", \"city\", \"name\", \"amount\", \"product\") VALUES ('106', 'Beijing', 'Kylin Soong', '$8000.00', 'Crystal Orange')";
+		helpTest(sql, expected);
+		
+		sql = "INSERT INTO Customer(PK, city, name) VALUES ('109', 'Beijing', 'Kylin Soong')";
+		expected = "UPSERT INTO \"Customer\" (\"ROW_ID\", \"city\", \"name\") VALUES ('109', 'Beijing', 'Kylin Soong')";
+		helpTest(sql, expected);
+	}
+	
+	@Test
+	public void testBatchedInsert() throws TranslatorException {
+		
+	}
+	
+	@Test
+	public void testUpdate() throws TranslatorException {
+		
+	}
+	
+	@Test
 	public void testSelect() throws TranslatorException {
 		
 		String sql = "SELECT * FROM Customer";
-		String expected = "SELECT customer.\"ROW_ID\", customer.\"city\", customer.\"name\", customer.\"amount\", customer.\"product\" FROM \"Customer\" AS customer";
+		String expected = "SELECT Customer.\"ROW_ID\", Customer.\"city\", Customer.\"name\", Customer.\"amount\", Customer.\"product\" FROM \"Customer\" AS Customer";
 		helpTest(sql, expected);
 		
 		sql = "SELECT city, amount FROM Customer";
-		expected = "SELECT customer.\"city\", customer.\"amount\" FROM \"Customer\" AS customer";
+		expected = "SELECT Customer.\"city\", Customer.\"amount\" FROM \"Customer\" AS Customer";
 		helpTest(sql, expected);
 		
 		sql = "SELECT DISTINCT city FROM Customer";
-		expected = "SELECT DISTINCT customer.\"city\" FROM \"Customer\" AS customer";
+		expected = "SELECT DISTINCT Customer.\"city\" FROM \"Customer\" AS Customer";
 		helpTest(sql, expected);
 		
 		sql = "SELECT city, amount FROM Customer WHERE PK='105'";
-		expected = "SELECT customer.\"city\", customer.\"amount\" FROM \"Customer\" AS customer WHERE customer.\"ROW_ID\" = '105'";
+		expected = "SELECT Customer.\"city\", Customer.\"amount\" FROM \"Customer\" AS Customer WHERE Customer.\"ROW_ID\" = '105'";
 		helpTest(sql, expected);
 		
 		sql = "SELECT city, amount FROM Customer WHERE PK='105' OR name='John White'";
-		expected = "SELECT customer.\"city\", customer.\"amount\" FROM \"Customer\" AS customer WHERE customer.\"ROW_ID\" = '105' OR customer.\"name\" = 'John White'";
+		expected = "SELECT Customer.\"city\", Customer.\"amount\" FROM \"Customer\" AS Customer WHERE Customer.\"ROW_ID\" = '105' OR Customer.\"name\" = 'John White'";
 		helpTest(sql, expected);
 		
 		sql = "SELECT city, amount FROM Customer WHERE PK='105' AND name='John White'";
-		expected = "SELECT customer.\"city\", customer.\"amount\" FROM \"Customer\" AS customer WHERE customer.\"ROW_ID\" = '105' AND customer.\"name\" = 'John White'";
+		expected = "SELECT Customer.\"city\", Customer.\"amount\" FROM \"Customer\" AS Customer WHERE Customer.\"ROW_ID\" = '105' AND Customer.\"name\" = 'John White'";
 		helpTest(sql, expected);
 	}
 	
@@ -41,19 +62,19 @@ public class TestSQLConversionVisitor {
 	public void testSelectOrderBy() throws TranslatorException {
 		
 		String sql = "SELECT * FROM Customer ORDER BY PK";
-		String expected = "SELECT customer.\"ROW_ID\", customer.\"city\", customer.\"name\", customer.\"amount\", customer.\"product\" FROM \"Customer\" AS customer ORDER BY customer.\"ROW_ID\"";
+		String expected = "SELECT Customer.\"ROW_ID\", Customer.\"city\", Customer.\"name\", Customer.\"amount\", Customer.\"product\" FROM \"Customer\" AS Customer ORDER BY Customer.\"ROW_ID\"";
 		helpTest(sql, expected);
 		
 		sql = "SELECT * FROM Customer ORDER BY PK ASC";
-		expected = "SELECT customer.\"ROW_ID\", customer.\"city\", customer.\"name\", customer.\"amount\", customer.\"product\" FROM \"Customer\" AS customer ORDER BY customer.\"ROW_ID\"";
+		expected = "SELECT Customer.\"ROW_ID\", Customer.\"city\", Customer.\"name\", Customer.\"amount\", Customer.\"product\" FROM \"Customer\" AS Customer ORDER BY Customer.\"ROW_ID\"";
 		helpTest(sql, expected);
 		
 		sql = "SELECT * FROM Customer ORDER BY PK DESC";
-		expected = "SELECT customer.\"ROW_ID\", customer.\"city\", customer.\"name\", customer.\"amount\", customer.\"product\" FROM \"Customer\" AS customer ORDER BY customer.\"ROW_ID\" DESC";
+		expected = "SELECT Customer.\"ROW_ID\", Customer.\"city\", Customer.\"name\", Customer.\"amount\", Customer.\"product\" FROM \"Customer\" AS Customer ORDER BY Customer.\"ROW_ID\" DESC";
 		helpTest(sql, expected);
 		
 		sql = "SELECT * FROM Customer ORDER BY name, city DESC";
-		expected = "SELECT customer.\"ROW_ID\", customer.\"city\", customer.\"name\", customer.\"amount\", customer.\"product\" FROM \"Customer\" AS customer ORDER BY customer.\"name\", customer.\"city\" DESC";
+		expected = "SELECT Customer.\"ROW_ID\", Customer.\"city\", Customer.\"name\", Customer.\"amount\", Customer.\"product\" FROM \"Customer\" AS Customer ORDER BY Customer.\"name\", Customer.\"city\" DESC";
 		helpTest(sql, expected);
 	}
 	
@@ -61,34 +82,34 @@ public class TestSQLConversionVisitor {
 	public void testSelectGroupBy() throws TranslatorException{
 		
 		String sql = "SELECT COUNT(PK) FROM Customer WHERE name='John White'";
-		String expected = "SELECT COUNT(customer.\"ROW_ID\") FROM \"Customer\" AS customer WHERE customer.\"name\" = 'John White'";
+		String expected = "SELECT COUNT(Customer.\"ROW_ID\") FROM \"Customer\" AS Customer WHERE Customer.\"name\" = 'John White'";
 		helpTest(sql, expected);
 		
 		sql = "SELECT name, COUNT(PK) FROM Customer GROUP BY name";
-		expected = "SELECT customer.\"name\", COUNT(customer.\"ROW_ID\") FROM \"Customer\" AS customer GROUP BY customer.\"name\"";
+		expected = "SELECT Customer.\"name\", COUNT(Customer.\"ROW_ID\") FROM \"Customer\" AS Customer GROUP BY Customer.\"name\"";
 		helpTest(sql, expected);
 		
 		sql = "SELECT name, COUNT(PK) FROM Customer GROUP BY name HAVING COUNT(PK) > 1";
-		expected = "SELECT customer.\"name\", COUNT(customer.\"ROW_ID\") FROM \"Customer\" AS customer GROUP BY customer.\"name\" HAVING COUNT(customer.\"ROW_ID\") > 1";
+		expected = "SELECT Customer.\"name\", COUNT(Customer.\"ROW_ID\") FROM \"Customer\" AS Customer GROUP BY Customer.\"name\" HAVING COUNT(Customer.\"ROW_ID\") > 1";
 		helpTest(sql, expected);
 		
 		sql = "SELECT name, city, COUNT(PK) FROM Customer GROUP BY name, city";
-		expected = "SELECT customer.\"name\", customer.\"city\", COUNT(customer.\"ROW_ID\") FROM \"Customer\" AS customer GROUP BY customer.\"name\", customer.\"city\"";
+		expected = "SELECT Customer.\"name\", Customer.\"city\", COUNT(Customer.\"ROW_ID\") FROM \"Customer\" AS Customer GROUP BY Customer.\"name\", Customer.\"city\"";
 		helpTest(sql, expected);
 		
 		sql = "SELECT name, city, COUNT(PK) FROM Customer GROUP BY name, city HAVING COUNT(PK) > 1";
-		expected = "SELECT customer.\"name\", customer.\"city\", COUNT(customer.\"ROW_ID\") FROM \"Customer\" AS customer GROUP BY customer.\"name\", customer.\"city\" HAVING COUNT(customer.\"ROW_ID\") > 1";
+		expected = "SELECT Customer.\"name\", Customer.\"city\", COUNT(Customer.\"ROW_ID\") FROM \"Customer\" AS Customer GROUP BY Customer.\"name\", Customer.\"city\" HAVING COUNT(Customer.\"ROW_ID\") > 1";
 		helpTest(sql, expected);
 	}
 	
 	@Test
 	public void testSelectLimit() throws TranslatorException {
 		String sql = "SELECT * FROM Customer LIMIT 3";
-		String expected = "SELECT customer.\"ROW_ID\", customer.\"city\", customer.\"name\", customer.\"amount\", customer.\"product\" FROM \"Customer\" AS customer LIMIT 3";
+		String expected = "SELECT Customer.\"ROW_ID\", Customer.\"city\", Customer.\"name\", Customer.\"amount\", Customer.\"product\" FROM \"Customer\" AS Customer LIMIT 3";
 		helpTest(sql, expected);
 		
 		sql = "SELECT * FROM Customer ORDER BY PK LIMIT 3";
-		expected = "SELECT customer.\"ROW_ID\", customer.\"city\", customer.\"name\", customer.\"amount\", customer.\"product\" FROM \"Customer\" AS customer ORDER BY customer.\"ROW_ID\" LIMIT 3";
+		expected = "SELECT Customer.\"ROW_ID\", Customer.\"city\", Customer.\"name\", Customer.\"amount\", Customer.\"product\" FROM \"Customer\" AS Customer ORDER BY Customer.\"ROW_ID\" LIMIT 3";
 		helpTest(sql, expected);
 	}
 	
