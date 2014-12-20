@@ -121,6 +121,7 @@ public class TestHBaseExecution {
 	@Test
 	public void testDataTypes() throws Exception{
 		JDBCUtil.executeQuery(conn, "SELECT * FROM TypesTest");
+//		JDBCUtil.executeBatchedUpdateDataType(conn, "INSERT INTO TypesTest VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 2);
 	}
 	
 	@Test
@@ -173,6 +174,8 @@ public class TestHBaseExecution {
 		
 		JDBCUtil.executeQuery(conn, "SELECT * FROM TypesTest");
 		
+//		JDBCUtil.executeBatchedUpdateDataType(conn, "INSERT INTO TypesTest VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 2);
+				
 		JDBCUtil.close(conn);
 		
 	}

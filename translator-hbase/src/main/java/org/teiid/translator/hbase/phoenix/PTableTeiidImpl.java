@@ -129,159 +129,133 @@ public class PTableTeiidImpl implements PTable {
 
 	@Override
 	public PColumn getPKColumn(String name) throws ColumnNotFoundException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PRow newRow(KeyValueBuilder builder, long ts,
 			ImmutableBytesWritable key, byte[]... values) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PRow newRow(KeyValueBuilder builder, ImmutableBytesWritable key,
 			byte[]... values) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int newKey(ImmutableBytesWritable key, byte[][] values) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public RowKeySchema getRowKeySchema() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Integer getBucketNum() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<PTable> getIndexes() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PIndexState getIndexState() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PName getParentName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PName getParentTableName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PName getParentSchemaName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<PName> getPhysicalNames() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PName getPhysicalName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean isImmutableRows() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public void getIndexMaintainers(ImmutableBytesWritable ptr) {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public IndexMaintainer getIndexMaintainer(PTable dataTable) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PName getDefaultFamilyName() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public boolean isWALDisabled() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isMultiTenant() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public ViewType getViewType() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getViewStatement() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Short getViewIndexId() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PTableKey getKey() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int getEstimatedSize() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public IndexType getIndexType() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public PTableStats getTableStats() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

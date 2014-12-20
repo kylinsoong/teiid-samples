@@ -37,4 +37,21 @@ public class TestPhoenixDriver {
 		assertEquals(expect, PhoenixUtils.hbaseTableMappingDDL(ptable));
 	
 	}
+	
+	@Test
+	public void testDataTypes() {
+		assertEquals("VARCHAR", PDataType.VARCHAR.getSqlTypeName());
+		assertEquals("VARBINARY", PDataType.VARBINARY.getSqlTypeName());
+		assertEquals("BOOLEAN", PDataType.BOOLEAN.getSqlTypeName());
+		assertEquals("TINYINT", PDataType.TINYINT.getSqlTypeName());
+		assertEquals("SMALLINT", PDataType.SMALLINT.getSqlTypeName());
+		assertEquals("INTEGER", PDataType.INTEGER.getSqlTypeName());
+		assertEquals("BIGINT", PDataType.LONG.getSqlTypeName());
+		assertEquals("FLOAT", PDataType.FLOAT.getSqlTypeName());
+		assertEquals("DOUBLE", PDataType.DOUBLE.getSqlTypeName());
+		assertEquals("DECIMAL", PDataType.DECIMAL.getSqlTypeName());
+		assertEquals("DATE", PDataType.DATE.getSqlTypeName());
+		assertEquals("TIME", PDataType.TIME.getSqlTypeName());
+		assertEquals("TIMESTAMP", PDataType.TIMESTAMP.getSqlTypeName());
+	}
 }

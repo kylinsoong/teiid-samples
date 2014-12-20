@@ -29,7 +29,7 @@ CREATE FOREIGN TABLE TypesTest (
     column16 bigdecimal OPTIONS ("teiid_hbase:CELL" 'f:q16'),
     column17 decimal OPTIONS ("teiid_hbase:CELL" 'f:q17'),
     column18 date OPTIONS ("teiid_hbase:CELL" 'f:q18'),
-    column10 time OPTIONS ("teiid_hbase:CELL" 'f:q29'),
+    column19 time OPTIONS ("teiid_hbase:CELL" 'f:q19'),
     column20 timestamp OPTIONS ("teiid_hbase:CELL" 'f:q20'),
     CONSTRAINT PK0 PRIMARY KEY(PK)
 ) OPTIONS("teiid_hbase:TABLE" 'TypesTest', "UPDATABLE" 'TRUE');

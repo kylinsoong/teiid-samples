@@ -24,9 +24,7 @@ public class HBaseUpdateExecution extends HBaseExecution implements UpdateExecut
 	private int[] result;
 	private int maxPreparedInsertBatchSize;
 	private boolean atomic = true;
-	
-	private SQLConversionVisitor vistor;
-	
+		
 	public HBaseUpdateExecution(HBaseExecutionFactory executionFactory
 							  , Command command
 							  , ExecutionContext executionContext
@@ -35,10 +33,7 @@ public class HBaseUpdateExecution extends HBaseExecution implements UpdateExecut
 		super(command, executionFactory, executionContext, metadata, connection);
 		this.maxPreparedInsertBatchSize = this.executionFactory.getMaxPreparedInsertBatchSize();
 		
-		vistor = this.executionFactory.getSQLConversionVisitor();
-		vistor.visitNode(command);
-		
-		phoenixTableMapping(vistor.getMappingDDLList());
+		visitCommand();
 	}
 
 	@Override
@@ -66,10 +61,6 @@ public class HBaseUpdateExecution extends HBaseExecution implements UpdateExecut
 			if(!vistor.isPrepared()) {
 				statement = getStatement();
 				updateCount = statement.executeUpdate(sql);
-				commitType = getAutoCommit();
-				if(!commitType){
-					connection.commit();
-				}
 				addStatementWarnings();
 			} else {
 				PreparedStatement pstatement = getPreparedStatement(sql);
@@ -115,13 +106,26 @@ public class HBaseUpdateExecution extends HBaseExecution implements UpdateExecut
 			}
 			return new int[] {updateCount};
 		} catch (SQLException e) {
-			throw new HBaseExecutionException(HBasePlugin.Event.TEIID27003, e, command);
+			throw new HBaseExecutionException(HBasePlugin.Event.TEIID27003, e, sql);
 		} finally {
 			if (commitType) {
                 restoreAutoCommit(!succeeded);
+            } else {
+            	autoCommit(succeeded);
             }
 		}
 		
+	}
+
+	private void autoCommit(boolean succeeded) throws HBaseExecutionException {
+
+		try {
+			if(succeeded && !getAutoCommit()) {
+				connection.commit();
+			}
+		} catch (SQLException e) {
+			throw new HBaseExecutionException(HBasePlugin.Event.TEIID27003, e, HBasePlugin.Event.TEIID27013, command);
+		}
 	}
 
 	private void restoreAutoCommit(boolean exceptionOccurred) throws HBaseExecutionException {

@@ -23,11 +23,11 @@ public class PhoenixUtils {
 		for (PColumn pColumn : ptable.getColumns()) {
 			if(pColumn.getFamilyName() == null) {
 				String pk = pColumn.getName().getString();
-				sb.append(pk).append(Tokens.SPACE).append(pColumn.getDataType()).append(Tokens.SPACE).append("PRIMARY KEY").append(Tokens.COMMA).append(Tokens.SPACE);
+				sb.append(pk).append(Tokens.SPACE).append(pColumn.getDataType().getSqlTypeName()).append(Tokens.SPACE).append("PRIMARY KEY").append(Tokens.COMMA).append(Tokens.SPACE);
 			} else {
 				String family = pColumn.getFamilyName().getString();
 				String qualifier = pColumn.getName().getString();
-				sb.append(family).append(Tokens.DOT).append(qualifier).append(Tokens.SPACE).append(pColumn.getDataType()).append(Tokens.COMMA).append(Tokens.SPACE);
+				sb.append(family).append(Tokens.DOT).append(qualifier).append(Tokens.SPACE).append(pColumn.getDataType().getSqlTypeName()).append(Tokens.COMMA).append(Tokens.SPACE);
 			}
 		}
 		

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import javax.naming.Context;
@@ -49,7 +50,27 @@ public class H2DataSourceDebug {
 		
 		conn = server.getDriver().connect("jdbc:teiid:H2VDB", null);	
 				
-		JDBCUtil.executeQuery(conn, "SELECT company_name, COUNT(product_id) FROM PROUDCTVIEW GROUP BY company_name");
+		JDBCUtil.executeQuery(conn, "SELECT * FROM PRODUCT");
+		
+		
+//		PreparedStatement pstmt = null ;
+//		try {
+//			pstmt = conn.prepareStatement("INSERT INTO PRODUCT(ID, SYMBOL, COMPANY_NAME) VALUES(?, ?, ?)");
+//			for(int i = 0 ; i < 1 ; i ++) {
+//				pstmt.setInt(1, 101 + i);
+//				pstmt.setString(2, "RHA");
+//				pstmt.setString(3, "REDHAT");
+//				pstmt.addBatch();
+//			}
+//			pstmt.executeBatch();
+//			if(!conn.getAutoCommit()) {
+//				conn.commit();
+//			}
+//		} catch (SQLException e) {
+//			throw e;
+//		} finally {
+//			JDBCUtil.close(pstmt);
+//		}
 		
 		JDBCUtil.close(conn);
 		

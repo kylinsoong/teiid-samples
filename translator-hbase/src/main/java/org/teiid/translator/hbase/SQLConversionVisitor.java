@@ -29,7 +29,9 @@ import org.teiid.core.types.XMLType;
 import org.teiid.language.Argument;
 import org.teiid.language.ColumnReference;
 import org.teiid.language.DerivedColumn;
+import org.teiid.language.ExpressionValueSource;
 import org.teiid.language.Insert;
+import org.teiid.language.Literal;
 import org.teiid.language.NamedTable;
 import org.teiid.language.Select;
 import org.teiid.language.TableReference;
@@ -50,6 +52,8 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 	
 	private HBaseExecutionFactory executionFactory ;
 	private ExecutionContext context ;
+	
+	private boolean replaceWithBinding = false;
 	
 	// used to map hbase table to phoenix
 //	private PTable ptable;
@@ -205,7 +209,6 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 
 	/*
 	 * Convert teiid type to phoenix type, the following types not support by phoenix
-	 *    biginteger -> java.math.BigInteger
 	 *    object -> Any 
 	 *    blob   -> java.sql.Blob
 	 *    clob   -> java.sql.Clob
@@ -218,9 +221,9 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 		if(clas.equals(String.class)){
 			return PDataType.VARCHAR;
 		} else if (clas.equals(BinaryType.class)){
-			return PDataType.BINARY;
+			return PDataType.VARBINARY;
 		} else if (clas.equals(Character.class)){
-			return PDataType.CHAR;
+			return PDataType.VARCHAR;
 		} else if (clas.equals(Boolean.class)){
 			return PDataType.BOOLEAN;
 		} else if (clas.equals(Byte.class)){
@@ -232,7 +235,7 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 		} else if (clas.equals(Long.class)){
 			return PDataType.LONG;
 		} else if (clas.equals(BigInteger.class)){
-			return PDataType.UNSIGNED_LONG;
+			return PDataType.LONG;
 		} else if (clas.equals(Float.class)){
 			return PDataType.FLOAT;
 		} else if (clas.equals(Double.class)){
@@ -257,10 +260,27 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 		
 		return null;
 	}
+	
+	@Override
+	public void visit(Literal obj) {
+		
+		if(isPrepared() && ((replaceWithBinding && obj.isBindEligible()) || executionFactory.isBindEligible(obj))){
+			buffer.append(UNDEFINED_PARAM);
+			preparedValues.add(obj);
+		} else {
+			super.visit(obj);
+		}
+	}
+
+	@Override
+    public void visit(ExpressionValueSource obj) {
+        replaceWithBinding = true;
+        super.visit(obj);
+    }
 
 	@Override
 	public void visit(DerivedColumn obj) {
-		
+		replaceWithBinding = false;
 		append(obj.getExpression());
 	}
 
@@ -326,6 +346,5 @@ public class SQLConversionVisitor extends SQLStringVisitor implements SQLStringV
 		// TODO Auto-generated method stub
 		
 	}
-
 
 }

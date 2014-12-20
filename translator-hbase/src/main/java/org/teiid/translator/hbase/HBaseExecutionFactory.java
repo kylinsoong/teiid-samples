@@ -1,5 +1,6 @@
 package org.teiid.translator.hbase;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,12 +11,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 import javax.resource.cci.ConnectionFactory;
 import javax.sql.rowset.serial.SerialStruct;
 
 import org.teiid.core.types.ArrayImpl;
+import org.teiid.core.types.BinaryType;
 import org.teiid.language.Command;
+import org.teiid.language.Literal;
 import org.teiid.language.QueryExpression;
 import org.teiid.metadata.RuntimeMetadata;
 import org.teiid.resource.adapter.hbase.HBaseConnection;
@@ -31,10 +35,11 @@ import org.teiid.translator.UpdateExecution;
 @Translator(name="hbase", description="HBase Translator, reads and writes the data to HBase")
 public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, HBaseConnection> {
 	
-	private int maxInsertBatchSize = 2048;
-	
 	// use to store phoenix hbase table mapping ddl
 	private Set<String> cacheSet = Collections.synchronizedSet(new HashSet<String>());
+	
+	private int maxInsertBatchSize = 2048;
+	private boolean useBindVariables = true;
 	
 	private static final Map<Class<?>, Integer> TYPE_CODE_MAP = new HashMap<Class<?>, Integer>();
     
@@ -68,6 +73,8 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
         TYPE_CODE_MAP.put(TypeFacility.RUNTIME_TYPES.BOOLEAN, new Integer(BOOLEAN_CODE));
         TYPE_CODE_MAP.put(TypeFacility.RUNTIME_TYPES.BYTE, new Integer(SHORT_CODE));
     }
+    
+    public final static TimeZone DEFAULT_TIME_ZONE = TimeZone.getDefault();
 
 	public HBaseExecutionFactory() {
 		
@@ -107,8 +114,16 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
 	}
 
 	public boolean usePreparedStatements() {
-		// TODO Auto-generated method stub
-		return false;
+		return useBindVariables();
+	}
+	
+	@TranslatorProperty(display="Use Bind Variables", description="Use prepared statements and bind variables",advanced=true)
+	public boolean useBindVariables() {
+		return this.useBindVariables;
+	}
+
+	public void setUseBindVariables(boolean useBindVariables) {
+		this.useBindVariables = useBindVariables;
 	}
 
 	 /**
@@ -127,13 +142,98 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
 		this.maxInsertBatchSize = maxInsertBatchSize;
 	}
 
-	public void bindValue(PreparedStatement stmt, Object param, Class<?> paramType, int i) throws SQLException {
+	public void bindValue(PreparedStatement pstmt, Object param, Class<?> paramType, int i) throws SQLException {
 
 		int type = TypeFacility.getSQLTypeFromRuntimeType(paramType);
+		
 		if (param == null) {
-            stmt.setNull(i, type);
+			pstmt.setNull(i, type);
             return;
         } 
+		
+		if(paramType.equals(TypeFacility.RUNTIME_TYPES.STRING)) {
+			pstmt.setString(i, String.valueOf(param));
+			return;
+		}
+		
+		if (paramType.equals(TypeFacility.RUNTIME_TYPES.VARBINARY)) {
+			byte[] bytes = ((BinaryType)param).getBytesDirect();
+			pstmt.setBytes(i, bytes);
+        	return;
+        }
+		
+		if(paramType.equals(TypeFacility.RUNTIME_TYPES.CHAR)) {
+			pstmt.setString(i, String.valueOf(param));
+			return;
+		}
+		
+		if(paramType.equals(TypeFacility.RUNTIME_TYPES.BOOLEAN)) {
+			pstmt.setBoolean(i, (Boolean)param);
+			return;
+		}
+		
+		if(paramType.equals(TypeFacility.RUNTIME_TYPES.BYTE)) {
+			pstmt.setByte(i, (Byte)param);
+			return;
+		}
+		
+		if(paramType.equals(TypeFacility.RUNTIME_TYPES.SHORT)) {
+			pstmt.setShort(i, (Short)param);
+			return;
+		}
+		
+		if(paramType.equals(TypeFacility.RUNTIME_TYPES.INTEGER)) {
+			pstmt.setInt(i, (Integer)param);
+			return;
+		}
+		
+		if(paramType.equals(TypeFacility.RUNTIME_TYPES.LONG)) {
+			pstmt.setLong(i, (Long)param);
+			return;
+		}
+		
+		if(paramType.equals(TypeFacility.RUNTIME_TYPES.FLOAT)) {
+			pstmt.setFloat(i, (Float)param);
+			return;
+		}
+		
+		if(paramType.equals(TypeFacility.RUNTIME_TYPES.DOUBLE)) {
+			pstmt.setDouble(i, (Double)param);
+			return;
+		}
+		
+		if(paramType.equals(TypeFacility.RUNTIME_TYPES.BIG_DECIMAL)) {
+			pstmt.setBigDecimal(i, (BigDecimal)param);
+			return;
+		}
+		
+		if (paramType.equals(TypeFacility.RUNTIME_TYPES.DATE)) {
+            pstmt.setDate(i,(java.sql.Date)param);
+            return;
+        } 
+        if (paramType.equals(TypeFacility.RUNTIME_TYPES.TIME)) {
+            pstmt.setTime(i,(java.sql.Time)param);
+            return;
+        } 
+        if (paramType.equals(TypeFacility.RUNTIME_TYPES.TIMESTAMP)) {
+            pstmt.setTimestamp(i,(java.sql.Timestamp)param);
+            return;
+        }
+        
+        if (TypeFacility.RUNTIME_TYPES.BIG_DECIMAL.equals(paramType)) {
+        	pstmt.setBigDecimal(i, (BigDecimal)param);
+            return;
+        }
+        
+        if (useStreamsForLobs()) {
+        	// Phonix current not support Blob, Clob, XML
+        }
+      
+        pstmt.setObject(i, param, type);
+	}
+
+	private boolean useStreamsForLobs() {
+		return false;
 	}
 
 	public Object retrieveValue(ResultSet results, int columnIndex, Class<?> expectedType) throws SQLException {
@@ -233,6 +333,16 @@ public class HBaseExecutionFactory extends ExecutionFactory<ConnectionFactory, H
     		}
     	}
     	return object;
+	}
+	
+	/*
+	 * Current Phoenix do not support XML, CLOB, BLOB, OBJECT
+	 */
+	protected boolean isBindEligible(Literal l) {
+		return TypeFacility.RUNTIME_TYPES.XML.equals(l.getType())
+				|| TypeFacility.RUNTIME_TYPES.CLOB.equals(l.getType())
+				|| TypeFacility.RUNTIME_TYPES.BLOB.equals(l.getType())
+				|| TypeFacility.RUNTIME_TYPES.OBJECT.equals(l.getType());
 	}
 
 	public Set<String> getDDLCacheSet() {

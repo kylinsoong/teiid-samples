@@ -12,6 +12,7 @@ import java.util.Set;
 import org.teiid.language.Command;
 import org.teiid.language.Literal;
 import org.teiid.language.Parameter;
+import org.teiid.language.visitor.CollectorVisitor;
 import org.teiid.logging.LogConstants;
 import org.teiid.logging.LogManager;
 import org.teiid.logging.MessageLevel;
@@ -30,6 +31,8 @@ public abstract class HBaseExecution {
 	protected Connection connection;
 	protected Command command;
 	
+	protected SQLConversionVisitor vistor;
+	
 	protected Statement statement;
 	
 	protected int fetchSize;
@@ -43,14 +46,45 @@ public abstract class HBaseExecution {
 		this.connection = hbconnection.getConnection();
 		this.fetchSize = executionContext.getBatchSize();
 	}
+	
+	protected void visitCommand() throws HBaseExecutionException{
 		
+		vistor = this.executionFactory.getSQLConversionVisitor();
+		vistor.setExecutionContext(executionContext);
+		
+		if(executionFactory.usePreparedStatements() || hasBindValue()){
+			vistor.setPrepared(true);
+		}
+//		vistor.visitNode(command);
+		
+		vistor.append(command);
+		
+		if (vistor.getSQL() != null && LogManager.isMessageToBeRecorded(LogConstants.CTX_CONNECTOR, MessageLevel.DETAIL)) {
+            LogManager.logDetail(LogConstants.CTX_CONNECTOR, "Source-specific command: " + vistor.getSQL()); 
+        }
+		
+		phoenixTableMapping(vistor.getMappingDDLList());
+	}
+	
+	private boolean hasBindValue() {
+        if (!CollectorVisitor.collectObjects(Parameter.class, command).isEmpty()) {
+            return true;
+        }
+        for (Literal l : CollectorVisitor.collectObjects(Literal.class, command)) {
+            if (executionFactory.isBindEligible(l)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 	protected synchronized Statement getStatement() throws SQLException {
         if (statement != null) {
             statement.close();
             statement = null;
         }
         statement = connection.createStatement();
-//        setSizeContraints(statement);
+        setSizeContraints(statement);
         return statement;
     }
 	
@@ -75,7 +109,7 @@ public abstract class HBaseExecution {
             statement = null;
         }
         statement = connection.prepareStatement(sql);
-//        setSizeContraints(statement);
+        setSizeContraints(statement);
         return (PreparedStatement)statement;
     }
 	

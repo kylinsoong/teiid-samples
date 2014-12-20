@@ -6,14 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import org.teiid.language.NamedTable;
 import org.teiid.language.QueryExpression;
-import org.teiid.language.Select;
-import org.teiid.language.TableReference;
 import org.teiid.logging.LogConstants;
 import org.teiid.logging.LogManager;
 import org.teiid.metadata.RuntimeMetadata;
-import org.teiid.metadata.Table;
 import org.teiid.resource.adapter.hbase.HBaseConnection;
 import org.teiid.translator.DataNotAvailableException;
 import org.teiid.translator.ExecutionContext;
@@ -26,8 +22,6 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 	
 	protected ResultSet results;
 	
-	private SQLConversionVisitor vistor;
-
 	public HBaseQueryExecution(HBaseExecutionFactory executionFactory
 							 , QueryExpression command
 							 , ExecutionContext executionContext
@@ -36,10 +30,7 @@ public class HBaseQueryExecution extends HBaseExecution implements ResultSetExec
 		super(command, executionFactory, executionContext, metadata, hbconnection);
 		this.columnDataTypes = command.getColumnTypes();
 		
-		vistor = this.executionFactory.getSQLConversionVisitor();
-		vistor.visitNode(command);
-		
-		phoenixTableMapping(vistor.getMappingDDLList());
+		visitCommand();
 	}
 
 	@Override

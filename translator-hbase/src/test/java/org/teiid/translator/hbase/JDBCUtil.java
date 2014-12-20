@@ -1,18 +1,74 @@
 package org.teiid.translator.hbase;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class JDBCUtil {
 	
 	public static Connection getDriverConnection(String driver, String url, String user, String pass) throws Exception {
 		Class.forName(driver);
 		return DriverManager.getConnection(url, user, pass); 
+	}
+	
+	public static void executeBatchedUpdateDataType(Connection conn, String sql, int size) throws SQLException {
+		
+		System.out.println("Update SQL: " + sql);
+		byte b = 127;
+		short s = 10000;
+		long l = 1000000;
+		float f = 3.6f;
+		double d = 3.6;
+		BigDecimal decimal = new BigDecimal(l);
+		Date date = new Date(new java.util.Date().getTime());
+		Time time = new Time(new java.util.Date().getTime());
+		Timestamp timestramp = new Timestamp(new java.util.Date().getTime());
+		
+		PreparedStatement pstmt = null ;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			for(int i = 0 ; i < size ; i ++) {
+				pstmt.setString(1, 100 + i + "");
+				pstmt.setString(2, "varchar");
+				pstmt.setBytes(3, "varbinary".getBytes());
+				pstmt.setString(4, "C");
+				pstmt.setBoolean(5, Boolean.FALSE);
+				pstmt.setByte(6, b);
+				pstmt.setByte(7, b);
+				pstmt.setShort(8, s);
+				pstmt.setShort(9, s);
+				pstmt.setInt(10, i);
+				pstmt.setInt(11, i);
+				pstmt.setLong(12, l);
+				pstmt.setLong(13, l);
+				pstmt.setFloat(14, f);
+				pstmt.setFloat(15, f);
+				pstmt.setDouble(16, d);
+				pstmt.setBigDecimal(17, decimal);
+				pstmt.setBigDecimal(18, decimal);
+				pstmt.setDate(19, date);
+				pstmt.setTime(20, time);
+				pstmt.setTimestamp(21, timestramp);
+				pstmt.addBatch();
+			}
+			pstmt.executeBatch();
+			if(!conn.getAutoCommit()) {
+				conn.commit();
+			}
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+			close(pstmt);
+		}
+		
 	}
 	
 	public static void executeBatchedUpdate(Connection conn, String sql, int size) throws SQLException {
@@ -23,7 +79,7 @@ public class JDBCUtil {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			for(int i = 0 ; i < size ; i ++) {
-				pstmt.setString(1, 122 + i + "");
+				pstmt.setString(1, 124 + i + "");
 				pstmt.setString(2, "Beijng");
 				pstmt.setString(3, "Kylin Soong");
 				pstmt.setString(4, "$8000.00");
@@ -165,7 +221,7 @@ public class JDBCUtil {
 					if (i > 0) {
 						System.out.print(", ");
 					}
-					System.out.print(rs.getString(i + 1));
+					System.out.print(rs.getObject(i + 1));
 				}
 				System.out.println();
 			}
@@ -196,5 +252,7 @@ public class JDBCUtil {
 		
 		return true ;
 	}
+
+	
 
 }
