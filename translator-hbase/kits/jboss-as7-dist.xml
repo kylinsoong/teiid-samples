@@ -23,19 +23,11 @@
   
   <dependencySets>
     <dependencySet>
-      <includes>
-        <include>org.jboss.teiid.connectors:mongodb-api</include>
-        <include>org.mongodb:mongo-java-driver</include>
-      </includes>    
-      <outputDirectory>${jbossas-module-root}/org/jboss/teiid/translator/mongodb/api/main</outputDirectory>
-      <useTransitiveDependencies>false</useTransitiveDependencies>
-      <useTransitiveFiltering>false</useTransitiveFiltering>
-    </dependencySet>
-    <dependencySet>
-          <outputDirectory>${jbossas-module-root}/org/jboss/teiid/translator/mongodb/main</outputDirectory>
+          <outputDirectory>${jbossas-module-root}/org/jboss/teiid/translator/hbase/main</outputDirectory>
           <useTransitiveDependencies>false</useTransitiveDependencies>
           <includes>
-              <include>org.jboss.teiid.connectors:translator-mongodb</include>
+              <include>org.apache.phoenix:phoenix-core</include>
+              <include>org.jboss.teiid.connectors:translator-hbase</include>
           </includes>
       </dependencySet>
   </dependencySets>

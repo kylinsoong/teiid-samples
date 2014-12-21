@@ -22,7 +22,7 @@
   
   <dependencySets>
      <dependencySet>
-         <outputDirectory>optional/mongodb</outputDirectory>
+         <outputDirectory>optional/hbase</outputDirectory>
          <unpack>false</unpack>
          <useTransitiveDependencies>false</useTransitiveDependencies>
      </dependencySet>

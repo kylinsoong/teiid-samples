@@ -3,7 +3,7 @@
 <connector version="1.5">
 
    <vendor-name>Red Hat Middleware LLC</vendor-name>
-   <eis-type>Teiid Text Connector</eis-type>
+   <eis-type>Teiid HBase Connector</eis-type>
    <resourceadapter-version>1.0</resourceadapter-version>
    <license>
       <description>
@@ -30,35 +30,31 @@
       <license-required>true</license-required>
    </license>
    <resourceadapter>
-      <resourceadapter-class>org.teiid.resource.adapter.mongodb.MongoDBResourceAdapter</resourceadapter-class>
+      <resourceadapter-class>org.teiid.resource.adapter.hbase.HBaseResourceAdapter</resourceadapter-class>
 
       <outbound-resourceadapter>
          <connection-definition>
-            <managedconnectionfactory-class>org.teiid.resource.adapter.mongodb.MongoDBManagedConnectionFactory</managedconnectionfactory-class>
+            <managedconnectionfactory-class>org.teiid.resource.adapter.hbase.HBaseManagedConnectionFactory</managedconnectionfactory-class>
 
             <config-property>
-               <description>{$display:"Server List", $description:"Server List (host:port[;host:port...]) to connect to", $required:"true"}</description>
-               <config-property-name>RemoteServerList</config-property-name>
-               <config-property-type>java.lang.String</config-property-type>
-            </config-property> 
-            
-            <config-property>
-               <description>{$display:"User Name", $description:"MongoDB Account User Name", $required:"false"}</description>
+               <description>{$display:"ZooKeeper Quorum", $description:"ZooKeeper Quorum (host:port)", $required:"true"}</description>
                <config-property-name>Username</config-property-name>
                <config-property-type>java.lang.String</config-property-type>
             </config-property>
             
+<!--  
             <config-property>
-               <description>{$display:"Password",$description:"MongoDB Account Password",$required:"false",$masked:"true"}</description> 
+               <description>{$display:"Password",$description:"Password",$required:"false",$masked:"true"}</description> 
                <config-property-name>Password</config-property-name>
                <config-property-type>java.lang.String</config-property-type>
             </config-property> 
             
             <config-property>
-               <description>{$display:"Database",$description:"MongoDB Database Name",$required:"true"}</description> 
+               <description>{$display:"Database",$description:"Name",$required:"true"}</description> 
                <config-property-name>Database</config-property-name>
                <config-property-type>java.lang.String</config-property-type>
             </config-property>             
+-->
             
             <connectionfactory-interface>javax.resource.cci.ConnectionFactory</connectionfactory-interface>
             <connectionfactory-impl-class>org.teiid.resource.spi.WrappedConnectionFactory</connectionfactory-impl-class>

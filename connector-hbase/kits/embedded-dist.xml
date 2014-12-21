@@ -22,7 +22,7 @@
     <files>
         <file>
             <source>${project.build.directory}/${project.artifactId}-${project.version}-lib.jar</source>
-            <outputDirectory>optional/mongodb</outputDirectory>
+            <outputDirectory>optional/hbase</outputDirectory>
         </file>
     </files>
 

@@ -15,6 +15,12 @@
                     CONSTRAINT PK0 PRIMARY KEY(PK)
                 ) OPTIONS("teiid_hbase:TABLE" 'Customer', "UPDATABLE" 'TRUE');
                 
+CREATE VIRTUAL PROCEDURE extractData(IN param String)
+AS
+BEGIN
+	SELECT * FROM Customer WHERE PK > param;
+END
+                
 CREATE FOREIGN TABLE TypesTest (
     PK string OPTIONS ("teiid_hbase:CELL" 'ROW_ID'),
     column1 varchar OPTIONS ("teiid_hbase:CELL" 'f:q1'),

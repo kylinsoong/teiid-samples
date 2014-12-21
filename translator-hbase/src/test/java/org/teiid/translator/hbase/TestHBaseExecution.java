@@ -1,3 +1,24 @@
+/*
+ * JBoss, Home of Professional Open Source.
+ * See the COPYRIGHT.txt file distributed with this work for information
+ * regarding copyright ownership.  Some portions may be licensed
+ * to Red Hat, Inc. under one or more contributor license agreements.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301 USA.
+ */
 package org.teiid.translator.hbase;
 
 import static org.junit.Assert.assertEquals;
@@ -9,7 +30,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.resource.ResourceException;
 import javax.transaction.TransactionManager;
@@ -29,6 +52,7 @@ import org.teiid.resource.adapter.hbase.HBaseManagedConnectionFactory;
 import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
 import org.teiid.translator.TranslatorException;
+import org.teiid.translator.TypeFacility;
 
 public class TestHBaseExecution {
 	
@@ -38,6 +62,8 @@ public class TestHBaseExecution {
 	      ConsoleAppender consoleAppender = new ConsoleAppender(layout);
 	      Logger.getRootLogger().setLevel(Level.WARN);
 	      Logger.getRootLogger().addAppender(consoleAppender);  
+	      
+	      System.setProperty("java.util.logging.config.file", "src/test/resources/logging.properties");
 		}
 	
 	static Connection conn = null;
@@ -64,53 +90,74 @@ public class TestHBaseExecution {
 	
 	@Test
 	public void testInsert() throws Exception {
-		JDBCUtil.executeUpdate(conn, "INSERT INTO Customer VALUES('108', 'Beijing', 'Kylin Soong', '$8000.00', 'Crystal Orange')");
-		JDBCUtil.executeUpdate(conn, "INSERT INTO Customer(PK, city, name) VALUES ('109', 'Beijing', 'Kylin Soong')");
+		TestHBaseUtil.executeUpdate(conn, "INSERT INTO Customer VALUES('108', 'Beijing', 'Kylin Soong', '$8000.00', 'Crystal Orange')");
+		TestHBaseUtil.executeUpdate(conn, "INSERT INTO Customer(PK, city, name) VALUES ('109', 'Beijing', 'Kylin Soong')");
 	}
 	
 	@Test
 	public void testBatchedInsert() throws SQLException {
-		JDBCUtil.executeBatchedUpdate(conn, "INSERT INTO Customer VALUES (?, ?, ?, ?, ?)", 2);
-		JDBCUtil.executeBatchedUpdate(conn, "INSERT INTO Customer(PK, city, name, amount, product) VALUES (?, ?, ?, ?, ?)", 2);
+		TestHBaseUtil.executeBatchedUpdate(conn, "INSERT INTO Customer VALUES (?, ?, ?, ?, ?)", 2);
+		TestHBaseUtil.executeBatchedUpdate(conn, "INSERT INTO Customer(PK, city, name, amount, product) VALUES (?, ?, ?, ?, ?)", 2);
 	}
 	
 	@Test
-	public void testUpdate() throws Exception {
-//		JDBCUtil.executeUpdate(conn, "UPDATE Customer SET name = 'Jack Black', city = 'St. Louis, MO' WHERE PK = '110'");
+	public void testConditionAndOr() throws Exception {
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer WHERE PK='105' OR name='John White'");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer WHERE PK='105' AND name='John White'");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer WHERE PK='105' AND (name='John White' OR name='Kylin Soong')");
 	}
 	
+	/**
+	 * = 	Equal
+	 * > 	Greater than
+	 * < 	Less than
+	 * >= 	Greater than or equal
+	 * <= 	Less than or equal
+	 * BETWEEN 	Between an inclusive range
+	 * LIKE 	Search for a pattern
+	 * IN 	To specify multiple possible values for a column
+	 */
+	@Test
+	public void testConditionComparison() throws Exception {
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer WHERE PK = '108'");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer WHERE PK > '108'");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer WHERE PK < '108'");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer WHERE PK >= '108'");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer WHERE PK <= '108'");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer WHERE PK BETWEEN '105' AND '108'");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer WHERE PK LIKE '10%'");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer WHERE PK IN ('105', '106')");
+	}
 	
 	@Test
 	public void testSelect() throws Exception {
-		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer");
-		JDBCUtil.executeQuery(conn, "SELECT city, amount FROM Customer");
-		JDBCUtil.executeQuery(conn, "SELECT DISTINCT city FROM Customer");
-		JDBCUtil.executeQuery(conn, "SELECT city, amount FROM Customer WHERE PK='105'");
-		JDBCUtil.executeQuery(conn, "SELECT city, amount FROM Customer WHERE PK='105' OR name='John White'");
-		JDBCUtil.executeQuery(conn, "SELECT city, amount FROM Customer WHERE PK='105' AND name='John White'");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer");
+		TestHBaseUtil.executeQuery(conn, "SELECT city, amount FROM Customer");
+		TestHBaseUtil.executeQuery(conn, "SELECT DISTINCT city FROM Customer");
+		TestHBaseUtil.executeQuery(conn, "SELECT city, amount FROM Customer WHERE PK='105'");
 	}
 	
 	@Test
 	public void testSelectOrderBy() throws Exception {
-		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY PK");
-		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY PK ASC");
-		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY PK DESC");
-		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY name, city DESC");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY PK");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY PK ASC");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY PK DESC");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY name, city DESC");
 	}
 	
 	@Test
 	public void testSelectGroupBy() throws Exception {
-		JDBCUtil.executeQuery(conn, "SELECT COUNT(PK) FROM Customer WHERE name='John White'");
-		JDBCUtil.executeQuery(conn, "SELECT name, COUNT(PK) FROM Customer GROUP BY name");
-		JDBCUtil.executeQuery(conn, "SELECT name, COUNT(PK) FROM Customer GROUP BY name HAVING COUNT(PK) > 1");
-		JDBCUtil.executeQuery(conn, "SELECT name, city, COUNT(PK) FROM Customer GROUP BY name, city");
-		JDBCUtil.executeQuery(conn, "SELECT name, city, COUNT(PK) FROM Customer GROUP BY name, city HAVING COUNT(PK) > 1");
+		TestHBaseUtil.executeQuery(conn, "SELECT COUNT(PK) FROM Customer WHERE name='John White'");
+		TestHBaseUtil.executeQuery(conn, "SELECT name, COUNT(PK) FROM Customer GROUP BY name");
+		TestHBaseUtil.executeQuery(conn, "SELECT name, COUNT(PK) FROM Customer GROUP BY name HAVING COUNT(PK) > 1");
+		TestHBaseUtil.executeQuery(conn, "SELECT name, city, COUNT(PK) FROM Customer GROUP BY name, city");
+		TestHBaseUtil.executeQuery(conn, "SELECT name, city, COUNT(PK) FROM Customer GROUP BY name, city HAVING COUNT(PK) > 1");
 	}
 	
 	@Test
 	public void testSelectLimit() throws Exception {
-		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer LIMIT 3");
-		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY PK DESC LIMIT 3");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer LIMIT 3");
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY PK DESC LIMIT 3");
 	}
 	
 	/*
@@ -120,8 +167,53 @@ public class TestHBaseExecution {
 	 */
 	@Test
 	public void testDataTypes() throws Exception{
-		JDBCUtil.executeQuery(conn, "SELECT * FROM TypesTest");
-//		JDBCUtil.executeBatchedUpdateDataType(conn, "INSERT INTO TypesTest VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 2);
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM TypesTest");
+		TestHBaseUtil.executeBatchedUpdateDataType(conn, "INSERT INTO TypesTest VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM TypesTest WHERE PK = '10001'");
+			if(rs.next()) {
+				assertEquals(rs.getObject(1).getClass(), TypeFacility.RUNTIME_TYPES.STRING);
+				assertEquals(rs.getObject(2).getClass(), TypeFacility.RUNTIME_TYPES.STRING);
+				assertEquals(rs.getObject(3).getClass(), byte[].class);
+				assertEquals(rs.getObject(4).getClass(), TypeFacility.RUNTIME_TYPES.CHAR);
+				assertEquals(rs.getObject(5).getClass(), TypeFacility.RUNTIME_TYPES.BOOLEAN);
+				assertEquals(rs.getObject(6).getClass(), TypeFacility.RUNTIME_TYPES.BYTE);
+				assertEquals(rs.getObject(7).getClass(), TypeFacility.RUNTIME_TYPES.BYTE);
+				assertEquals(rs.getObject(8).getClass(), TypeFacility.RUNTIME_TYPES.SHORT);
+				assertEquals(rs.getObject(9).getClass(), TypeFacility.RUNTIME_TYPES.SHORT);
+				assertEquals(rs.getObject(10).getClass(), TypeFacility.RUNTIME_TYPES.INTEGER);
+				assertEquals(rs.getObject(11).getClass(), TypeFacility.RUNTIME_TYPES.INTEGER);
+				assertEquals(rs.getObject(12).getClass(), TypeFacility.RUNTIME_TYPES.LONG);
+				assertEquals(rs.getObject(13).getClass(), TypeFacility.RUNTIME_TYPES.LONG);
+				assertEquals(rs.getObject(14).getClass(), TypeFacility.RUNTIME_TYPES.FLOAT);
+				assertEquals(rs.getObject(15).getClass(), TypeFacility.RUNTIME_TYPES.FLOAT);
+				assertEquals(rs.getObject(16).getClass(), TypeFacility.RUNTIME_TYPES.DOUBLE);
+				assertEquals(rs.getObject(17).getClass(), TypeFacility.RUNTIME_TYPES.BIG_DECIMAL);
+				assertEquals(rs.getObject(18).getClass(), TypeFacility.RUNTIME_TYPES.BIG_DECIMAL);
+				assertEquals(rs.getObject(19).getClass(), TypeFacility.RUNTIME_TYPES.DATE);
+				assertEquals(rs.getObject(20).getClass(), TypeFacility.RUNTIME_TYPES.TIME);
+				assertEquals(rs.getObject(21).getClass(), TypeFacility.RUNTIME_TYPES.TIMESTAMP);
+			}			
+		} catch (Exception e) {
+			throw e ;
+		} finally {
+			TestHBaseUtil.close(rs, stmt);
+		}
+	}
+	
+	@Test
+	public void testFunctions() throws Exception {
+		TestHBaseUtil.executeQuery(conn, "SELECT COUNT(PK) AS totalCount FROM Customer WHERE name = 'Kylin Soong'");
+	}
+	
+	@Test
+	public void testProcedures() throws Exception {
+		TestHBaseUtil.executeCallable(conn, "call extractData('103')");
 	}
 	
 	@Test
@@ -132,7 +224,7 @@ public class TestHBaseExecution {
 		assertNotNull(connection);
 		DatabaseMetaData dbmd = connection.getConnection().getMetaData();
 		assertEquals(false, dbmd.supportsGetGeneratedKeys());
-		JDBCUtil.close(connection.getConnection());;
+		TestHBaseUtil.close(connection.getConnection());;
 	}
 	
 	@AfterClass 
@@ -142,43 +234,4 @@ public class TestHBaseExecution {
 		}
 	}
 	
-	
-	
-	public static void main(String[] args) throws Exception {
-		
-		EmbeddedServer server = new EmbeddedServer();
-		
-		HBaseExecutionFactory executionFactory = new HBaseExecutionFactory();
-		executionFactory.start();
-		server.addTranslator("translator-hbase", executionFactory);
-		
-		HBaseManagedConnectionFactory managedconnectionFactory = new HBaseManagedConnectionFactory();
-		managedconnectionFactory.setZkQuorum("localhost:2181");
-		server.addConnectionFactory("java:/hbaseDS", managedconnectionFactory.createConnectionFactory());
-		
-		EmbeddedConfiguration config = new EmbeddedConfiguration();
-		config.setTransactionManager(SimpleMock.createSimpleMock(TransactionManager.class));
-		server.start(config);
-		server.deployVDB(new FileInputStream(new File("src/test/resources/hbase-vdb.xml")));
-		Connection conn = server.getDriver().connect("jdbc:teiid:hbasevdb", null);
-		
-//		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer");
-		
-//		JDBCUtil.executeUpdate(conn, "INSERT INTO Customer VALUES('108', 'Beijing', 'Kylin Soong', '$4000.00', 'Crystal Orange')");
-		
-//		JDBCUtil.executeBatchedUpdate(conn, "INSERT INTO Customer(PK, city, name, amount, product) VALUES (?, ?, ?, ?, ?)", 2);
-		
-//		JDBCUtil.executeUpdate(conn, "UPDATE Customer SET name = 'Jack Black', city = 'St. Louis, MO' WHERE PK = '110'");
-		
-//		JDBCUtil.executeQuery(conn, "SELECT * FROM Customer");
-		
-		JDBCUtil.executeQuery(conn, "SELECT * FROM TypesTest");
-		
-//		JDBCUtil.executeBatchedUpdateDataType(conn, "INSERT INTO TypesTest VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 2);
-				
-		JDBCUtil.close(conn);
-		
-	}
-	
-
 }

@@ -19,17 +19,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301 USA.
  */
-package org.teiid.translator.hbase.phoenix;
+package org.teiid.translator.hbase;
 
-import org.apache.phoenix.schema.PColumnImpl;
-import org.apache.phoenix.schema.PDataType;
-import org.apache.phoenix.schema.PName;
-import org.apache.phoenix.schema.SortOrder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Formatter;
+import java.util.logging.LogRecord;
 
-public class PColumnTeiidImpl extends PColumnImpl {
+public class TestHBaseLoggerFormatter extends Formatter {
 	
-	public PColumnTeiidImpl (PName name,PName familyName,PDataType dataType){
-		super(name, familyName, dataType, 0, 0, false, 0, SortOrder.getDefault(), 0, null, false);
+	SimpleDateFormat format = new SimpleDateFormat("MMM dd,yyyy HH:mm");
+
+	@Override
+	public String format(LogRecord record) {
+		StringBuffer sb = new StringBuffer();
+		sb.append(format.format(new Date(record.getMillis())) + " ");
+		sb.append(record.getLevel() + " ");
+		sb.append("[" + record.getLoggerName() + "] ");
+		sb.append(record.getMessage() + "\n");
+		return sb.toString();
 	}
 
 }

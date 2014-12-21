@@ -39,6 +39,12 @@
           )
             AS
          SELECT  A.ID, A.COMPANY_NAME FROM Accounts.PRODUCT AS A;
+         
+CREATE VIRTUAL PROCEDURE extractData(IN param integer)
+AS
+BEGIN
+	SELECT * FROM PROUDCTVIEW WHERE product_id > param;
+END
                 
         ]]> </metadata>
     </model>

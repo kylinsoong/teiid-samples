@@ -50,32 +50,39 @@ public class H2DataSourceDebug {
 		
 		conn = server.getDriver().connect("jdbc:teiid:H2VDB", null);	
 				
-		JDBCUtil.executeQuery(conn, "SELECT * FROM PRODUCT");
+//		JDBCUtil.executeQuery(conn, "SELECT * FROM PRODUCT");
 		
+//		prepareInsert();
 		
-//		PreparedStatement pstmt = null ;
-//		try {
-//			pstmt = conn.prepareStatement("INSERT INTO PRODUCT(ID, SYMBOL, COMPANY_NAME) VALUES(?, ?, ?)");
-//			for(int i = 0 ; i < 1 ; i ++) {
-//				pstmt.setInt(1, 101 + i);
-//				pstmt.setString(2, "RHA");
-//				pstmt.setString(3, "REDHAT");
-//				pstmt.addBatch();
-//			}
-//			pstmt.executeBatch();
-//			if(!conn.getAutoCommit()) {
-//				conn.commit();
-//			}
-//		} catch (SQLException e) {
-//			throw e;
-//		} finally {
-//			JDBCUtil.close(pstmt);
-//		}
+		JDBCUtil.executeCallable(conn, "call extractData(1010)");
+		
 		
 		JDBCUtil.close(conn);
 		
 	}
 	
+	protected void prepareInsert() throws SQLException {
+
+		PreparedStatement pstmt = null ;
+		try {
+			pstmt = conn.prepareStatement("INSERT INTO PRODUCT(ID, SYMBOL, COMPANY_NAME) VALUES(?, ?, ?)");
+			for(int i = 0 ; i < 1 ; i ++) {
+				pstmt.setInt(1, 101 + i);
+				pstmt.setString(2, "RHA");
+				pstmt.setString(3, "REDHAT");
+				pstmt.addBatch();
+			}
+			pstmt.executeBatch();
+			if(!conn.getAutoCommit()) {
+				conn.commit();
+			}
+		} catch (SQLException e) {
+			throw e;
+		} finally {
+			JDBCUtil.close(pstmt);
+		}
+	}
+
 	private void startServer() throws SQLException {
 		h2Server = Server.createTcpServer().start();
 	}

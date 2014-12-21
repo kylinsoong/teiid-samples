@@ -33,3 +33,9 @@ CREATE FOREIGN TABLE TypesTest (
     column20 timestamp OPTIONS ("teiid_hbase:CELL" 'f:q20'),
     CONSTRAINT PK0 PRIMARY KEY(PK)
 ) OPTIONS("teiid_hbase:TABLE" 'TypesTest', "UPDATABLE" 'TRUE');
+
+CREATE VIRTUAL PROCEDURE extractData(IN param String)
+AS
+BEGIN
+	SELECT * FROM Customer WHERE PK > param;
+END

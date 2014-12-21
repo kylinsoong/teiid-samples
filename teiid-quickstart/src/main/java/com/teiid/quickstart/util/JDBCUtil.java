@@ -1,5 +1,6 @@
 package com.teiid.quickstart.util;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -151,6 +152,43 @@ public class JDBCUtil {
 		System.out.println();
 		
 	}
+	
+	public static void executeCallable(Connection conn, String sql) throws Exception {
+		
+		System.out.println("Query SQL: " + sql);
+		
+		CallableStatement cStmt = null;
+		ResultSet rs = null;
+		
+		try {
+			cStmt = conn.prepareCall(sql);
+			boolean hadResults = cStmt.execute();
+			while(hadResults) {
+				rs = cStmt.getResultSet();
+				int columns = rs.getMetaData().getColumnCount();
+				for (int row = 1; rs.next(); row++) {
+					System.out.print(row + ": ");
+					for (int i = 0; i < columns; i++) {
+						if (i > 0) {
+							System.out.print(", ");
+						}
+						System.out.print(rs.getObject(i + 1));
+					}
+					System.out.println();
+				}
+				rs.close();
+				hadResults = cStmt.getMoreResults();
+			}
+		} catch (Exception e) {
+			throw e ;
+		} finally {
+			close(rs, cStmt);
+		}
+		
+		System.out.println();
+		
+	}
+
 
 	public static boolean executeUpdate(Connection conn, String sql) throws Exception {
 		
