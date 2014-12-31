@@ -38,8 +38,8 @@ import org.teiid.logging.LogConstants;
 import org.teiid.logging.LogManager;
 import org.teiid.logging.MessageLevel;
 import org.teiid.metadata.RuntimeMetadata;
-import org.teiid.resource.adapter.hbase.HBaseConnection;
 import org.teiid.translator.ExecutionContext;
+import org.teiid.translator.HBaseConnection;
 import org.teiid.translator.TranslatorException;
 import org.teiid.translator.hbase.phoenix.PhoenixUtils;
 

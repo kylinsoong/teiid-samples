@@ -10,7 +10,6 @@
         <module name="javax.resource.api"/>
         <module name="org.jboss.teiid.common-core" />
         <module name="org.jboss.teiid.api" />
-        <module name="org.apache.phoenix" />    
-        <module name="org.jboss.teiid.translator.jdbc" />
+        <module name="org.jboss.teiid.translator.hbase.api" />    
     </dependencies>
 </module>

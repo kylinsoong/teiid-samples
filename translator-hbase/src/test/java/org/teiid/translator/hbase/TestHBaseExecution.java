@@ -43,17 +43,19 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.teiid.core.util.SimpleMock;
 import org.teiid.deployers.VirtualDatabaseException;
 import org.teiid.dqp.internal.datamgr.ConnectorManagerRepository.ConnectorManagerException;
-import org.teiid.resource.adapter.hbase.HBaseConnection;
 import org.teiid.resource.adapter.hbase.HBaseManagedConnectionFactory;
 import org.teiid.runtime.EmbeddedConfiguration;
 import org.teiid.runtime.EmbeddedServer;
+import org.teiid.translator.HBaseConnection;
 import org.teiid.translator.TranslatorException;
 import org.teiid.translator.TypeFacility;
 
+//@Ignore
 public class TestHBaseExecution {
 	
 	static {
