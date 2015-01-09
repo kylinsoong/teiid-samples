@@ -236,4 +236,14 @@ public class TestHBaseExecution {
 		}
 	}
 	
+	public static void main(String[] args) throws Exception {
+		init();
+		
+//		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer");
+		
+		TestHBaseUtil.executeQuery(conn, "SELECT * FROM Customer ORDER BY PK DESC");
+		
+		tearDown();
+	}
+	
 }
