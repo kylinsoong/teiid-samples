@@ -15,8 +15,10 @@ public class DroolsClient {
 		
 		conn = JDBCUtil.getDriverConnection(JDBC_DRIVER, JDBC_URL, JDBC_USER, JDBC_PASS);
 		
-		JDBCUtil.executeQuery(conn, "SELECT COUNT(1), sayHello('Teiid'), celsiusToFahrenheit(1.23) FROM FOO");
+//		JDBCUtil.executeQuery(conn, "SELECT COUNT(1), sayHello('Teiid'), celsiusToFahrenheit(1.23) FROM FOO");
 				
+		JDBCUtil.executeQuery(conn, "SELECT performRuleOnData('org.jboss.teiid.drools.Message', 'Hello World', 0) FROM FOO");
+		
 		JDBCUtil.close(conn);
 
 	}

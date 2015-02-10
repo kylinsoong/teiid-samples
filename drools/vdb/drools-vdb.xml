@@ -20,7 +20,7 @@
 
     CREATE VIRTUAL FUNCTION celsiusToFahrenheit(celsius double) RETURNS double OPTIONS (JAVA_CLASS 'org.something.TempConv',  JAVA_METHOD 'celsiusToFahrenheit'); 
 
-    CREATE VIRTUAL FUNCTION sumAll(arg integer) RETURNS integer OPTIONS (JAVA_CLASS 'org.something.SumAll',  JAVA_METHOD 'addInput', AGGREGATE 'true', VARARGS 'true', "NULL-ON-NULL" 'true');
+    CREATE VIRTUAL FUNCTION performRuleOnData(className string, fileds object, arguments object) RETURNS object OPTIONS (JAVA_CLASS 'org.jboss.teiid.drools.HelloWorld',  JAVA_METHOD 'performRuleOnData');
 ]]> </metadata>
     </model>
 
