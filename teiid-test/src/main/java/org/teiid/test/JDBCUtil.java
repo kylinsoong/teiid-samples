@@ -151,6 +151,41 @@ public class JDBCUtil {
 		System.out.println();
 		
 	}
+	
+	public static void executeQuery(Connection conn, String sql, boolean showPlan) throws Exception {
+		
+		System.out.println("Query SQL: " + sql);
+		
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			stmt = conn.createStatement();
+			if(showPlan) {
+				stmt.execute("set showplan on");
+			}
+			rs = stmt.executeQuery(sql);
+			ResultSetMetaData metadata = rs.getMetaData();
+			int columns = metadata.getColumnCount();
+			for (int row = 1; rs.next(); row++) {
+				System.out.print(row + ": ");
+				for (int i = 0; i < columns; i++) {
+					if (i > 0) {
+						System.out.print(", ");
+					}
+					System.out.print(rs.getString(i + 1));
+				}
+				System.out.println();
+			}
+		} catch (Exception e) {
+			throw e ;
+		} finally {
+			close(rs, stmt);
+		}
+		
+		System.out.println();
+		
+	}
 
 	public static boolean executeUpdate(Connection conn, String sql) throws Exception {
 		

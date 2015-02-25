@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<vdb name="Teiid3346VDB" version="1">
+
+    <model name="Product" type="VIRTUAL">
+        <metadata type="DDL"><![CDATA[
+        
+        
+        CREATE VIEW foo.bar as SELECT 'FOO';
+                 
+        ]]> </metadata>
+    </model>
+    
+</vdb>

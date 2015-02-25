@@ -9,9 +9,9 @@ public class MYSQLInsert {
 
 	
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	static final String JDBC_URL = "jdbc:mysql://localhost:3306/customer";
-	static final String JDBC_USER = "jdv_user";
-	static final String JDBC_PASS = "jdv_pass";
+	static final String JDBC_URL = "jdbc:mysql://localhost:3306/test";
+	static final String JDBC_USER = "test_user";
+	static final String JDBC_PASS = "test_pass";
 	
 	static final String COL_A = "12341234";
 	static final String COL_B = "123412341234";
@@ -37,18 +37,21 @@ public class MYSQLInsert {
 			pstmt.addBatch();
 			if((i + 1) % 1000 == 0){
 				pstmt.executeBatch();
+				conn.commit();
 			} 
 		}
 		
 		JDBCUtil.close(conn);
 		JDBCUtil.close(pstmt);
 		
+		
+		
 		System.out.println("Insert " + count + " rows spend " + (System.currentTimeMillis() - start) + " ms");
 	}
 	
 	public static void main(String[] args) throws Exception {
 
-		init(10000 * 1200);
+		init(100000);
 	}
 
 }
