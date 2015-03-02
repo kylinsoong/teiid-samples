@@ -1,0 +1,478 @@
+[MUSIC]
+Hi there.
+In this next series of lectures we'll
+be looking at at the new generation of
+storage systems called key value
+stores and NOSQL storage systems.
+We'll see the overall concept and
+then we'll see in detail.
+The architecture of two different
+systems that fall in this pace.
+So what is the key-value store?
+What kind of an abstraction
+does it really provide?
+essentially, key-value stores
+map a key to a given value.
+For instance if you're
+a company like Twitter.com.
+Where you receive millions of
+tweets from millions of users.
+You are making a key-value store where,
+the key comma value pairs
+have the key as the tweet ID.
+So every id in twitter has a unique ID,
+the tweet ID.
+And the value associated with that tweet
+ID is information about that tweet,
+such as the 140 characters
+of the tweet itself.
+Who tweeted it what time was it tweeted
+and any links that it might contain.
+A different retailer, online retailer like
+Amazon, might maintain key value pairs
+where the key is the item number and
+the value is information about the item.
+For instance, who's selling it how
+many copies of the item are left.
+What are the recommendations for
+the item, and so on and so forth.
+An online booking agent like
+Kayak might maintain a key value
+store where the flight number is mapped
+to information about that flight.
+For instance,
+how many seats are left in that flight.
+And of course a lot of banks and financial
+institutions map your account number.
+The information about the account,
+such as the balance, or the user ID and
+so on and so forth.
+So essentially, key value pairs are used
+by a variety of businesses to map
+essential an important keys to values.
+However if you know your computer science,
+you might be saying, well,
+that's just a dictionary data structure,
+right?
+So, it's a data structure where you can
+insert, look up, and delete by key.
+For instance, this is provided by
+the hash table or by the binary tree.
+However, here because of the sheer
+amounts of data that are involved,
+imagine the billions of tweets
+that are maintained by Twitter,
+all of which need to be maintained.
+You can't maintain all of that on
+a single server where you have a single
+process running the strict,
+dictionary data structure.
+Instead, you need to maintain this data
+on a distributed cluster of servers.
+So essentially, you need to
+build a distributor hash table.
+And this should start to
+look familiar to you.
+We have already discussed distributed hash
+tables when we discussed peer to peer
+systems, and it's not a surprise
+that as a result the new
+generation of key values towards the no
+sequence storage systems actually reuse
+a lot of the design decisions from DHT
+that we studied in peer to peer system.
+This will become evident as we go along.
+Also you might be wondering well
+isn't that just a database.
+A database maintains large amounts of data
+and the data can be queried it can be
+looked up and
+it can be especially queried as well.
+And in fact relational
+database management systems or
+RDBMSs, have been around for
+ages, for many decades.
+And one of the more popular
+ones among them is MySQL.
+In these database systems,
+data is stored in tables.
+These are structured tables so every
+table has a structured schema meaning it
+specifies which columns
+are present in that table.
+And each show,
+that is each data item in the table,
+has a primary key which is
+unique in that table and
+that key can be used to look up
+that particular item in the table.
+The structured query language or SQL or
+SQL, is used to query such relational
+database tables, and relational database
+tables often support joins as well.
+So let's see an example of
+a relational database table.
+Here is an example of relational database
+with just one table to start with.
+It's called the users table.
+The users table has a primary key,
+called the user ID,.
+The primary key has to be
+unique across all the rows.
+It also has multiple columns, in this case
+name, the zip code, the blog_url, and
+the blog_ID that is
+maintained by that user.
+For instance the second row over
+here has a unique user ID 422, and
+then the name of user is Charlie,
+the zip code is 45753 and
+the blog URL is charlie.com then
+the blog ID is 3 in this case.
+There might be a second table
+present here called the blog table.
+The blog table again has a primary key
+which is the ID of the blog itself.
+Then it also has columns URL,
+when it was last updated,
+and the number of posts to that blog.
+Now, in relational databases,
+there are also foreign keys.
+A foreign key in a table like users refers
+to a primary key in a different table,
+like the blog.
+For instance, the second row
+again here has a blog ID of 3.
+This is a foreign key that
+refers to the primary key of
+3 over here in the blog table.
+And essentially the foreign
+keys are used to look up
+the entries quickly in the other tables.
+So what kinds of queries can you do on
+collections of tables such as this?
+Well, you can do simple select
+queries where for instance,
+you select from the zip code.
+sorry, you select from the users table.
+The zip code of all
+the users whose name is Bob.
+So in this case, the answer will
+just be one item, would be 99910.
+But if there were multiple users
+named Bob in the users table,
+it would return all of
+their zip codes as one.
+Has a list essentially or a table.
+You can also select from the second
+table all the URLs where the ID equals
+3 this would just return one entry
+because after all ID is the primary key.
+You can also do joins on the tables,
+for instance you can join
+the user's table with the blog table,
+over here so you say from users join blog.
+And essentially this calculates
+a cross product of all the entries in
+the users table with the entries in
+the blog table, and it retains only those
+where the users dot blog URL the blog URL
+column over here in the first table entry.
+Is the same as the URL entry,
+this URL entry, in the second table.
+So if those two match,
+then it returns a zip code and
+the number of posts for that particular
+combination in the cross product.
+So this is what is called a join in SQL.
+And there, again,
+many different kinds of joins.
+We just covered one particular
+kind of join over here, but
+there are many variants of joins.
+So that's a relational database.
+And it's been around for very long.
+And it supports fairly
+expressive SQL queries.
+So why not just use this for
+our new workloads?
+Well, unfortunately, the workloads that
+exist today in the world of Twitter and
+Facebook and Google.
+Are sort of a mismatch with
+the relation databases.
+So the data here is large, and
+it's often unstructured, which means that
+it's often hard to come up with schemas,
+into which the data can be fit.
+If you select a schema for a table,
+you might soon come across key value pairs
+that don't necessarily fit that schema
+which may have extra columns in there.
+Also, the workload involved here,
+involves a lot of reads and
+writes coming from multiple clients,
+millions of clients in some cases.
+And this is not necessarily a good
+match with relation databases.
+A lot of these workloads are write-heavy,
+meaning that there are a lot
+more writes compared to reads.
+And relational databases are typically
+optimized for read-heavy workloads.
+A foreign key as we saw in the previous
+slide are not not needed that often in
+todays workloads.
+And in fact joins are not needed
+that often in todays workloads.
+Which means that we could
+potentially come up with a sort of
+watered down simpler relation database
+not even relation just a database.
+Which is much faster as a result.
+And that's essentially what happens
+in this, what has happened in
+this new generation of key value stores
+and those equal storage systems.
+So what are the needs
+of today's workloads?
+Well first of all you needs speed,
+essentially you won't want users to
+go away from your system just
+because the system is slow, and
+it returns queries very quickly.
+for instance Netflix runs
+a key value store, and
+if Netflix was slow,
+you just wouldn't use it.
+You would use a competing,
+a competing product.
+You'd also want to use you also want to
+avoid a single point of failure, which
+means that you don't want the failure of
+one or a few servers in your system, to
+lead to loss of data or to unavailability
+of data for reads and writes.
+You want to minimize the TC or
+the total cost of
+operation also known as total cost
+of ownership of your infrastructure.
+This is again for the provider
+side of companies like Twitter or
+Netflix which might be running key
+value stores rather than the customers.
+So the companies like Netflix and
+Twitter they really want to minimize how
+much money they're spending in running
+the infrastructure,
+in running the key value store.
+And part of this is using
+fewer system administrators to
+administer the service itself.
+And then you also want
+incremental scalability.
+You want to grow your system based
+on the load as smoothly as possible,
+and you want to scale out, not scale up.
+Let's look a little bit at
+what this really means.
+Scale up is the ability to
+grow your cluster capacity by
+replacing your existing machines
+with more powerful machines.
+Machines that have more CPU, more memory,
+more disk, faster memory busses and
+faster busses in general.
+This has traditionally
+been the approach for
+for scaling relation databases,
+for instance.
+However, this is not really cost-effective
+as typically you are buying fairly
+powerful machines that are above
+the price curve's sweet spot.
+And of course as the technology
+grows very quickly
+you need to replace your
+machines fairly often.
+Scale out, on the other hand,
+which is preferred by the new
+generation of systems, helps you to
+incrementally grow your cluster by
+adding more off the shelf machines, or
+what is known as COTS machines or
+Components Off the Shelf machines.
+Essentially, you buy workstations or
+servers that are available on the sweet
+spot in the price curve right now and
+you simply add them to your cluster.
+This obviously is cheaper.
+And over long duration,
+you can choose to phase out the very old
+machines in your cluster, while replacing
+them with the current sweet spot machines
+that are available off the shelf.
+So essentially you have a collection
+of machines that are not the most
+powerful that you can buy today but
+of course are not too wimpy, either.
+But somewhere in the middle of the,
+of the price curve.
+But you can add machines very easily and
+also removed machines
+very easily if you want.
+And this is the approach for scale out
+approach that is used by most companies in
+today's Cloud computing environment.
+Just because it's cost effective and
+it's also easier to manage
+a larger cluster of off the shelf machines
+than it is to manage a few very powerful,
+very specialized machines.
+So what does NoSQL really stand for?
+NoSQL does not stand for no SQL.
+It sta, actually stands for Not Only SQL.
+The name is a little bit a bit
+of of a misnomer for this area.
+Essentially, NoSQL and key-values stores
+support are two necessary API operations.
+They are get, by a key, and
+put, by key or a value.
+This either creates a key, value pair of
+updates the value for an existing key.
+There are also other
+operations that are supported.
+For instance in the Cassandra
+key-value store.
+The Cassandra Query Language
+also in a CQL.
+This is different from Sequel or SQL.
+Which traditionally has no support.
+The CQL language supports a small set
+off extended operations that are more
+powerful than just get or put.
+But are not as powerful
+as the SQL language.
+So what are the concepts in these
+key values store and NoSQL, systems?
+So first of all these new systems maintain
+tables just like relation database tables,
+but the tables have different names.
+For instance in Cassandra the tables
+are called column families.
+Essentially they are a group of columns
+that share something in common.
+In age base the tables are called tables.
+In MongoDB,
+the tables are called collections.
+These are just like relation database
+tables, but they have a few differences.
+The tables may be
+unstructured to start with.
+In other words, they may not have schemas.
+Some columns may be
+missing from some rows.
+Some columns may be missing altogether.
+They don't always support joins or
+have foreign keys across tables,
+like relation database tables.
+But like relation database tables,
+they can have index tables, as well.
+So here is what a key value in NoSQL
+system would look like for our data model.
+For this new data model.
+So once again, here I have
+a users table and a blog table.
+You do have tables and
+the users table has a key.
+So each row has a key and
+the key in this case is just a user id.
+Again, that has to be unique and
+the value is essentially the rest
+of the columns in that table.
+Similarly the blog table has
+a key which is a blog id and
+the value is the rest of
+the columns in the table.
+Unlike relationary based tables,
+these tables are unstructured.
+This means that there's no schema imposed,
+some items may be missing.
+For instance, the row for 422 named
+Charlie does not have a zip code in it,
+and that's fine for
+a key-value in NoSQL stores.
+Also, some entire columns may be missing
+over here, and that's fine, too.
+You can add columns for particular rows,
+they don't need to be present in all the
+other rows and that's optional as well.
+Again, there are no foreign keys and the
+joins may not be supported in the systems
+just because the workloads don't
+necessarily need foreign keys or joins.
+These new generation systems also
+use column-oriented storage.
+So relation databases store an entire row
+together at a disk on a disk or
+or at a server.
+This means that the entire key on all
+the columns associated with that key
+are stored together.
+A no sequence storage systems
+instead store a column together,
+which means that in the previous
+slide the blog ID column might be or
+URL column might be stored as,
+as one, in one place.
+And the user name column might be
+stored as as one in a separate place.
+Well, why do you use
+column-oriented storage?
+well, first of all,
+entries within the column are indexed and
+easy to locate given the key,
+and also vice versa.
+So you can find out which is
+the URL column that corresponds to
+the user Charlie, for instance.
+But again, why do you do this?
+Well, you do this because
+then searches that use one or
+more columns are easier to do and
+more efficient, and they can be
+done by fetching only a part of the table
+rather than fetching the entire table.
+So for instance,
+if you want to get all the blog ids from
+the blog table that were
+updated within the past month,.
+In the relation database approach where
+you store the entire row essentially you
+have to refresh the entire
+table all the rows and
+then look at the corresponding
+column in each row.
+In the, in the NoSQL in the column
+one data storage example you
+simply look at the last updated column.
+You fetch only that column.
+And then for the entries in the column
+that match, which are within the past
+month, you fetch the corresponding
+entries in the block ID column.
+Okay, so you don't need to fetch any of
+the other columns at all that are present
+in the other table.
+Only these two columns are sufficient, and
+that means that you're incurring
+less of an I/O overhead.
+And your query's going to be much,
+much faster.
+So next in the next lecture,
+we'll be looking at the design of a real
+key-value store Apache Cassandra, which is
+one of the most popular key value storers
+that is being used in industry today.
+[MUSIC]
+
