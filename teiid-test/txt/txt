@@ -1,0 +1,839 @@
+So in this lecture we will be looking at
+the design details of Apache Cassandra.
+So Apache Cassandra is a distributed
+key-value store intended to
+run in a data center and
+also across multiple data centers.
+Originally it was designed as
+Facebook as a infrastructure for
+their messaging platform.
+However later they decided
+to open source it and
+today it's one of the most
+active Apache projects.
+A lot of companies use Apache Cassandra
+in their production clusters for
+a variety of different applications.
+These include blue chip companies
+such as IBM, Adobe, Hewlett Packard,
+eBay, Ericsson Symantec.
+Also newer companies such as Twitter and
+Spotify use Cassandra.
+Nonprofit such as PBS Kids use it.
+And if you've ever used Netflix,
+you've actually indirectly used Cassandra,
+essentially Netflix uses Cassandra to
+keep track of positions in the videos,
+so wherever you are in a particular
+video is kept track of in Cassandra so
+that if you pause the video, or
+if you stop it and then later resume
+the Cassandra key value store is used
+to fetch your latest, scene position.
+So let's go inside the design
+of Cassandra itself.
+So the first question that has
+to be address by the design is,
+given a key value pair how do
+you map the key to a server?
+How do you know which, which server
+stores that particular key value pair?
+Well, it turns out that because key value
+stores are similar to distributed hash
+tables Cassandra uses the ring that
+we saw in a distributed hash table.
+So you might remember this one from when
+we discussed peer to peer assistance.
+Essentially Cassandra places
+servers in a virtual ring; again
+the ring here consists of two power m
+points and here is 7, so it's 128 points.
+And the server is placed at a point
+in the ring and essentially,
+then you map the keys on the points on
+the ring and the server gets stored at,
+the key gets stored at servers that
+are successors to its point on the ring.
+So, for instance key with,
+with an ID of 13,
+which maps to 13 will get stored at
+servers 16 and also 32, and also 45.
+One of these might be the primary replica,
+one of these the others
+might be backup replicas.
+As far as Cassandra is concerned
+it doesn't necessarily need to
+have primary or backup replicas, or,
+need to know the notion of primary or
+backup replicas it just
+knows them as replicas.
+The client sends its queries to
+one of the servers in the system.
+It need not be one of the replicas.
+This server is called the coordinator.
+And again, the coordinator need
+not be on a per data center basis,
+it could be on a per client basis or on a
+per query basis, it doesn't really matter.
+There's also one ring present per data
+center, so if you have Cassandra running,
+Cassandra running in two different data
+centers, each of those data centers would
+be using a separate ring with its
+own servers mapped to that ring.
+What is not present in Cassandra which
+was present in a distribute hash
+table like Chord when we discussed it is a
+notion of finger tables or routing tables.
+So there's no routing used
+in Cassandra in, here.
+Instead, when the client sends
+a query to the coordinator,
+the coordinator simply forwards
+the query to the appropriate replicas or
+just some of the replicas in for
+that particular key.
+This means that every server,
+which could be the coordinator, needs to
+know about where the keys are stored
+on every other server in the system.
+We'll come back to this later on,
+we'll discuss later on how
+servers know about each other.
+But for now,
+let's focus on the key to server mapping.
+So the mapping from key to server
+is called the partitioner.
+And that is what is used by
+the coordinator here to find out
+which are the replica servers to forward
+a particular query for key 13 to.
+So there are different kinds of
+replication strategies there are two
+main classes that are supported by
+Cassandra, they are the SimpleStrategy and
+the Network Topology Strategy.
+The SimpleStrategy uses the partitioner
+and there are two kinds of partitioners.
+The random partitioner uses hash-based
+partitioning just like Chord so
+essentially this is the most this is
+the version of Cassandra that is most
+similar to Chord, where essentially keys
+are hashed to the point in the ring and
+then are stored at servers that
+are closed to that point in the ring,
+or assigned to that, are assigned
+to that segment in the ring itself.
+So for instance, if you assign
+to each server the segment in
+the ring that is between that servers
+point on the ring and its predecessor,
+then this becomes more similar to
+the Chord hash based partitioning.
+There's also byte order partitioner
+which assigns ranges of keys to servers.
+You might want to maintain a,
+a table in Cassandra that preserves
+the ordering of the keys in there.
+For instance,
+the keys might be timestamped, and
+you might want to maintain
+the ordering of the timestamps.
+And this assign, this does not hash the
+keys, instead it simply maps the key onto
+a point in the ring based on the value
+of the key itself so that two keys that
+are in order in the real space are also in
+the same order in the ring space itself.
+This is useful for range queries.
+For instance if you want to get all the
+Twitter users starting with a or b then
+you can do a range query very easily if
+you're using a byte order partitioner, by
+simply searching for the servers that will
+be storing that particular range of keys.
+If you were using the hash
+based partitioning instead,
+you'd essentially have to ask every single
+server in that particular ring, to see if
+the server has any key value key value
+pairs that match this particular range.
+The Network Topology Strategy is
+a different strategy which is used for
+multi-data center deployments it supports
+a variety of different configurations.
+It supports one configuration where you
+can have two replicas of each key per
+data center.
+So if you have three data centers then
+you essentially have six replicas,
+two in each data center for each key.
+There also different configuration which
+is three replicas per data center.
+Now how do you select the replicas
+within each data center?
+So on a per data center basis you fit,
+you first place the first replica
+according to the partitioner.
+Again, you can use a random partitioner or
+a byte order partitioner here.
+And then for the next replica you want to
+make sure that you're storing that second
+replica on a different track.
+Why?
+Well, you don't want rack failure with
+a data center to lose all copies of
+a given key.
+So you place the second copy
+of a key on a different track.
+Essentially, you go around
+the ring clockwise until you
+encounter the first server
+that is in a different rack
+from the primary the first
+replica that you placed.
+And you place your key
+at that first server.
+So this ensures there is rack [INAUDIBLE]
+tolerance and it also ensures that
+there is two replicas in this particular
+case for that key in the data center.
+So, Cassandra uses a mechanism known as
+Snitches to map IP addresses to racks and
+data centers.
+You can configure this is
+the cassandra.yaml configuration file.
+Cassandra offers a variety
+of snitch options.
+I'm going to discuss a few
+of those options here.
+Now, the first option is as simple as
+the SimpleSnitch which is unaware of
+the topology.
+In other words your application
+really cannot know much
+about which IP addresses map to
+which tracks and which data centers.
+In some cases, this works, for
+instance if you're running only one
+VM then you don't really want a snitch,
+and so this snitch is fine.
+The second snitch is a rack inferring
+snitch, which tries to guess from the IP
+address what the rack and
+the data center might be.
+essentially, the IP address
+breaks up into four octets.
+And the first octet is ignored.
+The second octet is used
+to map to the data center.
+The third is used to map to the rack.
+And the fourth is used to map to the node.
+So, for instance, if I have an IP
+address that it goes 101.102.103.104.
+Then essentially 102 is
+the data center octet, octet.
+So any other node that any other IP
+address that starts with 101.102 will
+belong to same data center as this
+particular IP address given over here.
+The third octet is the rack octet so
+any other IP address that starts
+with 101.102.103 will belong to
+the same data center and
+rack as this IP address given here.
+And finally the last octet
+104 identifies the node so.
+And other IP address that has exactly
+the same for opt as shown over here,
+will be the same identical address.
+Maybe in reference to the same
+IP address and server or
+VN as this particular IP
+address shown over here.
+And this of course is best effort guess,
+because, you know,
+IP addresses may not map actually to
+reaction data centers as shown over here.
+But not knowing anything else,
+this is a pretty reasonable guess.
+You can also, if you want to be really
+accurate about which IP address is
+mapped to which data center is if
+we actually know this information,
+you can create this in a property file,
+and
+this is called a property file snitch, and
+write this in to a configuration file.
+Finally if you're running your Cassandra
+on ec2 ec2 of course uses regions and
+within regions there
+are availabilities also.
+So the ec2 snitch in
+the Cassandra allows you to
+guess center as the availability zone and
+ec2 region respectively.
+And you can use this information.
+Then to do the Cassandra mapping for
+instance replication and also within a,
+within a data center, and
+across racks as we discussed previously
+and also across data centers.
+There are a variety of other Snitch
+options as well in Cassandra.
+If you're interested in this,
+please look at the Cassandra web pages.
+So how are writes and reads supported?
+So remember that when a client
+sends a write to a coordinator,
+the coordinator needs to follow
+the write to one or more replicas for
+that particular key that is present
+in the query, in the write itself.
+Writes need to be lock-free because we're
+dealing with write heavy workloads here
+and they need to be fast.
+Okay, so
+you want to incur few disk read reads or
+seeks preferably no disk accesses at all
+for the write in the critical write path.
+So the client sends a write to one
+coordinator node in the Cassandra cluster.
+The coordinator again may be per-key,
+per-client, or per-query.
+If you have a Per-key Coordinator,
+this ensures that all the writes to
+that particular key are serialized
+by that coordinator.
+But again, this is not a a requirement for
+Cassandra.
+The coordinator receives his write,
+uses the partitioner to find out which of
+the replicas that map
+to that particular key.
+He then sends the query to all the replica
+nodes responsible for that particular key.
+Then some of the replicas respond,
+when X replicas respond,
+the coordinator returns an acknowledgement
+to the client that the write is done.
+What is this value of X?
+We'll see that later, for
+now, let's just assume that X is some
+small number, specified by the client.
+That is, smaller, less than or
+equal to, the number of replicas for
+that particular key.
+So, keys always need to be writable,
+so you want to make sure that even if
+you have failures, the writes succeed and
+return an acknowledgement to the client.
+So for this, Cassandra uses what is
+known as a hinted handoff mechanism.
+This works as follows.
+If any replica is down, the Coordinator
+writes to all the other replicas.
+But it also keeps a copy
+of the write locally and
+when that down replica comes back up,
+it is then sent a copy of that write.
+This ensures that replicas,
+when they fail and
+then recover, they receive from
+the coordinator some of the latest writes.
+However, all the replicas might be down,
+it's possible.
+Right, it may be unlikely but it's
+possible that you have three replicas for
+the key and whenever I come along
+all three replicas have failed.
+In this case instead of rejecting the
+write, the coordinator stores the write
+locally at itself, it buffers the writes
+and then when one or more of the replicas
+comes back up, it then relays the writes
+to the corresponding replicas.
+The coordinator of course has a time
+order on how it stores these writes,
+otherwise it may be
+storing writes forever.
+And this time order is
+typically a few hours,
+which is, good enough for
+replicas to recover and rejoin the system.
+Again, this mechanism is known
+as hinted handoff because,
+the coordinator based on the hints that it
+receives from the, failure information,
+it might,
+assume the ownership of that key for.
+For just a temporary duration of time.
+So if you have multiple data centers
+running a Cassandra, you maintain one ring
+per data center and you might also
+use a per data center coordinator.
+This coordinator is different from
+the coordinator used by client queries.
+The per data center coordinator
+coordinates with the other per data
+center data center coordinators.
+To make sure that the co,
+the data center adjacent to coordination
+is done in a correct manner.
+The election of the per data center
+coordinator is done via Zookeeper, which
+is a system, again an open source Apache
+system, which runs a variant of Paxos.
+And we'll see Paxos ,.
+Later on, later, elsewhere in this course.
+So what does a replica server do when
+the coordinator forwards it a write?
+Well the first thing it does is that it
+logs information about that drive just
+a little bit of information in a comment
+log that is present on the disk,
+this is used for failure recovery.
+So that if the replica server fails
+at any point of time here on.
+It can know by looking at the disk log
+after it recovers that there were some
+write that it completed only partially,
+and then it can ask the coordinator for
+information about this write.
+After this the replica
+server updates a memtable.
+A memtable is an in-memory representation
+of multiple key-value pairs.
+Essentially a memtable maintains some of
+the latest key-value pairs that have been.
+Written at this particular replica server.
+It's a cache that can be searched by key.
+So you quickly search the particular
+key that you're trying to write.
+If it's present in the mem table,
+you update the corresponding value.
+If it's not present in the mem table,
+then you simply append to the mem
+table another key value pair.
+This mem table is called
+a write back cache.
+Meaning that you're storing it
+temporarily and tentatively in a memory.
+Rather than writing directly to disk
+if you were writing directly to
+disk then it would be
+called write-through cache.
+And write-through cache is much
+slower than back cache is.
+However the mem table has a maximum size
+and when this maximum size is reached, or
+when the mem table is very old
+then it is flushed to disk.
+Essentially you create a, a an assist
+table or a sorted string table.
+Soon as you take the mem table and
+you sort all the keys within them so that
+the keys are all sorted and the values
+are present alongside the keys as well.
+And then is stored on
+a disc as an access table.
+Now if you want to search for
+a particular key in the data file itself,
+in this data file that
+is the key value pairs,
+it might take a long time because it
+consists of both the keys and the values.
+So you maintain an index file as well,
+which stores an SSTable of key, comma,
+position in data SSTable pairs, so that
+it can quickly look up the position of
+a particular key in the data SSTable by
+looking at the index file SSTable itself.
+However, in most of the cases,
+you know, you might be checking for
+existence of a key in an SSTable and
+the key is just not there.
+In this case, doing a binary search
+through the index file to look for
+the key would just result in a very long,
+very large overhead.
+If you have a large number of SSTables,
+essentially each SSTable containing N
+entries, then you're going
+to incur an ordered log N
+overhead [INAUDIBLE] SSTable in
+trying to look for a particular key.
+And so what you do is you add a Bloom
+filter, which is a quick way of
+looking for whether or not a particular
+key is present in an SSTable.
+Okay, so a Bloom filter is a well-known
+data structure which Cassandra uses.
+So what is a Bloom filter and
+what does it look like?
+Well, here's a Bloom filter, an example.
+A Bloom filter is a compact way
+of representing a set of items.
+And so that the most common operation,
+which is checking for
+existence in that set, becomes very
+cheap and becomes very low overhead.
+The most common operation for
+the Bloom filter is you say,
+well is this particular key present
+in this particular set or not?
+The other operation that the Bloom filter
+supports is inserting an item into the,
+into the Bloom filter.
+The bloom filter has some
+property of false positives.
+An item not in the set may be returned
+as true, as being in the set.
+And for the Cassandra example,
+this just results in a little bit of
+extra overhead when you look to the next
+file and then subsequently not.
+Do not find that item.
+Well, you never have false negatives,
+which means that if you've inserted
+an item in the set you will always
+return true when the item is checked for
+the membership.
+So how does a bloom filter work?
+Well a bloom filter is
+essentially a very large bitmap.
+Here's an example of a bloom filter
+which has 128 bits shown as numbers 0
+through 127.
+The bits are all,
+each of them has a number, has an id.
+Initially, all the bits are zero, so
+the entire bloom filter is a zero.
+When you have a key, say K,
+you use a small set of hash functions,
+1 through small k, to hash that Key-K.
+Each of these hashes returns a number
+between 0 to 127, both ends inclusive.
+So for instance, Hash 1 applied on
+the Key-K returns the value one.
+If you're trying to insert the Key-K
+you're going to set that bit to be
+one over here.
+Again Hash2 when applied to
+the Key-K returns the value of 69.
+And so if you're inserting the Key-K,
+you set that bit number 69 to be one.
+Similarly, Hashk returns a value of 111,
+and you set that bit to be a one.
+So whenever you want to
+insert a particular key,
+you set all the corresponding
+small k hashed values to be ones.
+If you insert a second key you would go
+and set those corresponding bits that,
+that particular key maps to as one.
+If any of those bits is already one,
+you leave it as one.
+So we can see that over time as many
+keys are entered in the system,
+a small set of bits in this particular
+bloom filter are set to one.
+Now what happens when you want to
+check if a particular key is present
+in the bloom filter or not.
+Well once again you do the same thing.
+You take the key, and
+you hash it using the k hash functions.
+And then you check if all of
+these hash to bits are all ones.
+If any of them is a zero,
+then you return false,
+saying this particular key is
+not present in the bloom filter.
+Kay, and this is the correct answer
+because if the key had been inserted in
+the bloom filter,
+all those bits would have been one.
+If all those hash to bits
+on this Key-K are set,
+then you have done a true saying that
+that key is present in the bloom filter.
+This is guaranteed,
+well this is not guaranteed to be correct,
+however it is correct
+with a high probability.
+however, it's possible that this key was
+never inserted into the bloom filter, and
+that half of these bits were
+set by one other key and
+then the other half of the bits
+were set by a different key.
+And so you might end up
+returning an answer of true for
+membership even though that key was
+never inserted into the system.
+This is what is known as a false positive.
+However, the false positive rates
+can be tuned down to be very low.
+For instance,
+if you use four hash functions.
+100 items inserted into a bloom filter
+with 3200 bits, that's just 3.2 kilobits.
+The false positive rate
+is as low as 0.02%.
+Okay, so 0.02%, or
+0.0002 of the membership checks
+will return an answer of true
+when the real answer is false.
+Okay, and you can tune the false positive
+rate to be much lower by for instance
+increasing the number of bits that
+are present in the bloom filter itself.
+So coming back to Cassandra,
+over time a particular server might have a
+lot of SSTables that are written to disc.
+And a given key might be
+present in multiple SSTables.
+So whenever an SSTable is written to disc,
+you don't check the other SSTables
+that are present on disc.
+So a given key might be present
+in multiple SSTables, so
+you want to look out for a particular key.
+For instance, a read comes in for
+a key you want to look up,
+you may need to look on multiple SSTables
+and this is potentially wasteful.
+So in order to avoid this
+waste you do compaction.
+So over time you take the multiple
+SSTables that are present on disc, and
+you merge them.
+Essentially, you merge the,
+updates, for a given key.
+Okay?
+So if a key is present in two SSTables,
+you take the latest update for
+that key, and you replace, the older,
+the older update with that latest update.
+The notion, the compaction, process
+is run, periodically, by each server.
+And it is run locally on
+the SSTables at that server.
+Deletes.
+When you want to
+delete a particular key value pair,
+you don't need the item right away.
+Instead you write to the log or to
+the SSTable what is known as a tombstone.
+A tombstone is essentially a marker
+that says when you encounter this,
+please delete this particular key.
+Eventually when the compaction algorithm
+runs it encounters this tombstone and when
+it does so, it will delete the particular
+key value pair from the table itself.
+Okay, now let's come back to reads.
+How do reads work?
+Well, reads are very similar to writes.
+Again, the client sends the read
+operation to the coordinator.
+The coordinator can
+contact a set of replicas.
+It doesn't necessarily
+contact all the replicas.
+It contacts only X replicas.
+X is the number, again,
+specified by the client.
+Typically the coordinator might prefer
+replicas that have responded the quickest
+in the past.
+These are replicas for
+instance, that might be in the same
+rack as the coordinator, or
+that might be on nearby racks in the
+underlying data center topology itself.
+When these X replicas respond if they
+don't respond, then the coordinator might
+end up sending the coo, the read query to
+all the replicas of that particular key.
+In any case, when these X,
+when any of the X replicas respond,
+it doesn't need to be just
+the X closest replicas.
+Any of the X replicas when they respond,
+the coordinator can then return the latest
+time stamp value from among those X.
+When the different replicas for
+a given key might return different values,
+because we didn't say anything about
+consistency, which means that some of
+the replicas may have received,
+the latest write to that key.
+Other replicas may still be working
+with a stale value of the value for
+that particular key.
+This means that when you get back
+answers from these X replicas for
+a read, some of them may be stale values,
+some of them may be newer values.
+So, essentially the coordinator looks
+at the timestamp of these values and
+the highest timestamp, or
+the latest timestamped value
+is returned to the client.
+Once again, what is the value of X here?
+We'll see again when we
+discuss the next lecture.
+The coordinator also fetches
+values from the other replicas for
+this particular key.
+Why does it do this?
+Once again, some of the values
+may be staler than others.
+And you want to make sure that
+these values are updated and
+repaired to the latest value.
+So if any of these values are older,
+then the coordinator initiates
+a read repair on these older values.
+essentially, the read repair
+informs these older values, or
+rather, the replica servers that hey,
+here is the new and the latest value,
+the latest time stamped value that is
+associated with this particular key.
+Please update your corresponding
+mem table, and eventually SSTable.
+And if this goes on for long enough,
+this mechanism will eventually bring all
+the replicas for
+a given key up to date meaning that all of
+them will reflect the latest value that
+has been written to that particular key.
+For reads however if compaction
+doesn't run often enough
+then a row maybe split
+across multiple SSTables.
+then read needs to touch
+multiple SSTables.
+This means that all the values or
+all the columns for
+a given row are not necessarily written
+in the same SSTable, because you may
+have updated only one of the columns for
+a, for a given row and for a given key and
+only that particular column along with
+that key will be present in that SSTable.
+So even aside, apart from compaction,
+you might need to touch multiple SSTables.
+You are trying to read the entire row,
+because the row is split
+across multiple SSTables.
+This results in reads being
+slower than writes, but
+as we'll see soon,
+the overall system is still quite fast.
+Next we come to membership.
+So remember that we said that
+the coordinator needs to
+know about all the other servers
+present in the cluster, and
+this is true of all
+the other servers as well.
+Every server needs to know what are all
+the other servers that are present in
+the cluster.
+So every server maintains a list of all
+the other servers present in the cluster,
+and this list needs to be updated
+automatically as servers join,
+leave, and fail.
+And this should be familiar to you from
+a previous lecture in the, in the course.
+So essentially what Cassandra needs to do
+is it needs to maintain a membership list
+at each server.
+And Cassandra uses the gossip
+style membership list,
+which you've seen
+previously in the course.
+I won't discuss this in detail again for
+this for details of this please refer to
+the membership and the gossip style
+membership lectures earlier in the course.
+In addition to the gossip style membership
+Cassandra uses suspicion mechanisms to
+make sure that when servers are being
+detected as failed there is
+a low probability that this
+is a mistaken detection.
+So it,
+it tries to increase accuracy protections.
+For this it uses suspicion mechanisms.
+This is different from the previous
+suspicion mechanism we have discussed in
+the membership lectures.
+It uses what is known
+as an accrual detector.
+The failure detector outputs a value known
+as PHI, which represents the suspicion.
+The apps set an appropriate threshold for
+instance if you set a PHI threshold of
+five five, this results in about
+10-15 second detection time.
+The way the PHI calculation
+works is as follows.
+It takes into account
+the inter-arrival times for
+gossip messages and
+inter-arrival times for
+gossip messages from a particular
+server have been long in the past.
+Then it waits slightly longer for
+the next heartbeat before marking
+the server as having failed.
+Essentially, the PHI looks at not just
+the inter-arrival timetable but it
+also looks at the cumulative distribution
+or the probability between when the last
+gossip was received and the time now,
+and based on that it outputs a value.
+When this value crosses
+the specified application threshold,
+that server is marked as having failed.
+Because essentially this is a fairly
+adaptive way of setting the thresholds for
+detection on a per server basis.
+So some servers that are responding slower
+than others will end up being given
+slightly more laxity in the sense of other
+servers waiting for slightly longer.
+For us, heartbeats from that
+particular slow server and
+other servers that are faster
+might have shorter timeouts.
+So essentially, the sufficient mechanisms
+are a way of setting timeouts adaptively
+on a server by server basis in
+the gossip style membership protocol.
+Sow how about the speed?
+So how fast is Cassandra?
+So mySQL, which is one of the more popular
+relation database engines out there,
+on 50 gigabytes of data took on
+average 300 milliseconds for
+writes and
+average 350 milliseconds for writes.
+In comparison, Cassandra took
+only .12 milliseconds on average.
+And 15 milliseconds levels for
+re, write and for
+reads it took 15 milliseconds for reads.
+This is of course orders of magnitudes
+faster and this should lead you to think,
+well, what did we really lose?
+What is the catch over here?
+And that we'll discuss
+in the next lecture.

@@ -43,14 +43,14 @@ public class PortfolioCient {
 		
 		try {
 			stmt = conn.createStatement();
-			stmt.execute("set showplan on");
+			stmt.execute("set showplan DEBUG");
 			rs = stmt.executeQuery(sql);
 			while(rs.next()){
 //				System.out.println(rs.getLong(1));
 			}
 			TeiidStatement tstatement = stmt.unwrap(TeiidStatement.class);
             PlanNode queryPlan = tstatement.getPlanDescription();
-            System.out.println(queryPlan);
+            System.out.println(queryPlan.toXml());
 		} finally {
 			if(rs != null) {
 				rs.close();

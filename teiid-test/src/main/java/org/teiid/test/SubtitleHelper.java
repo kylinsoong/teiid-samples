@@ -12,7 +12,7 @@ public class SubtitleHelper {
 
 	public static void main(String[] args) {
 
-		File file = new File("txt/5 - 1 - 4.1. Key-value stores: Why Key-Value_NOSQL? (00:15:36).txt");
+		File file = new File("txt/txt");
 	    if (!file.exists()) {
 	      System.out.println(file + " does not exist.");
 	      return;
