@@ -12,40 +12,10 @@ public class PortfolioClient {
     private static final String JDBC_PASS = "password1!";
 
 	public static void main(String[] args) throws Exception {
-		
-		new Thread(new Runnable(){
-
-			@Override
-			public void run() {
-
-				for(int i = 0 ; i < 10000 ; i ++) {
-					try {
-						test();
-					} catch (Exception e) {
-						
-					}
-				}
-				
-			}}).start();
-		
-		new Thread(new Runnable(){
-
-			@Override
-			public void run() {
-
-				for(int i = 0 ; i < 10000 ; i ++) {
-					try {
-						test();
-					} catch (Exception e) {
-						
-					}
-				}
-				
-			}}).start();
-
+		test();
 	}
 
-	static void test() throws Exception {
+	public static void test() throws Exception {
 		
 		Connection conn = JDBCUtil.getDriverConnection(JDBC_DRIVER, JDBC_URL, JDBC_USER, JDBC_PASS);
 		
