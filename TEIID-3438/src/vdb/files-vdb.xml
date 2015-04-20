@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<vdb name="FilesVDB" version="1">
+
+  <description>The Files VDB</description>
+
+  <property name="UseConnectorMetadata" value="true" />
+
+  <model name="FilesVDB">
+    <source name="text-connector" translator-name="file" connection-jndi-name="java:/marketdata-file"/>
+  </model>
+
+  <model name="Stocks" type="VIRTUAL">
+        <metadata type="DDL"><![CDATA[
+    CREATE VIEW Marketdata(
+      symbol string,
+      price bigdecimal
+    )
+      AS
+    SELECT
+        A.SYMBOL, A.PRICE
+    FROM
+      (EXEC FilesVDB.getTextFiles('marketdata.csv')) AS f, TEXTTABLE(f.file COLUMNS SYMBOL string, PRICE bigdecimal HEADER) AS A;
+
+  CREATE VIEW SYMBOLS (
+    symbol string
+  )
+    AS
+  SELECT Marketdata.symbol FROM Marketdata;
+
+]]> </metadata>
+    </model>
+
+  <model name="Books" type="VIRTUAL">
+    <metadata type="DDL"><![CDATA[
+  CREATE VIEW Books(
+    id string,
+    name string,
+    author string,
+    reviewer string
+  )
+    AS
+  SELECT 
+    A.id AS id, A.name AS name, A.author AS author, A.reviewer AS reviewer
+  FROM 
+    (EXEC FilesVDB.getTextFiles('books.xml')) AS f, XMLTABLE('/books/book' PASSING XMLPARSE(DOCUMENT f.file) COLUMNS id string PATH 'id/text()', name string PATH 'name/text()', author string PATH 'author/text()', reviewer string PATH 'reviewer/text()') AS A
+
+  ]]> </metadata>
+    </model>
+
+
+</vdb>

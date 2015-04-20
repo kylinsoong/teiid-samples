@@ -1,20 +1,27 @@
 package org.teiid.test.admin;
 
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Properties;
 
 import org.teiid.adminapi.Admin;
+import org.teiid.adminapi.Admin.SchemaObjectType;
 import org.teiid.adminapi.Admin.TranlatorPropertyType;
 import org.teiid.adminapi.AdminException;
 import org.teiid.adminapi.AdminFactory;
+import org.teiid.adminapi.CacheStatistics;
+import org.teiid.adminapi.DataPolicy;
+import org.teiid.adminapi.EngineStatistics;
 import org.teiid.adminapi.Model;
 import org.teiid.adminapi.PropertyDefinition;
 import org.teiid.adminapi.Request;
 import org.teiid.adminapi.Session;
-import org.teiid.adminapi.Translator;
+import org.teiid.adminapi.Transaction;
 import org.teiid.adminapi.VDB;
 import org.teiid.adminapi.WorkerPoolStatistics;
 import org.teiid.adminapi.VDB.ConnectionType;
-import org.teiid.adminapi.impl.VDBTranslatorMetaData;
+import org.teiid.adminapi.impl.DataPolicyMetadata;
+import org.teiid.adminapi.impl.VDBMetaData;
 
 public class AdminTest {
 	
@@ -54,9 +61,126 @@ public class AdminTest {
 			
 //			testGetTemplatePropertyDefinitions();
 			
-			testGetTranslatorPropertyDefinitions();
+//			testGetTranslatorPropertyDefinitions();
+			
+//			testGetTransactions();
+			
+//			testClearCache();
+			
+//			testGetCacheStats();
+			
+//			testGetEngineStats();
+			
+//			testTerminateSession();
+			
+			testCancelRequest();
+			
+//			testDataRoleMapping();
+			
+//			testDataSources();
+			
+//			testGetSchema();
+			
+//			testRestart();
+			
+//			admin.markDataSourceAvailable("test");
+			
+//			System.out.println(admin.getDataSourceTemplateNames());
+			
 		} finally {
 			admin.close();
+		}
+	}
+	
+	static void testRestart() {
+		admin.restart();
+	}
+
+	static void testGetSchema() throws AdminException {
+		EnumSet<SchemaObjectType> allowedTypes = EnumSet.of(Admin.SchemaObjectType.TABLES);
+		String schema = admin.getSchema("AdminAPITestVDB", 1, "TestModel",  allowedTypes, "helloworld");
+		System.out.println(schema);
+	}
+
+	static void testDataSources() throws AdminException {
+
+//		admin.createDataSource("deployment", "templete", new Properties());
+		
+		
+	}
+
+	static void testDataRoleMapping() throws AdminException {
+		admin.addDataRoleMapping("AdminAPITestVDB", 1, "TestDataRole", "test-role-name");
+		
+		VDB vdb = admin.getVDB("AdminAPITestVDB", 1);
+		for(DataPolicy policy : vdb.getDataPolicies()) {
+			System.out.println(policy.getMappedRoleNames());
+			System.out.println(policy.getName());
+			System.out.println(policy.getDescription());
+			System.out.println(policy.getPermissions());
+		}
+		
+		admin.removeDataRoleMapping("AdminAPITestVDB", 1, "TestDataRole", "test-role-name");
+		
+		System.out.println(getPolicy(admin.getVDB("AdminAPITestVDB", 1), "TestDataRole").isAnyAuthenticated());
+		admin.setAnyAuthenticatedForDataRole("AdminAPITestVDB", 1, "TestDataRole", false);
+		System.out.println(getPolicy(admin.getVDB("AdminAPITestVDB", 1), "TestDataRole").isAnyAuthenticated());
+		admin.setAnyAuthenticatedForDataRole("AdminAPITestVDB", 1, "TestDataRole", true);
+	}
+	
+	static DataPolicyMetadata getPolicy(VDB vdb, String policyName) {
+		VDBMetaData vdbMetaData = (VDBMetaData) vdb;
+		return vdbMetaData.getDataPolicyMap().get(policyName);
+	}	
+
+	static void testCancelRequest() throws AdminException {
+		
+		List<Session> sessions = (List<Session>) admin.getSessions();
+		String id = sessions.get(0).getSessionId();
+		List<Request> requests = (List<Request>) admin.getRequestsForSession(id);
+		long executionId = requests.get(0).getExecutionId();
+		
+		
+		System.out.println(id + " " + executionId);
+		
+		admin.cancelRequest(id,executionId);
+	}
+
+	static void testTerminateSession() throws AdminException {
+		admin.terminateSession("aaa");
+	}
+
+	static void testGetEngineStats() throws AdminException {
+		for(EngineStatistics stat : admin.getEngineStats()) {
+			System.out.println(stat);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	static void testGetCacheStats() throws AdminException {
+		List<CacheStatistics> list = (List<CacheStatistics>) admin.getCacheStats("PREPARED_PLAN_CACHE");
+		System.out.println(list.get(0).getName());
+		System.out.println(list.get(0).getHitRatio());
+		System.out.println(list.get(0).getTotalEntries());
+		System.out.println(list.get(0).getRequestCount());
+		list = (List<CacheStatistics>) admin.getCacheStats("QUERY_SERVICE_RESULT_SET_CACHE");
+		System.out.println(list.get(0).getName());
+		System.out.println(list.get(0).getHitRatio());
+		System.out.println(list.get(0).getTotalEntries());
+		System.out.println(list.get(0).getRequestCount());
+	}
+
+	static void testClearCache() throws AdminException{
+		admin.clearCache("PREPARED_PLAN_CACHE");
+		admin.clearCache("QUERY_SERVICE_RESULT_SET_CACHE");
+		admin.clearCache("PREPARED_PLAN_CACHE", "AdminAPITestVDB", 1);
+		admin.clearCache("QUERY_SERVICE_RESULT_SET_CACHE", "AdminAPITestVDB", 1);
+	}
+
+	static void testGetTransactions() throws AdminException {
+
+		for(Transaction transaction : admin.getTransactions()) {
+			System.out.println(transaction);
 		}
 	}
 

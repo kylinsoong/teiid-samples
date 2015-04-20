@@ -19,23 +19,25 @@ public class PortfolioClient {
 		
 		Connection conn = JDBCUtil.getDriverConnection(JDBC_DRIVER, JDBC_URL, JDBC_USER, JDBC_PASS);
 		
-		JDBCUtil.executeQuery(conn, "SELECT * FROM Sheet1");
+		JDBCUtil.executeQueryPerf(conn, "SELECT * FROM Sheet1");
 		
-		JDBCUtil.executeQuery(conn, "SELECT * FROM StockPrices");
+		JDBCUtil.executeQueryPerf(conn, "SELECT * FROM StockPrices");
+//		
+		JDBCUtil.executeQueryPerf(conn, "SELECT * FROM Stock");
+//		
+		JDBCUtil.executeQueryPerf(conn, "SELECT * FROM PersonalHoldings");
+//		
+//		JDBCUtil.executeQueryPerf(conn, "SELECT * FROM stockPricesMatView");
+//		
+//		JDBCUtil.executeQueryPerf(conn, "SELECT * FROM product");
+//		
+//		JDBCUtil.executeQueryPerf(conn, "select stock.* from (call MarketData.getTextFiles('*.txt')) f, TEXTTABLE(f.file COLUMNS symbol string, price bigdecimal HEADER) stock");
+//		
+//		JDBCUtil.executeQueryPerf(conn, "select product.symbol, stock.price, company_name from product, (call MarketData.getTextFiles('*.txt')) f, TEXTTABLE(f.file COLUMNS symbol string, price bigdecimal HEADER) stock where product.symbol=stock.symbol");
+//		
+//		JDBCUtil.executeQueryPerf(conn, "select x.* FROM (call native('select Shares_Count, MONTHNAME(Purchase_Date) from Holdings')) w, ARRAYTABLE(w.tuple COLUMNS \"Shares_Count\" integer, \"MonthPurchased\" string ) AS x");
 		
-		JDBCUtil.executeQuery(conn, "SELECT * FROM Stock");
 		
-		JDBCUtil.executeQuery(conn, "SELECT * FROM PersonalHoldings");
-		
-		JDBCUtil.executeQuery(conn, "SELECT * FROM stockPricesMatView");
-		
-		JDBCUtil.executeQuery(conn, "SELECT * FROM product");
-		
-		JDBCUtil.executeQuery(conn, "select stock.* from (call MarketData.getTextFiles('*.txt')) f, TEXTTABLE(f.file COLUMNS symbol string, price bigdecimal HEADER) stock");
-		
-		JDBCUtil.executeQuery(conn, "select product.symbol, stock.price, company_name from product, (call MarketData.getTextFiles('*.txt')) f, TEXTTABLE(f.file COLUMNS symbol string, price bigdecimal HEADER) stock where product.symbol=stock.symbol");
-		
-		JDBCUtil.executeQuery(conn, "select x.* FROM (call native('select Shares_Count, MONTHNAME(Purchase_Date) from Holdings')) w, ARRAYTABLE(w.tuple COLUMNS \"Shares_Count\" integer, \"MonthPurchased\" string ) AS x");
 		
 		JDBCUtil.close(conn);
 		

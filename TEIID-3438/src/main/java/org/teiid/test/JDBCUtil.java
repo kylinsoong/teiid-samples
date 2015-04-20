@@ -74,6 +74,7 @@ public class JDBCUtil {
 		} finally {
 			close(rs, stmt);
 		}
+		System.out.println();
 	}
 	
 	public static int countResults(Connection conn, String sql) throws Exception{
@@ -120,33 +121,6 @@ public class JDBCUtil {
 		return result ;
 	}
 	
-	public static void executeQueryPerf(Connection conn, String sql) throws Exception {
-		
-//		System.out.println("Query SQL: " + sql);
-		
-		
-		Statement stmt = null;
-		ResultSet rs = null;
-		
-		try {
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql);
-			Thread.currentThread().sleep(Long.MAX_VALUE);
-			ResultSetMetaData metadata = rs.getMetaData();
-			int columns = metadata.getColumnCount();
-			for (int row = 1; rs.next(); row++) {
-				for (int i = 0; i < columns; i++) {
-					rs.getString(i + 1);
-				}
-			}
-		} catch (Exception e) {
-			throw e ;
-		} finally {
-			close(rs, stmt);
-		}
-		
-	}
-	
 	public static void executeQuery(Connection conn, String sql) throws Exception {
 		
 		System.out.println("Query SQL: " + sql);
@@ -166,7 +140,7 @@ public class JDBCUtil {
 					if (i > 0) {
 						System.out.print(", ");
 					}
-					System.out.print(rs.getString(i + 1));
+					System.out.print(rs.getObject(i + 1));
 				}
 				System.out.println();
 			}
