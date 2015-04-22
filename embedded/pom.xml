@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <parent>
+    <artifactId>teiid-parent</artifactId>
+    <groupId>org.jboss.teiid</groupId>
+        <version>8.11.0.Alpha3-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>teiid-runtime-embedded</artifactId>
+  <name>Teiid API</name>
+  <description>Teiid Embedded</description>
+  <packaging>bundle</packaging>
+  <dependencies>
+    
+	<dependency>
+		<groupId>com.github.fungal</groupId>
+		<artifactId>fungal</artifactId>
+		<version>0.11.0.Final</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.jboss.naming</groupId>
+		<artifactId>jnpserver</artifactId>
+		<version>5.0.3.GA</version>
+	</dependency>
+   
+    
+  </dependencies>
+</project>
