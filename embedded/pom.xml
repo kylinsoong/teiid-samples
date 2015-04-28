@@ -12,17 +12,60 @@
   <packaging>bundle</packaging>
   <dependencies>
     
-	<dependency>
-		<groupId>com.github.fungal</groupId>
-		<artifactId>fungal</artifactId>
-		<version>0.11.0.Final</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>org.jboss.naming</groupId>
-		<artifactId>jnpserver</artifactId>
-		<version>5.0.3.GA</version>
-	</dependency>
+    	<dependency>
+			<groupId>org.jboss.ironjacamar</groupId>
+			<artifactId>ironjacamar-jdbc</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.spec.javax.transaction</groupId>
+					<artifactId>jboss-transaction-api_1.1_spec</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.ironjacamar</groupId>
+			<artifactId>ironjacamar-core-api</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.spec.javax.transaction</groupId>
+					<artifactId>jboss-transaction-api_1.1_spec</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.jboss.ironjacamar</groupId>
+			<artifactId>ironjacamar-core-impl</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jboss.spec.javax.transaction</groupId>
+					<artifactId>jboss-transaction-api_1.1_spec</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.picketbox</groupId>
+					<artifactId>picketbox</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+        	<groupId>javax.resource</groupId>
+       		<artifactId>connector-api</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>javax.transaction</groupId>
+            <artifactId>jta</artifactId>
+		</dependency>
+		
+		
+		
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+		
    
     
   </dependencies>
