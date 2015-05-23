@@ -9,6 +9,16 @@ public class Main {
 		TupleBatchTest.main(args);
 		
 		STreeTest.main(args);
+		
+		LrfuEvictionQueueTest.main(args);
+		
+		SplittableStorageManagerTest.main(args);
+		
+		EncryptedStorageManagerTest.main(args);
+		
+		ConcurrentBitSetTest.main(args);
+		
+		BlockByteBufferTest.main(args);
 	}
 
 }
