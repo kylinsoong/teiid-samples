@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<vdb name="SOAPServiceVDB" version="1">
+
+    <description>Shows how to call StateService Web Services</description>
+    
+    <property name="UseConnectorMetadata" value="true" />
+    <!--property name="{http://teiid.org/rest}auto-generate" value="true"/-->
+
+    <model name="StateService">
+        <source name="webservice" translator-name="translator-ws" connection-jndi-name="java:/SOAPWebServiceSource"/>
+    </model>
+    
+    <model name="CountryInfoService" type="VIRTUAL">
+	    <metadata type="DDL"><![CDATA[
+	    
+	    CREATE VIRTUAL PROCEDURE
+		BEGIN
+        	SELECT XMLELEMENT(NAME "tns:CapitalCity", XMLNAMESPACES( 'http://www.oorsprong.org/websamples.countryinfo' AS tns), XMLELEMENT(NAME "tns:sCountryISOCode", CountryInfoServiceView.CapitalCity_request.sCountryISOCode)) AS xml_out;
+		END
+
+
+		CREATE VIRTUAL PROCEDURE
+		BEGIN
+        	SELECT t.* FROM 
+        		XMLTABLE(XMLNAMESPACES('http://www.oorsprong.org/websamples.countryinfo' AS tns) , '/tns:CapitalCityResponse' PASSING CountryInfoServiceView.CapitalCity_response.xml_in
+        	COLUMNS
+            	CapitalCityResult string PATH '/tns:CapitalCityResult') AS t;
+		END
+
+
+		CREATE VIRTUAL PROCEDURE
+		BEGIN
+	        SELECT t.* FROM
+	                TABLE(EXEC CountryInfoServiceView.CapitalCity_request(CountryInfoServiceView.CapitalCity.sCountryISOCode)
+	        AS request,
+	                TABLE(EXEC CountryInfoService.invoke('SOAP11', null, REQUEST.xml_out, null, TRUE))
+	        AS response,
+	                TABLE(EXEC CountryInfoServiceView.CapitalCity_response(RESPONSE.result))
+	        AS t;
+		END
+	 	 ]]> </metadata>
+        
+    </model>
+
+</vdb>
